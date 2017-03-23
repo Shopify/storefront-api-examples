@@ -1,6 +1,6 @@
 # ember-js-buy
 
-An example usage of the js-buy-sdk built with Ember.
+An example usage of the [js-buy-sdk](https://github.com/Shopify/js-buy-sdk) built with Ember.
 
 ## Prerequisites
 

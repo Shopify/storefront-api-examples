@@ -1,0 +1,16 @@
+<section class="products">
+  <header class="header">
+    <h1>Ember Example</h1>
+  </header>
+
+  <ul class="product-list">
+    {{#each model as |product|}}
+      {{buy-button product=product.attrs}}
+    {{/each}}
+  </ul>
+
+</section>
+
+<section>
+  {{shopify-cart}}
+</section>

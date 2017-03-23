@@ -1,0 +1,34 @@
+<li class="product">
+  <img src="{{imageSrc}}">
+  <div class="product-info">
+    <h2>{{product.title}}</h2>
+    {{#each variantGroups as |variantGroup|}}
+      {{#unless variantGroup.noChoices}}
+        <div>
+          <label>{{variantGroup.name}}</label>
+          <select {{action 'updateSelected' variantGroup on='change'}} id="{{variantGroup.selectId}}">
+            {{#each variantGroup.values as |value|}}
+              <option value={{value}} selected={{is-equal variantGroup.selected value}}>
+                {{value}}
+              </option>
+            {{/each}}
+          </select>
+        </div>
+      {{/unless}}
+    {{/each}}
+    <div class="buy-button-wrapper">
+      {{#if currentVariant}}
+        <button class="buy-button button" {{action 'addVariantToCart'}}>
+          Add to cart
+        </button>
+        <div class="product-pricing">
+          $ {{price}}
+        </div>
+      {{else}}
+        <button class="buy-button button" disabled>
+          Unavailable
+        </button>
+      {{/if}}
+    </div>
+  </div>
+</li>

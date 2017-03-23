@@ -18,7 +18,7 @@
     {{/each}}
     <div class="buy-button-wrapper">
       {{#if currentVariant}}
-        <button class="buy-button button" {{action 'addVariantToCart'}}>
+        <button class="buy-button button" {{action "open"}} {{action "addVariantToCart"}}>
           Add to cart
         </button>
         <div class="product-pricing">

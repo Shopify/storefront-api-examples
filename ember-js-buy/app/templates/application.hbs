@@ -4,13 +4,13 @@
   </header>
 
   <ul class="product-list">
-    {{#each model as |product|}}
-      {{buy-button product=product.attrs}}
+    {{#each model.products as |product|}}
+      {{buy-button product=product.attrs open="openCart"}}
     {{/each}}
   </ul>
 
 </section>
 
-<section>
-  {{shopify-cart}}
+<section class="cart {{if model.isCartOpen "cart--open"}}">
+  {{shopify-cart close="closeCart"}}
 </section>

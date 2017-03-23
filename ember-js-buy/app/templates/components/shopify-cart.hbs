@@ -1,29 +1,27 @@
-<section class="cart {{if isCartOpen "cart--open"}}">
-  <section class="main">
-    <button class="cart-close" {{action "closeCart"}}>
-      ×
-    </button>
-    <h2>Cart</h2>
-    <ul class="cart-list">
-      {{#each lineItems as |item|}}
-        <li>
-          <div class="view">
-            <label>
-              {{item.title}}
-              {{#if item.variant.title}}
-              : {{item.variant.title}}
-              {{/if}}
-            </label>
-            <button class="destroy" {{action "removeItem" item}}></button>
-          </div>
-        </li>
-      {{/each}}
-    </ul>
-  </section>
-
-  <footer class="cart-footer">
-    <button class="button" disabled={{checkoutDisabled}} {{action "openCheckout"}}>
-      Checkout
-    </button>
-  </footer>
+<section class="main">
+  <button class="cart-close" {{action "close"}}>
+    ×
+  </button>
+  <h2>Cart</h2>
+  <ul class="cart-list">
+    {{#each lineItems as |item|}}
+      <li>
+        <div class="view">
+          <label>
+            {{item.title}}
+            {{#if item.variant.title}}
+            : {{item.variant.title}}
+            {{/if}}
+          </label>
+          <button class="destroy" {{action "removeItem" item}}></button>
+        </div>
+      </li>
+    {{/each}}
+  </ul>
 </section>
+
+<footer class="cart-footer">
+  <button class="button" disabled={{checkoutDisabled}} {{action "openCheckout"}}>
+    Checkout
+  </button>
+</footer>

@@ -252,8 +252,26 @@ button:focus {
   cursor: pointer;
   position: absolute;
   top: 10px;
-  right: 10px; /* TODO: bump up this value to ensure alignment */
+  right: 18px;
   border: none;
   background: none;
   font-size: 20px;
+}
+
+.view-cart-wrapper {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.view-cart {
+  font-size: 25px;
+  border: none;
+  background: none;
+  color: #cc9a9a;
+  cursor: pointer;
+}
+
+.view-cart:hover {
+  color: #af5b5e;
 }

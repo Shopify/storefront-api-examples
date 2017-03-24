@@ -11,6 +11,14 @@
 
 </section>
 
+
+
 <section class="cart {{if model.isCartOpen "cart--open"}}">
   {{shopify-cart close="closeCart"}}
 </section>
+
+{{#unless model.isCartOpen}}
+  <section class="view-cart-wrapper">
+    <button class="view-cart" {{action "openCart"}}>Cart</button>
+  </section>
+{{/unless}}

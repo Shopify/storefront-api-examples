@@ -1,0 +1,763 @@
+schema {
+  query: QueryRoot
+  mutation: Mutation
+}
+
+type Attribute {
+  key: String!
+  value: String
+}
+
+input AttributeInput {
+  key: String!
+  value: String!
+}
+
+type Checkout implements Node {
+  createdAt: DateTime!
+  customAttributes: [Attribute!]!
+  id: ID!
+  lineItems(first: Int!, after: String, reverse: Boolean = false): LineItemConnection!
+  note: String
+  ready: Boolean!
+  requiresShipping: Boolean!
+  shippingAddress: MailingAddress
+  shippingLine: ShippingRate
+  updatedAt: DateTime!
+}
+
+input CheckoutAttributesUpdateInput {
+  clientMutationId: String
+  checkoutId: ID!
+  note: String
+  customAttributes: [AttributeInput!]
+}
+
+type CheckoutAttributesUpdatePayload {
+  checkout: Checkout!
+  clientMutationId: String
+  userErrors: [UserError!]!
+}
+
+input CheckoutCreateInput {
+  clientMutationId: String
+  email: String
+  lineItems: [LineItemInput!]
+  shippingAddress: MailingAddressInput
+  note: String
+  customAttributes: [AttributeInput!]
+}
+
+type CheckoutCreatePayload {
+  checkout: Checkout
+  clientMutationId: String
+  userErrors: [UserError!]!
+}
+
+input CheckoutShippingAddressUpdateInput {
+  clientMutationId: String
+  shippingAddress: MailingAddressInput!
+  checkoutId: ID!
+}
+
+type CheckoutShippingAddressUpdatePayload {
+  checkout: Checkout!
+  clientMutationId: String
+  userErrors: [UserError!]!
+}
+
+input CheckoutShippingLineUpdateInput {
+  clientMutationId: String
+  checkoutId: ID!
+  shippingRateHandle: String!
+}
+
+type CheckoutShippingLineUpdatePayload {
+  checkout: Checkout
+  clientMutationId: String
+  userErrors: [UserError!]!
+}
+
+type Collection implements Node {
+  descriptionHtml: String!
+  descriptionPlainSummary: String!
+  handle: String!
+  id: ID!
+  image(maxWidth: Int, maxHeight: Int, crop: CropRegion, scale: Int = 1): Image
+  products(first: Int!, after: String, reverse: Boolean = false): ProductConnection!
+  title: String!
+  updatedAt: DateTime!
+}
+
+type CollectionConnection {
+  edges: [CollectionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type CollectionEdge {
+  cursor: String!
+  node: Collection!
+}
+
+enum CollectionSortKeys {
+  TITLE
+  UPDATED_AT
+  ID
+  RELEVANCE
+}
+
+type CreditCard {
+  brand: String
+  expiryMonth: Int
+  expiryYear: Int
+  firstDigits: String
+  firstName: String
+  lastDigits: String
+  lastName: String
+  maskedNumber: String
+}
+
+type CreditCardPaymentRequest implements Node {
+  amount: Money!
+  checkout: Checkout!
+  creditCard: CreditCard!
+  errorMessage: String
+  id: ID!
+  idempotencyKey: String
+  test: Boolean!
+  transaction: Transaction
+}
+
+enum CropRegion {
+  CENTER
+  TOP
+  BOTTOM
+}
+
+enum CurrencyCode {
+  USD
+  EUR
+  GBP
+  CAD
+  AFN
+  ALL
+  DZD
+  AOA
+  ARS
+  AMD
+  AWG
+  AUD
+  BBD
+  AZN
+  BDT
+  BSD
+  BHD
+  BYR
+  BZD
+  BTN
+  BAM
+  BRL
+  BOB
+  BWP
+  BND
+  BGN
+  MMK
+  KHR
+  KYD
+  XAF
+  CLP
+  CNY
+  COP
+  KMF
+  CDF
+  CRC
+  HRK
+  CZK
+  DKK
+  DOP
+  XCD
+  EGP
+  ETB
+  XPF
+  FJD
+  GMD
+  GHS
+  GTQ
+  GYD
+  GEL
+  HTG
+  HNL
+  HKD
+  HUF
+  ISK
+  INR
+  IDR
+  ILS
+  JMD
+  JPY
+  JEP
+  JOD
+  KZT
+  KES
+  KWD
+  KGS
+  LAK
+  LVL
+  LBP
+  LSL
+  LRD
+  LTL
+  MGA
+  MKD
+  MOP
+  MWK
+  MVR
+  MXN
+  MYR
+  MUR
+  MDL
+  MAD
+  MNT
+  MZN
+  NAD
+  NPR
+  ANG
+  NZD
+  NIO
+  NGN
+  NOK
+  OMR
+  PKR
+  PGK
+  PYG
+  PEN
+  PHP
+  PLN
+  QAR
+  RON
+  RUB
+  RWF
+  WST
+  SAR
+  STD
+  RSD
+  SCR
+  SGD
+  SYP
+  ZAR
+  KRW
+  SBD
+  LKR
+  SRD
+  SEK
+  CHF
+  TWD
+  THB
+  TZS
+  TTD
+  TND
+  TRY
+  TMT
+  UGX
+  UAH
+  AED
+  UYU
+  UZS
+  VUV
+  VEF
+  VND
+  XOF
+  YER
+  ZMW
+}
+
+type Customer {
+  acceptsMarketing: Boolean!
+  address(id: ID!): MailingAddress
+  addresses(first: Int!, after: String, reverse: Boolean = false): MailingAddressConnection!
+  createdAt: DateTime!
+  defaultAddress: MailingAddress
+  displayName: String!
+  email: String
+  firstName: String
+  id: ID!
+  lastName: String
+  order(id: ID!): Order
+  orders(first: Int!, after: String, sortKey: OrderSortKeys, reverse: Boolean = false, query: String): OrderConnection!
+  updatedAt: DateTime!
+}
+
+type CustomerAccessToken {
+  accessToken: String!
+  expiresAt: DateTime!
+}
+
+input CustomerAccessTokenCreateInput {
+  clientMutationId: String
+  email: String!
+  password: String!
+}
+
+type CustomerAccessTokenCreatePayload {
+  clientMutationId: String
+  customerAccessToken: CustomerAccessToken
+  userErrors: [UserError!]!
+}
+
+input CustomerAccessTokenDeleteInput {
+  clientMutationId: String
+  accessToken: String!
+}
+
+type CustomerAccessTokenDeletePayload {
+  clientMutationId: String
+  deletedAccessToken: String
+  deletedCustomerAccessTokenId: String
+  userErrors: [UserError!]!
+}
+
+input CustomerAccessTokenRenewInput {
+  clientMutationId: String
+  accessToken: String!
+}
+
+type CustomerAccessTokenRenewPayload {
+  clientMutationId: String
+  customerAccessToken: CustomerAccessToken
+  userErrors: [UserError!]!
+}
+
+input CustomerActivateInput {
+  clientMutationId: String
+  id: ID!
+  token: String!
+  password: String!
+}
+
+type CustomerActivatePayload {
+  clientMutationId: String
+  customer: Customer
+  userErrors: [UserError!]!
+}
+
+input CustomerAddressCreateInput {
+  clientMutationId: String
+  accessToken: String!
+  address: MailingAddressInput!
+}
+
+type CustomerAddressCreatePayload {
+  clientMutationId: String
+  customerAddress: MailingAddress
+  userErrors: [UserError!]!
+}
+
+input CustomerAddressDeleteInput {
+  clientMutationId: String
+  id: ID!
+  accessToken: String!
+}
+
+type CustomerAddressDeletePayload {
+  clientMutationId: String
+  deletedCustomerAddressId: String
+  userErrors: [UserError!]!
+}
+
+input CustomerAddressUpdateInput {
+  clientMutationId: String
+  accessToken: String!
+  address: MailingAddressInput!
+}
+
+type CustomerAddressUpdatePayload {
+  clientMutationId: String
+  customerAddress: MailingAddress
+  userErrors: [UserError!]!
+}
+
+input CustomerCreateInput {
+  clientMutationId: String
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  acceptsMarketing: Boolean
+}
+
+type CustomerCreatePayload {
+  clientMutationId: String
+  customer: Customer
+  userErrors: [UserError!]!
+}
+
+input CustomerRecoverInput {
+  clientMutationId: String
+  email: String!
+}
+
+type CustomerRecoverPayload {
+  clientMutationId: String
+  userErrors: [UserError!]!
+}
+
+input CustomerResetInput {
+  clientMutationId: String
+  id: ID!
+  token: String!
+  password: String!
+}
+
+type CustomerResetPayload {
+  clientMutationId: String
+  customer: Customer
+  userErrors: [UserError!]!
+}
+
+input CustomerUpdateInput {
+  clientMutationId: String
+  accessToken: String!
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  acceptsMarketing: Boolean
+}
+
+type CustomerUpdatePayload {
+  clientMutationId: String
+  customer: Customer
+  userErrors: [UserError!]!
+}
+
+scalar DateTime
+
+type Domain {
+  host: String!
+  sslEnabled: Boolean!
+  url: URL!
+}
+
+type Image {
+  altText: String
+  id: ID
+  src: URL!
+}
+
+type ImageConnection {
+  edges: [ImageEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ImageEdge {
+  cursor: String!
+  node: Image!
+}
+
+type LineItem {
+  customAttributes: [Attribute!]!
+  quantity: Int!
+  title: String!
+  variant: ProductVariant
+}
+
+type LineItemConnection {
+  edges: [LineItemEdge!]!
+  pageInfo: PageInfo!
+}
+
+type LineItemEdge {
+  cursor: String!
+  node: LineItem!
+}
+
+input LineItemInput {
+  variantId: ID!
+  quantity: Int!
+  customAttributes: [AttributeInput!]
+}
+
+type MailingAddress {
+  address1: String
+  address2: String
+  city: String
+  company: String
+  country: String
+  countryCode: String
+  firstName: String
+  formatted(withName: Boolean = false, withCompany: Boolean = true): [String!]!
+  id: ID!
+  lastName: String
+  latitude: Float
+  longitude: Float
+  name: String
+  phone: String
+  province: String
+  provinceCode: String
+  zip: String
+}
+
+type MailingAddressConnection {
+  edges: [MailingAddressEdge!]!
+  pageInfo: PageInfo!
+}
+
+type MailingAddressEdge {
+  cursor: String!
+  node: MailingAddress!
+}
+
+input MailingAddressInput {
+  id: ID
+  address1: String
+  address2: String
+  city: String
+  company: String
+  country: String
+  firstName: String
+  lastName: String
+  phone: String
+  province: String
+  zip: String
+}
+
+scalar Money
+
+type Mutation {
+  checkoutAttributesUpdate(input: CheckoutAttributesUpdateInput!): CheckoutAttributesUpdatePayload
+  checkoutCreate(input: CheckoutCreateInput!): CheckoutCreatePayload
+  checkoutShippingAddressUpdate(input: CheckoutShippingAddressUpdateInput!): CheckoutShippingAddressUpdatePayload
+  checkoutShippingLineUpdate(input: CheckoutShippingLineUpdateInput!): CheckoutShippingLineUpdatePayload
+  customerAccessTokenCreate(input: CustomerAccessTokenCreateInput!): CustomerAccessTokenCreatePayload
+  customerAccessTokenDelete(input: CustomerAccessTokenDeleteInput!): CustomerAccessTokenDeletePayload
+  customerAccessTokenRenew(input: CustomerAccessTokenRenewInput!): CustomerAccessTokenRenewPayload
+  customerActivate(input: CustomerActivateInput!): CustomerActivatePayload
+  customerAddressCreate(input: CustomerAddressCreateInput!): CustomerAddressCreatePayload
+  customerAddressDelete(input: CustomerAddressDeleteInput!): CustomerAddressDeletePayload
+  customerAddressUpdate(input: CustomerAddressUpdateInput!): CustomerAddressUpdatePayload
+  customerCreate(input: CustomerCreateInput!): CustomerCreatePayload
+  customerRecover(input: CustomerRecoverInput!): CustomerRecoverPayload
+  customerReset(input: CustomerResetInput!): CustomerResetPayload
+  customerUpdate(input: CustomerUpdateInput!): CustomerUpdatePayload
+}
+
+interface Node {
+  id: ID!
+}
+
+type Order {
+  cancelReason: OrderCancelReason
+  cancelledAt: DateTime
+  createdAt: DateTime!
+  currencyCode: CurrencyCode!
+  customerUrl: URL
+  displayFinancialStatus: OrderDisplayFinancialStatus
+  displayFulfillmentStatus: OrderDisplayFulfillmentStatus!
+  id: ID!
+  lineItems(first: Int!, after: String, reverse: Boolean = false): LineItemConnection!
+  orderNumber: Int!
+  processedAt: DateTime!
+  shippingAddress: MailingAddress
+  subtotalPrice: Money
+  totalPrice: Money!
+  totalRefunded: Money!
+  totalShippingPrice: Money!
+  totalTax: Money
+  updatedAt: DateTime!
+}
+
+enum OrderCancelReason {
+  CUSTOMER
+  FRAUD
+  INVENTORY
+  DECLINED
+  OTHER
+}
+
+type OrderConnection {
+  edges: [OrderEdge!]!
+  pageInfo: PageInfo!
+}
+
+enum OrderDisplayFinancialStatus {
+  PENDING
+  AUTHORIZED
+  PARTIALLY_PAID
+  PARTIALLY_REFUNDED
+  PAID
+  REFUNDED
+  VOIDED
+}
+
+enum OrderDisplayFulfillmentStatus {
+  UNFULFILLED
+  PARTIALLY_FULFILLED
+  FULFILLED
+  RESTOCKED
+  PENDING_FULFILLMENT
+  OPEN
+}
+
+type OrderEdge {
+  cursor: String!
+  node: Order!
+}
+
+enum OrderSortKeys {
+  ORDER_NUMBER
+  CREATED_AT
+  UPDATED_AT
+  FINANCIAL_STATUS
+  FULFILLMENT_STATUS
+  TOTAL_PRICE
+  CUSTOMER_NAME
+  PROCESSED_AT
+  ID
+  RELEVANCE
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type Product implements Node {
+  collections(first: Int!, after: String, reverse: Boolean = false): CollectionConnection!
+  createdAt: DateTime!
+  descriptionHtml: String!
+  descriptionPlainSummary: String!
+  handle: String!
+  id: ID!
+  images(first: Int!, after: String, reverse: Boolean = false, maxWidth: Int, maxHeight: Int, crop: CropRegion, scale: Int = 1): ImageConnection!
+  options(first: Int): [ProductOption!]!
+  productType: String!
+  publishedAt: DateTime!
+  tags: [String!]!
+  title: String!
+  updatedAt: DateTime!
+  variants(first: Int!, after: String, reverse: Boolean = false): ProductVariantConnection!
+  vendor: String!
+}
+
+type ProductConnection {
+  edges: [ProductEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ProductEdge {
+  cursor: String!
+  node: Product!
+}
+
+type ProductOption implements Node {
+  id: ID!
+  name: String!
+  values: [String!]!
+}
+
+enum ProductSortKeys {
+  TITLE
+  PRODUCT_TYPE
+  VENDOR
+  INVENTORY_TOTAL
+  UPDATED_AT
+  CREATED_AT
+  PUBLISHED_AT
+  ID
+  RELEVANCE
+}
+
+type ProductVariant implements Node {
+  available: Boolean
+  id: ID!
+  image(maxWidth: Int, maxHeight: Int, crop: CropRegion, scale: Int = 1): Image
+  price: Money!
+  product: Product!
+  selectedOptions: [SelectedOption!]!
+  title: String!
+  weight: Float
+  weightUnit: WeightUnit!
+}
+
+type ProductVariantConnection {
+  edges: [ProductVariantEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ProductVariantEdge {
+  cursor: String!
+  node: ProductVariant!
+}
+
+type QueryRoot {
+  customer(accessToken: String!): Customer
+  node(id: ID!): Node
+  shop: Shop!
+}
+
+type SelectedOption {
+  name: String!
+  value: String!
+}
+
+type ShippingRate {
+  handle: String!
+  price: Money!
+  title: String!
+}
+
+type Shop {
+  billingAddress: MailingAddress!
+  collections(first: Int!, after: String, sortKey: CollectionSortKeys, reverse: Boolean = false, query: String): CollectionConnection!
+  currencyCode: CurrencyCode!
+  description: String
+  moneyFormat: String!
+  name: String!
+  primaryDomain: Domain!
+  privacyPolicy: ShopPolicy
+  products(first: Int!, after: String, sortKey: ProductSortKeys, reverse: Boolean = false, query: String): ProductConnection!
+  refundPolicy: ShopPolicy
+  termsOfService: ShopPolicy
+}
+
+type ShopPolicy implements Node {
+  body: String!
+  id: ID!
+  title: String!
+  url: URL!
+}
+
+type Transaction {
+  amount: Money!
+  kind: TransactionKind!
+  status: TransactionStatus!
+  test: Boolean!
+}
+
+enum TransactionKind {
+  SALE
+  CAPTURE
+  AUTHORIZATION
+  EMV_AUTHORIZATION
+  CHANGE
+}
+
+enum TransactionStatus {
+  PENDING
+  SUCCESS
+  FAILURE
+}
+
+scalar URL
+
+type UserError {
+  field: [String!]
+  message: String!
+}
+
+enum WeightUnit {
+  KILOGRAMS
+  GRAMS
+  POUNDS
+  OUNCES
+}

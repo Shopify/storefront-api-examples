@@ -13,11 +13,10 @@ export default Ember.Route.extend({
 
   actions: {
     closeCart() {
-      const model = this.set('controller.model.isCartOpen', false);
+      this.set('controller.model.isCartOpen', false);
     },
     openCart() {
-      const model = this.set('controller.model.isCartOpen', true);
+      this.set('controller.model.isCartOpen', true);
     }
   }
 });
-

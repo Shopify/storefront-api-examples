@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, inject, computed, get, observer } = Ember;
+const { Component, inject, computed, get } = Ember;
 
 export default Component.extend({
   cart: inject.service(),

@@ -84,9 +84,9 @@ export default Component.extend({
     },
 
     addVariantToCart() {
-      const variantId = this.get('currentVariant.id');
+     // const variantId = this.get('currentVariant.id');
 
-//      this.get('cart').addVariants({ variantId, quantity: 1 });
+     // this.get('cart').addVariants({ variantId, quantity: 1 });
     },
     open() {
       this.sendAction('open');

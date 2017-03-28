@@ -1,7 +1,7 @@
 {
-  "name": "ember-js-buy",
+  "name": "ember-graphql-client",
   "version": "0.0.0",
-  "description": "An example usage of the js-buy-sdk built with Ember",
+  "description": "An example usage of the grapqhl-js-client built with Ember",
   "license": "MIT",
   "author": "",
   "directories": {
@@ -12,11 +12,16 @@
   "scripts": {
     "build": "ember build",
     "start": "ember server",
-    "test": "ember test"
+    "test": "ember test",
+    "schema:refresh": "rimraf types.js && yarn run schema:fetch && yarn run schema:transform-to-types",
+    "schema:fetch": "graphql-js-schema-fetch --url 'https://graphql.myshopify.com/api/graphql' --header 'Authorization: Basic MzUxYzEyMjAxN2QwZjJhOTU3ZDMyYWU3MjhhZDc0OWM=' | jq '.' > schema.json",
+    "schema:transform-to-types": "graphql-js-schema --schema-file schema.json --outdir ./app --schema-bundle-name 'Types' --bundle-only"
   },
   "devDependencies": {
+    "@shopify/graphql-js-client": "^0.4.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^2.4.1",
+    "ember-browserify": "^1.1.13",
     "ember-cli": "2.12.1",
     "ember-cli-app-version": "^2.0.0",
     "ember-cli-babel": "^5.1.7",

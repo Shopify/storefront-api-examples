@@ -10,6 +10,7 @@ export default Ember.Route.extend({
       root.add('shop', (shop) => {
         shop.addConnection('products', {args: {first: 20}}, (products) => {
           products.add('id');
+          products.add('title');
           products.add('options', (options) => {
             options.add('name');
             options.add('values');

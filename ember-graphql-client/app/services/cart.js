@@ -14,6 +14,7 @@ export default Service.extend({
           userErrors.add('field');
         });
         checkoutCreate.add('checkout', (checkout) => {
+          checkout.add('webUrl');
           checkout.addConnection('lineItems', {args: {first: 250}}, (lineItems) => {
             lineItems.add('title');
             lineItems.add('variant', (variant) => {
@@ -47,6 +48,7 @@ export default Service.extend({
           userErrors.add('field');
         });
         checkoutAddLineItems.add('checkout', (checkout) => {
+          checkout.add('webUrl');
           checkout.addConnection('lineItems', {args: {first: 250}}, (lineItems) => {
             lineItems.add('title');
             lineItems.add('variant', (variant) => {

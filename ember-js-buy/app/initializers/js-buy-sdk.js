@@ -2,8 +2,8 @@ import Client, {Config} from 'shopify-buy';
 
 export function initialize(application) {
   const config = new Config({
-    storefrontAccessToken: '0dc0448815bdf506934101c6d39ec244',
-    domain: 'sendmecats.myshopify.com',
+    storefrontAccessToken: '663365cfae2c84f0f68ca1006329a694',
+    domain: 'graphql.myshopify.com',
   });
 
   const client = new Client(config);

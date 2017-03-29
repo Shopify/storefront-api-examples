@@ -3,10 +3,10 @@ import typeBundle from '../types';
 
 export function initialize(application) {
   const client = new Client.default(typeBundle, {
-    url: 'https://sendmecats.myshopify.com/api/graphql',
+    url: 'https://graphql.myshopify.com/api/graphql',
     fetcherOptions: {
       headers: {
-        Authorization: 'Basic MGRjMDQ0ODgxNWJkZjUwNjkzNDEwMWM2ZDM5ZWMyNDQK'
+        Authorization: 'Basic NjYzMzY1Y2ZhZTJjODRmMGY2OGNhMTAwNjMyOWE2OTQK'
       }
     }
   });

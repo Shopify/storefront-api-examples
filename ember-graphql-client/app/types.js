@@ -603,6 +603,7 @@ const Mutation = {
   "name": "Mutation",
   "kind": "OBJECT",
   "fieldBaseTypes": {
+    "checkoutAddLineItems": "CheckoutAddLineItemsPayload",
     "checkoutAttributesUpdate": "CheckoutAttributesUpdatePayload",
     "checkoutCompleteWithCreditCard": "CheckoutCompleteWithCreditCardPayload",
     "checkoutCompleteWithTokenizedPayment": "CheckoutCompleteWithTokenizedPaymentPayload",
@@ -623,6 +624,7 @@ const Mutation = {
   },
   "implementsNode": false,
   "relayInputObjectBaseTypes": {
+    "checkoutAddLineItems": "CheckoutAddLineItemsInput",
     "checkoutAttributesUpdate": "CheckoutAttributesUpdateInput",
     "checkoutCompleteWithCreditCard": "CheckoutCompleteWithCreditCardInput",
     "checkoutCompleteWithTokenizedPayment": "CheckoutCompleteWithTokenizedPaymentInput",
@@ -763,7 +765,7 @@ const CustomerActivateInput = {
   "inputFieldBaseTypes": {
     "clientMutationId": "String",
     "id": "ID",
-    "token": "String",
+    "resetToken": "String",
     "password": "String"
   }
 };
@@ -827,7 +829,6 @@ const MailingAddressInput = {
   "name": "MailingAddressInput",
   "kind": "INPUT_OBJECT",
   "inputFieldBaseTypes": {
-    "id": "ID",
     "address1": "String",
     "address2": "String",
     "city": "String",
@@ -887,6 +888,7 @@ const CustomerAddressUpdateInput = {
   "inputFieldBaseTypes": {
     "clientMutationId": "String",
     "accessToken": "String",
+    "id": "ID",
     "address": "MailingAddressInput"
   }
 };
@@ -935,7 +937,7 @@ const CustomerResetInput = {
   "inputFieldBaseTypes": {
     "clientMutationId": "String",
     "id": "ID",
-    "token": "String",
+    "resetToken": "String",
     "password": "String"
   }
 };
@@ -971,6 +973,54 @@ const CustomerUpdateInput = {
 Object.freeze(CustomerUpdateInput.inputFieldBaseTypes);
 var CustomerUpdateInput$1 = Object.freeze(CustomerUpdateInput);
 
+const CheckoutAddLineItemsPayload = {
+  "name": "CheckoutAddLineItemsPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "clientMutationId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CheckoutAddLineItemsPayload.fieldBaseTypes);
+var CheckoutAddLineItemsPayload$1 = Object.freeze(CheckoutAddLineItemsPayload);
+
+const CheckoutAddLineItemsInput = {
+  "name": "CheckoutAddLineItemsInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "lineItems": "LineItemInput",
+    "checkoutId": "ID"
+  }
+};
+Object.freeze(CheckoutAddLineItemsInput.inputFieldBaseTypes);
+var CheckoutAddLineItemsInput$1 = Object.freeze(CheckoutAddLineItemsInput);
+
+const LineItemInput = {
+  "name": "LineItemInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "variantId": "ID",
+    "quantity": "Int",
+    "customAttributes": "AttributeInput"
+  }
+};
+Object.freeze(LineItemInput.inputFieldBaseTypes);
+var LineItemInput$1 = Object.freeze(LineItemInput);
+
+const AttributeInput = {
+  "name": "AttributeInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "key": "String",
+    "value": "String"
+  }
+};
+Object.freeze(AttributeInput.inputFieldBaseTypes);
+var AttributeInput$1 = Object.freeze(AttributeInput);
+
 const CheckoutAttributesUpdatePayload = {
   "name": "CheckoutAttributesUpdatePayload",
   "kind": "OBJECT",
@@ -996,17 +1046,6 @@ const CheckoutAttributesUpdateInput = {
 };
 Object.freeze(CheckoutAttributesUpdateInput.inputFieldBaseTypes);
 var CheckoutAttributesUpdateInput$1 = Object.freeze(CheckoutAttributesUpdateInput);
-
-const AttributeInput = {
-  "name": "AttributeInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "key": "String",
-    "value": "String"
-  }
-};
-Object.freeze(AttributeInput.inputFieldBaseTypes);
-var AttributeInput$1 = Object.freeze(AttributeInput);
 
 const CheckoutCompleteWithCreditCardPayload = {
   "name": "CheckoutCompleteWithCreditCardPayload",
@@ -1161,18 +1200,6 @@ const CheckoutCreateInput = {
 };
 Object.freeze(CheckoutCreateInput.inputFieldBaseTypes);
 var CheckoutCreateInput$1 = Object.freeze(CheckoutCreateInput);
-
-const LineItemInput = {
-  "name": "LineItemInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "variantId": "ID",
-    "quantity": "Int",
-    "customAttributes": "AttributeInput"
-  }
-};
-Object.freeze(LineItemInput.inputFieldBaseTypes);
-var LineItemInput$1 = Object.freeze(LineItemInput);
 
 const CheckoutShippingAddressUpdatePayload = {
   "name": "CheckoutShippingAddressUpdatePayload",
@@ -1410,9 +1437,12 @@ Types.types["CustomerResetPayload"] = CustomerResetPayload$1;
 Types.types["CustomerResetInput"] = CustomerResetInput$1;
 Types.types["CustomerUpdatePayload"] = CustomerUpdatePayload$1;
 Types.types["CustomerUpdateInput"] = CustomerUpdateInput$1;
+Types.types["CheckoutAddLineItemsPayload"] = CheckoutAddLineItemsPayload$1;
+Types.types["CheckoutAddLineItemsInput"] = CheckoutAddLineItemsInput$1;
+Types.types["LineItemInput"] = LineItemInput$1;
+Types.types["AttributeInput"] = AttributeInput$1;
 Types.types["CheckoutAttributesUpdatePayload"] = CheckoutAttributesUpdatePayload$1;
 Types.types["CheckoutAttributesUpdateInput"] = CheckoutAttributesUpdateInput$1;
-Types.types["AttributeInput"] = AttributeInput$1;
 Types.types["CheckoutCompleteWithCreditCardPayload"] = CheckoutCompleteWithCreditCardPayload$1;
 Types.types["Payment"] = Payment$1;
 Types.types["CreditCard"] = CreditCard$1;
@@ -1424,7 +1454,6 @@ Types.types["CheckoutCompleteWithTokenizedPaymentPayload"] = CheckoutCompleteWit
 Types.types["CheckoutCompleteWithTokenizedPaymentInput"] = CheckoutCompleteWithTokenizedPaymentInput$1;
 Types.types["CheckoutCreatePayload"] = CheckoutCreatePayload$1;
 Types.types["CheckoutCreateInput"] = CheckoutCreateInput$1;
-Types.types["LineItemInput"] = LineItemInput$1;
 Types.types["CheckoutShippingAddressUpdatePayload"] = CheckoutShippingAddressUpdatePayload$1;
 Types.types["CheckoutShippingAddressUpdateInput"] = CheckoutShippingAddressUpdateInput$1;
 Types.types["CheckoutShippingLineUpdatePayload"] = CheckoutShippingLineUpdatePayload$1;

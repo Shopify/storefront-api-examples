@@ -6,17 +6,9 @@ export default Service.extend({
   client: inject.service('graphql-js-client'),
   checkout: null,
 
-  // line items currently hard coded so I can do other things
   init() {
-    const input = {
-      lineItems: [
-        {variantId:'gid://shopify/ProductVariant/25602235976', quantity: 5},
-        {variantId: 'gid://shopify/ProductVariant/29106022792', quantity: 10}
-      ]
-    };
-
     const mutation = this.get('client').mutation((root) => {
-      root.add('checkoutCreate', {args: {input}}, (checkoutCreate) => {
+      root.add('checkoutCreate', {args: {input:{}}}, (checkoutCreate) => {
         checkoutCreate.add('userErrors', (userErrors) => {
           userErrors.add('message');
           userErrors.add('field');
@@ -33,27 +25,44 @@ export default Service.extend({
       });
     });
 
-    this.get('client').send(mutation).then((checkout) => {
-      this.set('checkout', checkout.model.checkoutCreate.checkout);
+    this.get('client').send(mutation).then((result) => {
+      this.set('checkout', result.model.checkoutCreate.checkout);
     });
   },
 
-  // dummy checkout url
-  checkoutUrl: 'https://google.com',
+  checkoutUrl: computed.alias('checkout.webUrl'),
 
   lineItems: computed.alias('checkout.lineItems'),
-/*
-  addVariants() {
-    const variants = [].slice.call(arguments);
-    const lineItems = this.get('lineItems');
 
-    variants.forEach(item => {
-      lineItems.push({ variant_id: item.variantId, quantity: item.quantity });
+  addVariants({variantId, quantity}) {
+    const input = {
+      checkoutId: this.get('checkout.id'),
+      lineItems: [{variantId, quantity}]
+    }
+
+    const mutation = this.get('client').mutation((root) => {
+      root.add('checkoutAddLineItems', {args: {input}}, (checkoutAddLineItems) => {
+        checkoutAddLineItems.add('userErrors', (userErrors) => {
+          userErrors.add('message');
+          userErrors.add('field');
+        });
+        checkoutAddLineItems.add('checkout', (checkout) => {
+          checkout.addConnection('lineItems', {args: {first: 250}}, (lineItems) => {
+            lineItems.add('title');
+            lineItems.add('variant', (variant) => {
+              variant.add('title');
+            });
+            lineItems.add('quantity');
+          });
+        });
+      });
     });
 
-    return this.update();
+    this.get('client').send(mutation).then((result) => {
+      this.set('checkout', result.model.checkoutAddLineItems.checkout);
+    });
   },
-
+/*
   updateLineItem(lineItemId, quantity) {
     const lineItem = this.get('lineItems').findBy('id', lineItemId);
 
@@ -84,16 +93,5 @@ export default Service.extend({
 
     return this.update();
   },
-
-  update() {
-    const checkout = this.get('checkout');
-    const client = this.get('client');
-
-    return client.update('checkouts', checkout).then(newCheckout => {
-      this.set('checkout.attrs', newCheckout.attrs);
-
-      return checkout;
-    });
-  }
 */
 });

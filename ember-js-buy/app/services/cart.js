@@ -6,29 +6,28 @@ export default Service.extend({
   client: inject.service('js-buy-sdk-client'),
   checkout: null,
 
-  // line items currently hard coded so I can do other things
   init() {
-    this.get('client').createCheckout({lineItems: [{variantId:'gid://shopify/ProductVariant/25602235976', quantity: 5}, {variantId: 'gid://shopify/ProductVariant/29106022792', quantity: 10}]}).then(checkout => {
+    this.get('client').createCheckout().then(checkout => {
       this.set('checkout', checkout);
     });
   },
 
-  // dummy checkout url
-  checkoutUrl: 'https://google.com',
+  checkoutUrl: computed.alias('checkout.webUrl'),
 
   lineItems: computed.alias('checkout.lineItems'),
-/*
-  addVariants() {
-    const variants = [].slice.call(arguments);
-    const lineItems = this.get('lineItems');
 
-    variants.forEach(item => {
-      lineItems.push({ variant_id: item.variantId, quantity: item.quantity });
+  addVariants({variantId, quantity}) {
+    const input = {
+      checkoutId: this.get('checkout.id'),
+      lineItems: [{variantId, quantity}]
+    }
+
+    return this.get('client').addLineItems(input).then(checkout => {
+      this.set('checkout', checkout);
     });
-
-    return this.update();
   },
 
+  /*
   updateLineItem(lineItemId, quantity) {
     const lineItem = this.get('lineItems').findBy('id', lineItemId);
 
@@ -59,16 +58,5 @@ export default Service.extend({
 
     return this.update();
   },
-
-  update() {
-    const checkout = this.get('checkout');
-    const client = this.get('client');
-
-    return client.update('checkouts', checkout).then(newCheckout => {
-      this.set('checkout.attrs', newCheckout.attrs);
-
-      return checkout;
-    });
-  }
 */
 });

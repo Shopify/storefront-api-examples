@@ -1,0 +1,25 @@
+<section class="products">
+  <header class="header">
+    <h1>Ember Example</h1>
+  </header>
+
+  <ul class="product-list">
+    {{#each model.products as |product|}}
+      {{buy-button product=product.node open="openCart"}}
+    {{/each}}
+  </ul>
+
+</section>
+
+
+
+<section class="cart {{if model.isCartOpen "cart--open"}}">
+  {{shopify-cart close="closeCart"}}
+</section>
+
+{{#unless model.isCartOpen}}
+  <section class="view-cart-wrapper">
+    <button class="view-cart" {{action "openCart"}}>Cart</button>
+  </section>
+{{/unless}}
+

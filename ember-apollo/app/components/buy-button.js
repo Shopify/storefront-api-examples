@@ -12,6 +12,8 @@ export default Component.extend({
 
   product: null,
 
+  quantity: 1,
+
   variants: computed('product', {
     get() {
       return this.get('product.variants.edges');
@@ -92,8 +94,9 @@ export default Component.extend({
 
     addVariantToCart() {
       const variantId = this.get('currentVariant.id');
+      const quantity = parseInt(this.get('quantity'));
 
-      this.get('cart').addVariants({ variantId, quantity: 1 });
+      this.get('cart').addVariants({ variantId, quantity });
     },
     open() {
       this.sendAction('open');

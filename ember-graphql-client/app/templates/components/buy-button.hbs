@@ -16,6 +16,8 @@
         </div>
       {{/unless}}
     {{/each}}
+    <label>Quantity</label>
+    {{input min="1" type="number" value=quantity}}
     <div class="buy-button-wrapper">
       {{#if currentVariant}}
         <button class="buy-button button" {{action "open"}} {{action "addVariantToCart"}}>

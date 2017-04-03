@@ -1,0 +1,27 @@
+<section class="main">
+  <button class="cart-close" {{action "close"}}>
+    ×
+  </button>
+  <h2>Cart</h2>
+  <ul class="cart-list">
+    {{#each lineItems as |item|}}
+      <li>
+        <div class="view">
+          <label>
+            {{item.node.title}}
+            {{#if item.node.variant.title}}
+            : {{item.node.variant.title}}
+            {{/if}}
+          </label>
+          <button class="destroy" {{action "removeItem" item}}></button>
+        </div>
+      </li>
+    {{/each}}
+  </ul>
+</section>
+
+<footer class="cart-footer">
+  <button class="button" disabled={{checkoutDisabled}} {{action "openCheckout"}}>
+    Checkout
+  </button>
+</footer>

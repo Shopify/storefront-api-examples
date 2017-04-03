@@ -17,6 +17,27 @@ You will need the following things properly installed on your computer.
 * `cd ember-apollo`
 * `npm install`
 
+## Configuring
+
+If you would like to connect your store to this example, open up `config/environment.js` and update the `apiURL`:
+```js
+var ENV = {
+  ...
+  apollo: {
+    apiURL: 'https://your-shop-name.myshopify/api/graphql'
+  },
+  ...
+}
+```
+Then, add your base64-encoded storefront access token to `app/services/apollo.js`:
+```js
+_runAuthorize(req, next) {
+  ...
+  req.options.headers.authorization = 'Basic your-base64-encoded-storefront-access-token';
+  ...
+}
+```
+
 ## Running
 
 * `ember s`

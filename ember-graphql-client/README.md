@@ -1,6 +1,6 @@
 # ember-graphql-client
 
-An example usage of the [graphql-js-client](https://github.com/Shopify/graphql-js-client) built with Ember.
+An example using [graphql-js-client](https://github.com/Shopify/graphql-js-client) built with Ember.
 
 ## Prerequisites
 
@@ -16,6 +16,20 @@ You will need the following things properly installed on your computer.
 * `git clone git@github.com:Shopify/storefront-api-examples.git` this repository
 * `cd ember-graphql-client`
 * `npm install`
+
+## Configuring
+
+If you would like to connect your store to this example, open up `app/initializers/graphql-js-client.js` and update the `url` and `Authorization` header:
+```js
+const client = new Client.default(typeBundle, {
+  url: 'https://your-shop-name.myshopify.com/api/graphql',
+  fetcherOptions: {
+    headers: {
+      Authorization: 'Basic your-base64-encoded-storefront-access-token'
+    }
+  }
+});
+```
 
 ## Running
 

@@ -1,6 +1,6 @@
 # ember-js-buy
 
-An example usage of the [js-buy-sdk](https://github.com/Shopify/js-buy-sdk) built with Ember.
+An example using [js-buy-sdk](https://github.com/Shopify/js-buy-sdk) built with Ember.
 
 ## Prerequisites
 
@@ -16,6 +16,16 @@ You will need the following things properly installed on your computer.
 * `git clone git@github.com:Shopify/storefront-api-examples.git` this repository
 * `cd ember-js-buy`
 * `npm install`
+
+## Configuring
+
+If you would like to connect your store to this example, open up `app/initializers/js-buy-sdk.js` and update the `domain` and `storefrontAccessToken`:
+```js
+const config = new Config({
+    storefrontAccessToken: 'your-storefront-access-token',
+    domain: 'your-shop-name.myshopify.com',
+  });
+```
 
 ## Running
 

@@ -1,8 +1,6 @@
 import ApolloService from 'ember-apollo-client/services/apollo';
 import Ember from 'ember';
 
-const { inject: { service } } = Ember;
-
 export default ApolloService.extend({
   init() {
     this._super(...arguments);

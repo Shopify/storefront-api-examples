@@ -1,0 +1,59 @@
+doctype html
+html(lang='en', data-framework='javascript')
+  head
+    meta(charset='utf-8')
+    title NodeJsBuy
+    link(rel='stylesheet', href='app.css')
+  body
+    .container
+      section.products
+        header.header
+          h1=`${shopName}: Node Example`
+        ul.product-list
+          each product in products
+            div
+              li.product
+                img(src=product.images[0].src)
+                .product-info
+                  h2=product.title
+                  form(method='post' action='/line_item' + product.id.substring(product.id.lastIndexOf('/')))
+                    each option in product.options
+                      label=option.name
+                      select(name=option.name)
+                        each value in option.values
+                          option(value=value.valueOf())
+                            =value
+                    .buy-button-wrapper
+                      button.buy-button.button(type='submit', onclick='openCart()')
+                        | Add to cart
+                    .product-pricing
+      section.view-cart-wrapper
+        button.view-cart(onclick='openCart()') Cart
+      section.cart#cart(class={'cart--open': isCartOpen})
+        section.main
+          button.cart-close(onclick='closeCart()') ×
+          h2 Cart
+          ul.cart-list
+            each item in cart.lineItems
+              li
+                .view
+                  label=`${item.quantity} - ${item.title}: ${item.variant.title}`
+                  form(method='post' action='/line_item' + item.variant.id.substring(item.variant.id.lastIndexOf('/')))
+                    input(type="hidden" name="method" value="delete")
+                    button.destroy(type='submit')
+        footer.cart-footer
+          form(target='_blank', action=cart.webUrl)
+            button.button(type='submit', disabled=!cart.lineItems.length) Checkout
+    script.
+      function isCartOpen() {
+        return document.getElementById('cart').className.match(/(?:^|\s)cart--open(?!\S)/);
+      }
+      function closeCart() {
+        document.getElementById('cart').className = document.getElementById('cart').className.replace(/(?:^|\s)cart--open(?!\S)/g, '');
+      }
+
+      function openCart() {
+        if (!isCartOpen()) {
+          document.getElementById('cart').className += ' cart--open';
+        }
+      }

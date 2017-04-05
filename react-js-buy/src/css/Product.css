@@ -1,0 +1,26 @@
+.Product {
+  flex: 0 1 31%;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3%;
+}
+
+.Product__title {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+  opacity: 0.7;
+}
+
+.Product__price {
+  display: block;
+  font-size: 1.1rem;
+  opacity: 0.5;
+  margin-bottom: 0.4rem;
+}
+
+.Product__option {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}

@@ -1,4 +1,6 @@
-import Client, {Config} from 'shopify-buy';
+import ShopifyBuy from 'npm:shopify-buy';
+
+const {default: Client, Config} = ShopifyBuy;
 
 export function initialize(application) {
   const config = new Config({

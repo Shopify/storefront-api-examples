@@ -1,1 +1,0 @@
-/Users/jessicajiang/js-buy-sdk/index.amd.js

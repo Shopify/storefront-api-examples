@@ -1,8 +1,10 @@
-import Client from 'npm:@shopify/graphql-js-client';
+import GraphQLJSClient from 'npm:@shopify/graphql-js-client';
 import typeBundle from '../types';
 
+const {default: Client} = GraphQLJSClient;
+
 export function initialize(application) {
-  const client = new Client.default(typeBundle, {
+  const client = new Client(typeBundle, {
     url: 'https://graphql.myshopify.com/api/graphql',
     fetcherOptions: {
       headers: {

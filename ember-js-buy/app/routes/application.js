@@ -6,7 +6,10 @@ export default Ember.Route.extend({
 
   model() {
     return RSVP.hash({
-      isCartOpen: true,
+      shopName: this.get('client').fetchShopInfo().then((result) => {
+        return result.name;
+      }),
+      isCartOpen: false,
       products: this.get('client').fetchAllProducts()
     });
   },

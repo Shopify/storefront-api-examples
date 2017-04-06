@@ -6,7 +6,14 @@ export default Ember.Route.extend({
 
   model() {
     const client = this.get('client');
-    const query = client.query((root) => {
+
+    const shopQuery = client.query((root) => {
+      root.add('shop', (shop) => {
+        shop.add('name');
+      });
+    });
+
+    const productsQuery = client.query((root) => {
       root.add('shop', (shop) => {
         shop.addConnection('products', {args: {first: 20}}, (products) => {
           products.add('id');
@@ -33,12 +40,17 @@ export default Ember.Route.extend({
       });
     });
 
-    const products = client.send(query).then((result) => {
+    const products = client.send(productsQuery).then((result) => {
       return result.model.shop.products;
     });
 
+    const shopName = client.send(shopQuery).then((result) => {
+      return result.model.shop.name;
+    });
+
     return RSVP.hash({
-      isCartOpen: true,
+      isCartOpen: false,
+      shopName,
       products
     });
   },

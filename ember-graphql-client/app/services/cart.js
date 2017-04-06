@@ -26,7 +26,7 @@ export default Service.extend({
       });
     });
 
-    this.get('client').send(mutation).then((result) => {
+    return this.get('client').send(mutation).then((result) => {
       this.set('checkout', result.model.checkoutCreate.checkout);
     });
   },

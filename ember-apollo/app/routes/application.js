@@ -8,6 +8,18 @@ export default Ember.Route.extend({
   apollo: Ember.inject.service(),
 
   model() {
+    const shopName = this.get('apollo').queryOnce({
+      query: gql`
+        query {
+          shop {
+            name
+          }
+        }
+      `
+    }).then((result) => {
+      return result.shop.name;
+    });
+
     const products = this.get('apollo').queryOnce({
       query: gql`
         query {
@@ -55,8 +67,9 @@ export default Ember.Route.extend({
     });
 
     return RSVP.hash({
-      isCartOpen: true,
-      products
+      isCartOpen: false,
+      products,
+      shopName
     });
   },
 

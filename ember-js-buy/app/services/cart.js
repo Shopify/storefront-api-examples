@@ -7,7 +7,7 @@ export default Service.extend({
   checkout: null,
 
   init() {
-    this.get('client').createCheckout().then(checkout => {
+    return this.get('client').createCheckout().then(checkout => {
       this.set('checkout', checkout);
     });
   },

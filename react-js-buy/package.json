@@ -8,7 +8,8 @@
     "shopify-buy": "^0.7.1"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "shopify-buy": "^1.0.0-alpha.1"
   },
   "scripts": {
     "start": "react-scripts start",

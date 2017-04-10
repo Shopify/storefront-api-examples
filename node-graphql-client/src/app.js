@@ -8,80 +8,52 @@ function gql() {
 }
 
 const app = express();
-let cartPromise = client.send(gql`
-  mutation {
-    checkoutCreate(input: {}) {
-      userErrors {
-        message
-        field
-      }
-      checkout {
-        webUrl
-        lineItems (first:250) {
+
+const shopNameAndProductsPromise = client.send(gql`
+    query {
+      shop {
+        name
+        products(first:20) {
           pageInfo {
             hasNextPage
             hasPreviousPage
           }
           edges {
             node {
+              id
               title
-              variant {
-                title
+              options {
+                name
+                values
               }
-              quantity
-            }
-          }
-        }
-      }
-    }
-  }
-`).then((result) => {
-  return result.model.checkoutCreate.checkout;
-});
-const shopNameAndProductsPromise = client.send(gql`
-  query {
-    shop {
-      name
-      products(first:20) {
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-        }
-        edges {
-          node {
-            id
-            title
-            options {
-              name
-              values
-            }
-            variants(first: 250) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-              }
-              edges {
-                node {
-                  title
-                  selectedOptions {
-                    name
-                    value
+              variants(first: 250) {
+                pageInfo {
+                  hasNextPage
+                  hasPreviousPage
+                }
+                edges {
+                  node {
+                    title
+                    selectedOptions {
+                      name
+                      value
+                    }
+                    image {
+                      src
+                    }
+                    price
                   }
-                  image {
+                }
+              }
+              images(first: 250) {
+                pageInfo {
+                  hasNextPage
+                  hasPreviousPage
+                }
+                edges {
+                  node {
                     src
                   }
-                  price
-                }
-              }
-            }
-            images(first: 250) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-              }
-              edges {
-                node {
-                  src
                 }
               }
             }
@@ -89,10 +61,9 @@ const shopNameAndProductsPromise = client.send(gql`
         }
       }
     }
-  }
-`).then((result) => {
-  return result.model.shop;
-});
+  `).then((result) => {
+    return result.model.shop;
+  });
 
 app.set('view engine', 'pug');
 
@@ -101,6 +72,71 @@ app.use(express.static(path.join(__dirname, '../../shared')));
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
+  const checkoutId = req.query.checkoutId;
+
+  // Create a checkout if it doesn't exist yet
+  if (!checkoutId) {
+    return client.send(gql`
+      mutation {
+        checkoutCreate(input: {}) {
+          userErrors {
+            message
+            field
+          }
+          checkout {
+            webUrl
+            lineItems (first:250) {
+              pageInfo {
+                hasNextPage
+                hasPreviousPage
+              }
+              edges {
+                node {
+                  title
+                  variant {
+                    title
+                  }
+                  quantity
+                }
+              }
+            }
+          }
+        }
+      }
+    `).then((result) => {
+      res.redirect(`/?checkoutId=${result.model.checkoutCreate.checkout.id}`);
+    });
+  }
+
+  // Fetch the checkout
+  const cartPromise = client.send(gql`
+    query ($checkoutId: ID!) {
+      node(id: $checkoutId) {
+        ... on Checkout {
+          webUrl
+          lineItems (first:250) {
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+            }
+            edges {
+              node {
+                title
+                variant {
+                  title
+                }
+                quantity
+              }
+            }
+          }
+        }
+      }
+    }
+  `, {checkoutId}).then((result) => {
+    return result.model.node;
+  });
+
+
   return Promise.all([shopNameAndProductsPromise, cartPromise]).then(([shop, cart]) => {
     res.render('index', {
       products: shop.products,
@@ -111,14 +147,16 @@ app.get('/', (req, res) => {
   });
 });
 
-app.post('/line_item/:id', (req, res) => {
+app.post('/line_item/:productId', (req, res) => {
   const options = req.body;
-  const productId = req.params.id;
+  const productId = req.params.productId;
+  const checkoutId = options.checkoutId;
   const quantity = parseInt(options.quantity, 10);
 
   delete options.quantity;
+  delete options.checkoutId;
 
-  return Promise.all([shopNameAndProductsPromise, cartPromise]).then(([shop, cart]) => {
+  return shopNameAndProductsPromise.then((shop) => {
     // Find the product that is selected
     const targetProduct = shop.products.find((product) => {
       return product.id.substring(product.id.lastIndexOf('/')) === `/${productId}`;
@@ -133,11 +171,11 @@ app.post('/line_item/:id', (req, res) => {
 
     // Add the variant to our cart
     const input = {
-      checkoutId: cart.id,
+      checkoutId,
       lineItems: [{variantId: selectedVariant.id, quantity}]
     };
 
-    cartPromise = client.send(gql`
+    return client.send(gql`
       mutation ($input: CheckoutAddLineItemsInput!) {
         checkoutAddLineItems(input: $input) {
           userErrors {
@@ -165,9 +203,7 @@ app.post('/line_item/:id', (req, res) => {
         }
       }
     `, {input}).then((result) => {
-      res.redirect('/?cart=true');
-
-      return result.model.checkoutAddLineItems.checkout;
+      res.redirect(`/?cart=true&checkoutId=${result.model.checkoutAddLineItems.checkout.id}`);
     });
   });
 });

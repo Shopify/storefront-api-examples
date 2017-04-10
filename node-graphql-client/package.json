@@ -26,7 +26,7 @@
   "scripts": {
     "prestart": "yarn build",
     "start": "node lib/app.js",
-    "test": "npm run lint-allow-warning && mocha --compilers js:babel-register -u tdd test/index.js",
+    "test": "yarn run lint-allow-warning && mocha --compilers js:babel-register -u tdd test/index.js",
     "build": "babel -d lib/ src/",
     "lint": "eslint --max-warnings 0 -c .eslintrc.json src/ test/",
     "lint-allow-warning": "eslint -c .eslintrc.json src/ test/"

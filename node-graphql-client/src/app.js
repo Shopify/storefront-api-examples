@@ -122,6 +122,9 @@ app.get('/', (req, res) => {
 app.post('/line_item/:id', (req, res) => {
   const options = req.body;
   const productId = req.params.id;
+  const quantity = parseInt(options.quantity, 10);
+
+  delete options.quantity;
 
   return Promise.all([productsPromise, cartPromise]).then(([products, cart]) => {
     // Find the product that is selected
@@ -139,7 +142,7 @@ app.post('/line_item/:id', (req, res) => {
     // Add the variant to our cart
     const input = {
       checkoutId: cart.id,
-      lineItems: [{variantId: selectedVariant.id, quantity: 1}]
+      lineItems: [{variantId: selectedVariant.id, quantity}]
     };
 
     cartPromise = client.send(gql`

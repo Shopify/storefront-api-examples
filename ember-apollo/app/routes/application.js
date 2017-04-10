@@ -8,22 +8,11 @@ export default Ember.Route.extend({
   apollo: Ember.inject.service(),
 
   model() {
-    const shopName = this.get('apollo').queryOnce({
+    return this.get('apollo').queryOnce({
       query: gql`
         query {
           shop {
             name
-          }
-        }
-      `
-    }).then((result) => {
-      return result.shop.name;
-    });
-
-    const products = this.get('apollo').queryOnce({
-      query: gql`
-        query {
-          shop {
             products (first: 20) {
               edges {
                 node {
@@ -63,13 +52,11 @@ export default Ember.Route.extend({
         }
       `
     }).then((result) => {
-      return result.shop.products.edges;
-    });
-
-    return RSVP.hash({
-      isCartOpen: false,
-      products,
-      shopName
+      return {
+        products: result.shop.products.edges,
+        shopName: result.shop.name,
+        isCartOpen: false
+      };
     });
   },
 

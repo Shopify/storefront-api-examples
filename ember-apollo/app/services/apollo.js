@@ -1,5 +1,4 @@
 import ApolloService from 'ember-apollo-client/services/apollo';
-import Ember from 'ember';
 
 export default ApolloService.extend({
   init() {

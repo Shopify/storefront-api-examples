@@ -20,6 +20,9 @@ export default Service.extend({
             checkout {
               id
               webUrl
+              totalTax
+              subtotalPrice
+              totalPrice
               lineItems (first: 250) {
                 edges {
                   node {

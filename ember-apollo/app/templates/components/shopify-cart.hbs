@@ -18,6 +18,30 @@
         </div>
       </li>
     {{/each}}
+    <li>
+      <div class="view">
+        <label>
+          <strong>Subtotal:</strong>
+          {{checkout.subtotalPrice}}
+        </label>
+      </div>
+    </li>
+    <li>
+      <div class="view">
+        <label>
+          <strong>Taxes:</strong>
+          {{checkout.totalTax}}
+        </label>
+      </div>
+    </li>
+    <li>
+      <div class="view">
+        <label>
+          <strong>Total:</strong>
+          {{checkout.totalPrice}}
+        </label>
+      </div>
+    </li>
   </ul>
 </section>
 

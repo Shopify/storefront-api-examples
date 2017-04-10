@@ -4,7 +4,7 @@ import path from 'path';
 import client from './js-buy-sdk';
 
 const app = express();
-let cartPromise = client.createCheckout();
+let cartPromise = client.createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}});
 const productsPromise = client.fetchAllProducts();
 const shopPromise = client.fetchShopInfo();
 

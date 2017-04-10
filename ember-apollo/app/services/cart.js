@@ -33,8 +33,8 @@ export default Service.extend({
   init() {
     return this.get('apollo').mutate({
       mutation: gql`
-        mutation {
-          checkoutCreate(input: {}) {
+        mutation ($input: CheckoutCreateInput!) {
+          checkoutCreate(input: $input) {
             userErrors {
               message
               field
@@ -45,7 +45,7 @@ export default Service.extend({
           }
         }
         ${CheckoutFragment}
-      `
+      `, variables: {input: {allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}}
     }).then((result) => {
       this.set('checkout', result.checkoutCreate.checkout);
     });

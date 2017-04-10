@@ -7,7 +7,7 @@ export default Service.extend({
   checkout: null,
 
   init() {
-    return this.get('client').createCheckout().then(checkout => {
+    return this.get('client').createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}).then(checkout => {
       this.set('checkout', checkout);
     });
   },

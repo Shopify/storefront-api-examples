@@ -8,13 +8,16 @@ export default Service.extend({
 
   init() {
     const mutation = this.get('client').mutation((root) => {
-      root.add('checkoutCreate', {args: {input:{}}}, (checkoutCreate) => {
+      root.add('checkoutCreate', {args: {input: {allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}}}, (checkoutCreate) => {
         checkoutCreate.add('userErrors', (userErrors) => {
           userErrors.add('message');
           userErrors.add('field');
         });
         checkoutCreate.add('checkout', (checkout) => {
           checkout.add('webUrl');
+          checkout.add('subtotalPrice');
+          checkout.add('totalTax');
+          checkout.add('totalPrice');
           checkout.addConnection('lineItems', {args: {first: 250}}, (lineItems) => {
             lineItems.add('title');
             lineItems.add('variant', (variant) => {
@@ -49,6 +52,9 @@ export default Service.extend({
         });
         checkoutAddLineItems.add('checkout', (checkout) => {
           checkout.add('webUrl');
+          checkout.add('subtotalPrice');
+          checkout.add('totalTax');
+          checkout.add('totalPrice');
           checkout.addConnection('lineItems', {args: {first: 250}}, (lineItems) => {
             lineItems.add('title');
             lineItems.add('variant', (variant) => {

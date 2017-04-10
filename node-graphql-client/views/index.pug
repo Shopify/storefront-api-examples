@@ -5,19 +5,6 @@ html(lang='en', data-framework='javascript')
     title NodeGraphqlClient
     link(rel='stylesheet', href='app.css')
   body
-    script.
-      function isCartOpen() {
-        return document.getElementById('cart').className.match(/(?:^|\s)cart--open(?!\S)/);
-      }
-      function closeCart() {
-        document.getElementById('cart').className = document.getElementById('cart').className.replace(/(?:^|\s)cart--open(?!\S)/g, '' )
-      }
-
-      function openCart() {
-        if (!isCartOpen()) {
-          document.getElementById('cart').className += ' cart--open';
-        }
-      }
     .container
       section.products
         header.header
@@ -39,14 +26,14 @@ html(lang='en', data-framework='javascript')
                     label Quantity
                     input(min='1', type='number', name='quantity', value='1')
                     .buy-button-wrapper
-                      button.buy-button.button(type='submit', onclick='openCart()')
+                      button.buy-button.button#add-to-cart-button(type='submit')
                         | Add to cart
                     .product-pricing
       section.view-cart-wrapper
-        button.view-cart(onclick='openCart()') Cart
+        button.view-cart#view-cart-button Cart
       section.cart#cart(class={'cart--open': isCartOpen})
         section.main
-          button.cart-close(onclick='closeCart()') ×
+          button.cart-close#close-cart-button ×
           h2 Cart
           ul.cart-list
             each item in cart.lineItems
@@ -57,5 +44,34 @@ html(lang='en', data-framework='javascript')
                     input(type="hidden" name="method" value="delete")
                     button.destroy(type='submit')
         footer.cart-footer
-          form(target='_blank', action=cart.webUrl)
-            button.button(type='submit', disabled=!cart.lineItems.length) Checkout
+            button.button#checkout-button(type='submit', disabled=!cart.lineItems.length) Checkout
+    script.
+      function isCartOpen() {
+        return document.getElementById('cart').className.match(/(?:^|\s)cart--open(?!\S)/);
+      }
+      function closeCart() {
+        document.getElementById('cart').className = document.getElementById('cart').className.replace(/(?:^|\s)cart--open(?!\S)/g, '' )
+      }
+
+      function openCart() {
+        if (!isCartOpen()) {
+          document.getElementById('cart').className += ' cart--open';
+        }
+      }
+
+      document.getElementById('checkout-button').onclick = function () {
+        window.open('#{cart.webUrl}');
+      };
+
+      document.getElementById('add-to-cart-button').onclick = function () {
+        openCart();
+      }
+
+      document.getElementById('view-cart-button').onclick = function () {
+        openCart();
+      }
+
+      document.getElementById('close-cart-button').onclick = function () {
+        closeCart();
+      }
+

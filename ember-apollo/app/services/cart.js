@@ -3,6 +3,28 @@ import gql from 'npm:graphql-tag';
 
 const { Service, RSVP, computed, inject } = Ember;
 
+const CheckoutFragment = gql`
+  fragment CheckoutFragment on Checkout {
+    id
+    webUrl
+    totalTax
+    subtotalPrice
+    totalPrice
+    lineItems (first: 250) {
+      edges {
+        node {
+          title
+          variant {
+            id
+            title
+          }
+          quantity
+        }
+      }
+    }
+  }
+`;
+
 export default Service.extend({
   apollo: inject.service(),
 
@@ -18,26 +40,11 @@ export default Service.extend({
               field
             }
             checkout {
-              id
-              webUrl
-              totalTax
-              subtotalPrice
-              totalPrice
-              lineItems (first: 250) {
-                edges {
-                  node {
-                    title
-                    variant {
-                      id
-                      title
-                    }
-                    quantity
-                  }
-                }
-              }
+              ...CheckoutFragment
             }
           }
         }
+        ${CheckoutFragment}
       `
     }).then((result) => {
       this.set('checkout', result.checkoutCreate.checkout);
@@ -63,23 +70,11 @@ export default Service.extend({
               field
             }
             checkout {
-              id
-              webUrl
-              lineItems (first: 250) {
-                edges {
-                  node {
-                    title
-                    variant {
-                      id
-                      title
-                    }
-                    quantity
-                  }
-                }
-              }
+              ...CheckoutFragment
             }
           }
         }
+        ${CheckoutFragment}
       `,
       variables: {input}
     }).then((result) => {

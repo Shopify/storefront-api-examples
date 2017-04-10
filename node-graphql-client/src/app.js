@@ -38,9 +38,10 @@ let cartPromise = client.send(gql`
 `).then((result) => {
   return result.model.checkoutCreate.checkout;
 });
-const productsPromise = client.send(gql`
+const shopNameAndProductsPromise = client.send(gql`
   query {
     shop {
+      name
       products(first:20) {
         pageInfo {
           hasNextPage
@@ -90,15 +91,6 @@ const productsPromise = client.send(gql`
     }
   }
 `).then((result) => {
-  return result.model.shop.products;
-});
-const shopPromise = client.send(gql`
-  {
-    shop {
-      name
-    }
-  }
-`).then((result) => {
   return result.model.shop;
 });
 
@@ -109,9 +101,9 @@ app.use(express.static(path.join(__dirname, '../../shared')));
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
-  return Promise.all([productsPromise, cartPromise, shopPromise]).then(([products, cart, shop]) => {
+  return Promise.all([shopNameAndProductsPromise, cartPromise]).then(([shop, cart]) => {
     res.render('index', {
-      products,
+      products: shop.products,
       cart,
       shopName: shop.name,
       isCartOpen: req.query.cart
@@ -126,9 +118,9 @@ app.post('/line_item/:id', (req, res) => {
 
   delete options.quantity;
 
-  return Promise.all([productsPromise, cartPromise]).then(([products, cart]) => {
+  return Promise.all([shopNameAndProductsPromise, cartPromise]).then(([shop, cart]) => {
     // Find the product that is selected
-    const targetProduct = products.find((product) => {
+    const targetProduct = shop.products.find((product) => {
       return product.id.substring(product.id.lastIndexOf('/')) === `/${productId}`;
     });
 

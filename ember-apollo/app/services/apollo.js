@@ -12,7 +12,7 @@ export default ApolloService.extend({
     if (!req.options.headers) {
       req.options.headers = {}; // Create the headers object if needed.
     }
-    req.options.headers.authorization = 'Basic NjYzMzY1Y2ZhZTJjODRmMGY2OGNhMTAwNjMyOWE2OTQK';
+    req.options.headers.authorization = 'Basic ZGQ0ZDRkYzE0NjU0MmJhNzc2MzMwNWQ3MWQxYjNkMzg=';
     next();
   }
 });

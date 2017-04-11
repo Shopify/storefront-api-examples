@@ -8,7 +8,7 @@ export function initialize(application) {
     url: 'https://graphql.myshopify.com/api/graphql',
     fetcherOptions: {
       headers: {
-        Authorization: 'Basic NjYzMzY1Y2ZhZTJjODRmMGY2OGNhMTAwNjMyOWE2OTQK'
+        Authorization: 'Basic ZGQ0ZDRkYzE0NjU0MmJhNzc2MzMwNWQ3MWQxYjNkMzg='
       }
     }
   });

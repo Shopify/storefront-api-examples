@@ -1,4 +1,3 @@
-import Ember from 'ember';
 
 const { Service, RSVP, computed, inject } = Ember;
 

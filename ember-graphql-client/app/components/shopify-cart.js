@@ -9,7 +9,7 @@ export default Component.extend({
 
   checkoutDisabled: computed('cart.lineItems.[]', {
     get() {
-      return this.get('lineItems.length') < 1;
+      return this.get('cart.lineItems.length') < 1;
     }
   }),
 
@@ -18,7 +18,7 @@ export default Component.extend({
       this.get('cart').removeLineItem(get(item, 'id'));
     },
     openCheckout() {
-      window.open(this.get('checkoutUrl'));
+      window.open(this.get('cart.webUrl'));
     },
     close() {
       this.sendAction('close');

@@ -1,4 +1,4 @@
-import GraphQLJSClient from 'npm:@shopify/graphql-js-client';
+import GraphQLJSClient from 'npm:graphql-js-client';
 import typeBundle from '../types';
 
 const {default: Client} = GraphQLJSClient;

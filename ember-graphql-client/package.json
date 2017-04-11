@@ -18,7 +18,7 @@
     "schema:transform-to-types": "graphql-js-schema --schema-file schema.json --outdir ./app --schema-bundle-name 'Types' --bundle-only"
   },
   "devDependencies": {
-    "@shopify/graphql-js-client": "^0.4.0",
+    "graphql-js-client": "^0.5.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^2.4.1",
     "ember-browserify": "^1.1.13",
@@ -40,13 +40,13 @@
     "ember-resolver": "^2.0.3",
     "ember-source": "~2.12.0",
     "ember-welcome-page": "^2.0.2",
-    "loader.js": "^4.2.3"
+    "loader.js": "^4.2.3",
+    "rimraf": "^2.6.1"
   },
   "engines": {
     "node": ">= 4"
   },
   "private": true,
   "dependencies": {
-    "rimraf": "^2.6.1"
   }
 }

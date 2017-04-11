@@ -9,8 +9,8 @@ export default Ember.Route.extend({
       shopName: this.get('client').fetchShopInfo().then((result) => {
         return result.name;
       }),
-      isCartOpen: false,
-      products: this.get('client').fetchAllProducts()
+      products: this.get('client').fetchAllProducts(),
+      isCartOpen: RSVP.resolve(false)
     });
   },
 

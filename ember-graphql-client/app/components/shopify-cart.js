@@ -3,17 +3,9 @@ import Ember from 'ember';
 const { Component, inject, computed, get } = Ember;
 
 export default Component.extend({
-  cart: inject.service(),
+  cartService: inject.service('cart'),
 
-  lineItems: computed.alias('cart.lineItems'),
-
-  checkoutUrl: computed.alias('cart.checkoutUrl'),
-
-  subtotalPrice: computed.alias('cart.checkout.subtotalPrice'),
-
-  totalTax: computed.alias('cart.checkout.totalTax'),
-
-  totalPrice: computed.alias('cart.checkout.totalPrice'),
+  cart: computed.alias('cartService.checkout'),
 
   checkoutDisabled: computed('cart.lineItems.[]', {
     get() {

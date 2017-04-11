@@ -34,10 +34,6 @@ export default Service.extend({
     });
   },
 
-  checkoutUrl: computed.alias('checkout.webUrl'),
-
-  lineItems: computed.alias('checkout.lineItems'),
-
   addVariants({variantId, quantity}) {
     const input = {
       checkoutId: this.get('checkout.id'),
@@ -45,12 +41,12 @@ export default Service.extend({
     }
 
     const mutation = this.get('client').mutation((root) => {
-      root.add('checkoutAddLineItems', {args: {input}}, (checkoutAddLineItems) => {
-        checkoutAddLineItems.add('userErrors', (userErrors) => {
+      root.add('checkoutLineItemsAdd', {args: {input}}, (checkoutLineItemsAdd) => {
+        checkoutLineItemsAdd.add('userErrors', (userErrors) => {
           userErrors.add('message');
           userErrors.add('field');
         });
-        checkoutAddLineItems.add('checkout', (checkout) => {
+        checkoutLineItemsAdd.add('checkout', (checkout) => {
           checkout.add('webUrl');
           checkout.add('subtotalPrice');
           checkout.add('totalTax');
@@ -67,7 +63,7 @@ export default Service.extend({
     });
 
     this.get('client').send(mutation).then((result) => {
-      this.set('checkout', result.model.checkoutAddLineItems.checkout);
+      this.set('checkout', result.model.checkoutLineItemsAdd.checkout);
     });
   },
 /*

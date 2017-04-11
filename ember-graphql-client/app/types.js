@@ -2,12 +2,16 @@ const Checkout = {
   "name": "Checkout",
   "kind": "OBJECT",
   "fieldBaseTypes": {
+    "appliedGiftCards": "AppliedGiftCard",
+    "availableShippingRates": "AvailableShippingRates",
     "completedAt": "DateTime",
     "createdAt": "DateTime",
     "currencyCode": "CurrencyCode",
     "customAttributes": "Attribute",
+    "customer": "Customer",
+    "email": "String",
     "id": "ID",
-    "lineItems": "LineItemConnection",
+    "lineItems": "CheckoutLineItemConnection",
     "note": "String",
     "order": "Order",
     "orderStatusUrl": "URL",
@@ -41,17 +45,17 @@ const Boolean = {
 };
 var Boolean$1 = Object.freeze(Boolean);
 
-const LineItemConnection = {
-  "name": "LineItemConnection",
+const CheckoutLineItemConnection = {
+  "name": "CheckoutLineItemConnection",
   "kind": "OBJECT",
   "fieldBaseTypes": {
-    "edges": "LineItemEdge",
+    "edges": "CheckoutLineItemEdge",
     "pageInfo": "PageInfo"
   },
   "implementsNode": false
 };
-Object.freeze(LineItemConnection.fieldBaseTypes);
-var LineItemConnection$1 = Object.freeze(LineItemConnection);
+Object.freeze(CheckoutLineItemConnection.fieldBaseTypes);
+var CheckoutLineItemConnection$1 = Object.freeze(CheckoutLineItemConnection);
 
 const PageInfo = {
   "name": "PageInfo",
@@ -65,17 +69,17 @@ const PageInfo = {
 Object.freeze(PageInfo.fieldBaseTypes);
 var PageInfo$1 = Object.freeze(PageInfo);
 
-const LineItemEdge = {
-  "name": "LineItemEdge",
+const CheckoutLineItemEdge = {
+  "name": "CheckoutLineItemEdge",
   "kind": "OBJECT",
   "fieldBaseTypes": {
     "cursor": "String",
-    "node": "LineItem"
+    "node": "CheckoutLineItem"
   },
   "implementsNode": false
 };
-Object.freeze(LineItemEdge.fieldBaseTypes);
-var LineItemEdge$1 = Object.freeze(LineItemEdge);
+Object.freeze(CheckoutLineItemEdge.fieldBaseTypes);
+var CheckoutLineItemEdge$1 = Object.freeze(CheckoutLineItemEdge);
 
 const String = {
   "name": "String",
@@ -83,19 +87,20 @@ const String = {
 };
 var String$1 = Object.freeze(String);
 
-const LineItem = {
-  "name": "LineItem",
+const CheckoutLineItem = {
+  "name": "CheckoutLineItem",
   "kind": "OBJECT",
   "fieldBaseTypes": {
     "customAttributes": "Attribute",
+    "id": "ID",
     "quantity": "Int",
     "title": "String",
     "variant": "ProductVariant"
   },
-  "implementsNode": false
+  "implementsNode": true
 };
-Object.freeze(LineItem.fieldBaseTypes);
-var LineItem$1 = Object.freeze(LineItem);
+Object.freeze(CheckoutLineItem.fieldBaseTypes);
+var CheckoutLineItem$1 = Object.freeze(CheckoutLineItem);
 
 const ProductVariant = {
   "name": "ProductVariant",
@@ -183,7 +188,8 @@ const Product = {
   "fieldBaseTypes": {
     "collections": "CollectionConnection",
     "createdAt": "DateTime",
-    "descriptionHtml": "String",
+    "description": "String",
+    "descriptionHtml": "HTML",
     "descriptionPlainSummary": "String",
     "handle": "String",
     "id": "ID",
@@ -230,7 +236,8 @@ const Collection = {
   "name": "Collection",
   "kind": "OBJECT",
   "fieldBaseTypes": {
-    "descriptionHtml": "String",
+    "description": "String",
+    "descriptionHtml": "HTML",
     "descriptionPlainSummary": "String",
     "handle": "String",
     "id": "ID",
@@ -243,6 +250,12 @@ const Collection = {
 };
 Object.freeze(Collection.fieldBaseTypes);
 var Collection$1 = Object.freeze(Collection);
+
+const HTML = {
+  "name": "HTML",
+  "kind": "SCALAR"
+};
+var HTML$1 = Object.freeze(HTML);
 
 const DateTime = {
   "name": "DateTime",
@@ -280,7 +293,7 @@ const Node = {
   "fieldBaseTypes": {
     "id": "ID"
   },
-  "possibleTypes": ["Checkout", "Collection", "MailingAddress", "Order", "Payment", "Product", "ProductOption", "ProductVariant", "ShopPolicy"]
+  "possibleTypes": ["AppliedGiftCard", "Checkout", "CheckoutLineItem", "Collection", "MailingAddress", "Order", "Payment", "Product", "ProductOption", "ProductVariant", "ShopPolicy"]
 };
 Object.freeze(Node.fieldBaseTypes);
 Object.freeze(Node.possibleTypes);
@@ -399,70 +412,17 @@ const ShippingRate = {
 Object.freeze(ShippingRate.fieldBaseTypes);
 var ShippingRate$1 = Object.freeze(ShippingRate);
 
-const Order = {
-  "name": "Order",
+const AvailableShippingRates = {
+  "name": "AvailableShippingRates",
   "kind": "OBJECT",
   "fieldBaseTypes": {
-    "cancelReason": "OrderCancelReason",
-    "cancelledAt": "DateTime",
-    "createdAt": "DateTime",
-    "currencyCode": "CurrencyCode",
-    "customerUrl": "URL",
-    "displayFinancialStatus": "OrderDisplayFinancialStatus",
-    "displayFulfillmentStatus": "OrderDisplayFulfillmentStatus",
-    "id": "ID",
-    "lineItems": "LineItemConnection",
-    "orderNumber": "Int",
-    "processedAt": "DateTime",
-    "shippingAddress": "MailingAddress",
-    "subtotalPrice": "Money",
-    "totalPrice": "Money",
-    "totalRefunded": "Money",
-    "totalShippingPrice": "Money",
-    "totalTax": "Money",
-    "updatedAt": "DateTime"
-  },
-  "implementsNode": true
-};
-Object.freeze(Order.fieldBaseTypes);
-var Order$1 = Object.freeze(Order);
-
-const OrderCancelReason = {
-  "name": "OrderCancelReason",
-  "kind": "ENUM"
-};
-var OrderCancelReason$1 = Object.freeze(OrderCancelReason);
-
-const CurrencyCode = {
-  "name": "CurrencyCode",
-  "kind": "ENUM"
-};
-var CurrencyCode$1 = Object.freeze(CurrencyCode);
-
-const OrderDisplayFulfillmentStatus = {
-  "name": "OrderDisplayFulfillmentStatus",
-  "kind": "ENUM"
-};
-var OrderDisplayFulfillmentStatus$1 = Object.freeze(OrderDisplayFulfillmentStatus);
-
-const OrderDisplayFinancialStatus = {
-  "name": "OrderDisplayFinancialStatus",
-  "kind": "ENUM"
-};
-var OrderDisplayFinancialStatus$1 = Object.freeze(OrderDisplayFinancialStatus);
-
-const QueryRoot = {
-  "name": "QueryRoot",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customer": "Customer",
-    "node": "Node",
-    "shop": "Shop"
+    "ready": "Boolean",
+    "shippingRates": "ShippingRate"
   },
   "implementsNode": false
 };
-Object.freeze(QueryRoot.fieldBaseTypes);
-var QueryRoot$1 = Object.freeze(QueryRoot);
+Object.freeze(AvailableShippingRates.fieldBaseTypes);
+var AvailableShippingRates$1 = Object.freeze(AvailableShippingRates);
 
 const Customer = {
   "name": "Customer",
@@ -478,6 +438,7 @@ const Customer = {
     "id": "ID",
     "lastName": "String",
     "orders": "OrderConnection",
+    "phone": "String",
     "updatedAt": "DateTime"
   },
   "implementsNode": false
@@ -533,17 +494,133 @@ const OrderEdge = {
 Object.freeze(OrderEdge.fieldBaseTypes);
 var OrderEdge$1 = Object.freeze(OrderEdge);
 
+const Order = {
+  "name": "Order",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cancelReason": "OrderCancelReason",
+    "cancelledAt": "DateTime",
+    "createdAt": "DateTime",
+    "currencyCode": "CurrencyCode",
+    "customerUrl": "URL",
+    "displayFinancialStatus": "OrderDisplayFinancialStatus",
+    "displayFulfillmentStatus": "OrderDisplayFulfillmentStatus",
+    "id": "ID",
+    "lineItems": "OrderLineItemConnection",
+    "orderNumber": "Int",
+    "processedAt": "DateTime",
+    "shippingAddress": "MailingAddress",
+    "subtotalPrice": "Money",
+    "totalPrice": "Money",
+    "totalRefunded": "Money",
+    "totalShippingPrice": "Money",
+    "totalTax": "Money",
+    "updatedAt": "DateTime"
+  },
+  "implementsNode": true
+};
+Object.freeze(Order.fieldBaseTypes);
+var Order$1 = Object.freeze(Order);
+
+const OrderCancelReason = {
+  "name": "OrderCancelReason",
+  "kind": "ENUM"
+};
+var OrderCancelReason$1 = Object.freeze(OrderCancelReason);
+
+const CurrencyCode = {
+  "name": "CurrencyCode",
+  "kind": "ENUM"
+};
+var CurrencyCode$1 = Object.freeze(CurrencyCode);
+
+const OrderDisplayFulfillmentStatus = {
+  "name": "OrderDisplayFulfillmentStatus",
+  "kind": "ENUM"
+};
+var OrderDisplayFulfillmentStatus$1 = Object.freeze(OrderDisplayFulfillmentStatus);
+
+const OrderDisplayFinancialStatus = {
+  "name": "OrderDisplayFinancialStatus",
+  "kind": "ENUM"
+};
+var OrderDisplayFinancialStatus$1 = Object.freeze(OrderDisplayFinancialStatus);
+
+const OrderLineItemConnection = {
+  "name": "OrderLineItemConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "OrderLineItemEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+Object.freeze(OrderLineItemConnection.fieldBaseTypes);
+var OrderLineItemConnection$1 = Object.freeze(OrderLineItemConnection);
+
+const OrderLineItemEdge = {
+  "name": "OrderLineItemEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "OrderLineItem"
+  },
+  "implementsNode": false
+};
+Object.freeze(OrderLineItemEdge.fieldBaseTypes);
+var OrderLineItemEdge$1 = Object.freeze(OrderLineItemEdge);
+
+const OrderLineItem = {
+  "name": "OrderLineItem",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customAttributes": "Attribute",
+    "quantity": "Int",
+    "title": "String",
+    "variant": "ProductVariant"
+  },
+  "implementsNode": false
+};
+Object.freeze(OrderLineItem.fieldBaseTypes);
+var OrderLineItem$1 = Object.freeze(OrderLineItem);
+
 const OrderSortKeys = {
   "name": "OrderSortKeys",
   "kind": "ENUM"
 };
 var OrderSortKeys$1 = Object.freeze(OrderSortKeys);
 
+const AppliedGiftCard = {
+  "name": "AppliedGiftCard",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "amountUsed": "Money",
+    "balance": "Money",
+    "id": "ID",
+    "lastCharacters": "String"
+  },
+  "implementsNode": true
+};
+Object.freeze(AppliedGiftCard.fieldBaseTypes);
+var AppliedGiftCard$1 = Object.freeze(AppliedGiftCard);
+
+const QueryRoot = {
+  "name": "QueryRoot",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customer": "Customer",
+    "node": "Node",
+    "shop": "Shop"
+  },
+  "implementsNode": false
+};
+Object.freeze(QueryRoot.fieldBaseTypes);
+var QueryRoot$1 = Object.freeze(QueryRoot);
+
 const Shop = {
   "name": "Shop",
   "kind": "OBJECT",
   "fieldBaseTypes": {
-    "billingAddress": "MailingAddress",
     "collections": "CollectionConnection",
     "currencyCode": "CurrencyCode",
     "description": "String",
@@ -603,11 +680,17 @@ const Mutation = {
   "name": "Mutation",
   "kind": "OBJECT",
   "fieldBaseTypes": {
-    "checkoutAddLineItems": "CheckoutAddLineItemsPayload",
     "checkoutAttributesUpdate": "CheckoutAttributesUpdatePayload",
+    "checkoutCompleteFree": "CheckoutCompleteFreePayload",
     "checkoutCompleteWithCreditCard": "CheckoutCompleteWithCreditCardPayload",
     "checkoutCompleteWithTokenizedPayment": "CheckoutCompleteWithTokenizedPaymentPayload",
     "checkoutCreate": "CheckoutCreatePayload",
+    "checkoutCustomerAssociate": "CheckoutCustomerAssociatePayload",
+    "checkoutCustomerDisassociate": "CheckoutCustomerDisassociatePayload",
+    "checkoutEmailUpdate": "CheckoutEmailUpdatePayload",
+    "checkoutGiftCardApply": "CheckoutGiftCardApplyPayload",
+    "checkoutLineItemsAdd": "CheckoutLineItemsAddPayload",
+    "checkoutLineItemsRemove": "CheckoutLineItemsRemovePayload",
     "checkoutShippingAddressUpdate": "CheckoutShippingAddressUpdatePayload",
     "checkoutShippingLineUpdate": "CheckoutShippingLineUpdatePayload",
     "customerAccessTokenCreate": "CustomerAccessTokenCreatePayload",
@@ -624,11 +707,17 @@ const Mutation = {
   },
   "implementsNode": false,
   "relayInputObjectBaseTypes": {
-    "checkoutAddLineItems": "CheckoutAddLineItemsInput",
     "checkoutAttributesUpdate": "CheckoutAttributesUpdateInput",
+    "checkoutCompleteFree": "CheckoutCompleteFree",
     "checkoutCompleteWithCreditCard": "CheckoutCompleteWithCreditCardInput",
     "checkoutCompleteWithTokenizedPayment": "CheckoutCompleteWithTokenizedPaymentInput",
     "checkoutCreate": "CheckoutCreateInput",
+    "checkoutCustomerAssociate": "CheckoutCustomerAssociateInput",
+    "checkoutCustomerDisassociate": "CheckoutCustomerDisassociateInput",
+    "checkoutEmailUpdate": "CheckoutEmailUpdateInput",
+    "checkoutGiftCardApply": "CheckoutGiftCardApplyInput",
+    "checkoutLineItemsAdd": "CheckoutLineItemsAddInput",
+    "checkoutLineItemsRemove": "CheckoutLineItemsRemoveInput",
     "checkoutShippingAddressUpdate": "CheckoutShippingAddressUpdateInput",
     "checkoutShippingLineUpdate": "CheckoutShippingLineUpdateInput",
     "customerAccessTokenCreate": "CustomerAccessTokenCreateInput",
@@ -640,386 +729,12 @@ const Mutation = {
     "customerAddressUpdate": "CustomerAddressUpdateInput",
     "customerCreate": "CustomerCreateInput",
     "customerRecover": "CustomerRecoverInput",
-    "customerReset": "CustomerResetInput",
-    "customerUpdate": "CustomerUpdateInput"
+    "customerReset": "CustomerResetInput"
   }
 };
 Object.freeze(Mutation.fieldBaseTypes);
 Object.freeze(Mutation.relayInputObjectBaseTypes);
 var Mutation$1 = Object.freeze(Mutation);
-
-const CustomerAccessTokenCreatePayload = {
-  "name": "CustomerAccessTokenCreatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "customerAccessToken": "CustomerAccessToken",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAccessTokenCreatePayload.fieldBaseTypes);
-var CustomerAccessTokenCreatePayload$1 = Object.freeze(CustomerAccessTokenCreatePayload);
-
-const UserError = {
-  "name": "UserError",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "field": "String",
-    "message": "String"
-  },
-  "implementsNode": false
-};
-Object.freeze(UserError.fieldBaseTypes);
-var UserError$1 = Object.freeze(UserError);
-
-const CustomerAccessToken = {
-  "name": "CustomerAccessToken",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "accessToken": "String",
-    "expiresAt": "DateTime"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAccessToken.fieldBaseTypes);
-var CustomerAccessToken$1 = Object.freeze(CustomerAccessToken);
-
-const CustomerAccessTokenCreateInput = {
-  "name": "CustomerAccessTokenCreateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "email": "String",
-    "password": "String"
-  }
-};
-Object.freeze(CustomerAccessTokenCreateInput.inputFieldBaseTypes);
-var CustomerAccessTokenCreateInput$1 = Object.freeze(CustomerAccessTokenCreateInput);
-
-const CustomerAccessTokenRenewPayload = {
-  "name": "CustomerAccessTokenRenewPayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "customerAccessToken": "CustomerAccessToken",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAccessTokenRenewPayload.fieldBaseTypes);
-var CustomerAccessTokenRenewPayload$1 = Object.freeze(CustomerAccessTokenRenewPayload);
-
-const CustomerAccessTokenRenewInput = {
-  "name": "CustomerAccessTokenRenewInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "accessToken": "String"
-  }
-};
-Object.freeze(CustomerAccessTokenRenewInput.inputFieldBaseTypes);
-var CustomerAccessTokenRenewInput$1 = Object.freeze(CustomerAccessTokenRenewInput);
-
-const CustomerAccessTokenDeletePayload = {
-  "name": "CustomerAccessTokenDeletePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "deletedAccessToken": "String",
-    "deletedCustomerAccessTokenId": "String",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAccessTokenDeletePayload.fieldBaseTypes);
-var CustomerAccessTokenDeletePayload$1 = Object.freeze(CustomerAccessTokenDeletePayload);
-
-const CustomerAccessTokenDeleteInput = {
-  "name": "CustomerAccessTokenDeleteInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "accessToken": "String"
-  }
-};
-Object.freeze(CustomerAccessTokenDeleteInput.inputFieldBaseTypes);
-var CustomerAccessTokenDeleteInput$1 = Object.freeze(CustomerAccessTokenDeleteInput);
-
-const CustomerActivatePayload = {
-  "name": "CustomerActivatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "customer": "Customer",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerActivatePayload.fieldBaseTypes);
-var CustomerActivatePayload$1 = Object.freeze(CustomerActivatePayload);
-
-const CustomerActivateInput = {
-  "name": "CustomerActivateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "id": "ID",
-    "resetToken": "String",
-    "password": "String"
-  }
-};
-Object.freeze(CustomerActivateInput.inputFieldBaseTypes);
-var CustomerActivateInput$1 = Object.freeze(CustomerActivateInput);
-
-const CustomerCreatePayload = {
-  "name": "CustomerCreatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "customer": "Customer",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerCreatePayload.fieldBaseTypes);
-var CustomerCreatePayload$1 = Object.freeze(CustomerCreatePayload);
-
-const CustomerCreateInput = {
-  "name": "CustomerCreateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "firstName": "String",
-    "lastName": "String",
-    "email": "String",
-    "password": "String",
-    "acceptsMarketing": "Boolean"
-  }
-};
-Object.freeze(CustomerCreateInput.inputFieldBaseTypes);
-var CustomerCreateInput$1 = Object.freeze(CustomerCreateInput);
-
-const CustomerAddressCreatePayload = {
-  "name": "CustomerAddressCreatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "customerAddress": "MailingAddress",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAddressCreatePayload.fieldBaseTypes);
-var CustomerAddressCreatePayload$1 = Object.freeze(CustomerAddressCreatePayload);
-
-const CustomerAddressCreateInput = {
-  "name": "CustomerAddressCreateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "accessToken": "String",
-    "address": "MailingAddressInput"
-  }
-};
-Object.freeze(CustomerAddressCreateInput.inputFieldBaseTypes);
-var CustomerAddressCreateInput$1 = Object.freeze(CustomerAddressCreateInput);
-
-const MailingAddressInput = {
-  "name": "MailingAddressInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "address1": "String",
-    "address2": "String",
-    "city": "String",
-    "company": "String",
-    "country": "String",
-    "firstName": "String",
-    "lastName": "String",
-    "phone": "String",
-    "province": "String",
-    "zip": "String"
-  }
-};
-Object.freeze(MailingAddressInput.inputFieldBaseTypes);
-var MailingAddressInput$1 = Object.freeze(MailingAddressInput);
-
-const CustomerAddressDeletePayload = {
-  "name": "CustomerAddressDeletePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "deletedCustomerAddressId": "String",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAddressDeletePayload.fieldBaseTypes);
-var CustomerAddressDeletePayload$1 = Object.freeze(CustomerAddressDeletePayload);
-
-const CustomerAddressDeleteInput = {
-  "name": "CustomerAddressDeleteInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "id": "ID",
-    "accessToken": "String"
-  }
-};
-Object.freeze(CustomerAddressDeleteInput.inputFieldBaseTypes);
-var CustomerAddressDeleteInput$1 = Object.freeze(CustomerAddressDeleteInput);
-
-const CustomerAddressUpdatePayload = {
-  "name": "CustomerAddressUpdatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "customerAddress": "MailingAddress",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAddressUpdatePayload.fieldBaseTypes);
-var CustomerAddressUpdatePayload$1 = Object.freeze(CustomerAddressUpdatePayload);
-
-const CustomerAddressUpdateInput = {
-  "name": "CustomerAddressUpdateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "accessToken": "String",
-    "id": "ID",
-    "address": "MailingAddressInput"
-  }
-};
-Object.freeze(CustomerAddressUpdateInput.inputFieldBaseTypes);
-var CustomerAddressUpdateInput$1 = Object.freeze(CustomerAddressUpdateInput);
-
-const CustomerRecoverPayload = {
-  "name": "CustomerRecoverPayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerRecoverPayload.fieldBaseTypes);
-var CustomerRecoverPayload$1 = Object.freeze(CustomerRecoverPayload);
-
-const CustomerRecoverInput = {
-  "name": "CustomerRecoverInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "email": "String"
-  }
-};
-Object.freeze(CustomerRecoverInput.inputFieldBaseTypes);
-var CustomerRecoverInput$1 = Object.freeze(CustomerRecoverInput);
-
-const CustomerResetPayload = {
-  "name": "CustomerResetPayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "customer": "Customer",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerResetPayload.fieldBaseTypes);
-var CustomerResetPayload$1 = Object.freeze(CustomerResetPayload);
-
-const CustomerResetInput = {
-  "name": "CustomerResetInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "id": "ID",
-    "resetToken": "String",
-    "password": "String"
-  }
-};
-Object.freeze(CustomerResetInput.inputFieldBaseTypes);
-var CustomerResetInput$1 = Object.freeze(CustomerResetInput);
-
-const CustomerUpdatePayload = {
-  "name": "CustomerUpdatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "clientMutationId": "String",
-    "customer": "Customer",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerUpdatePayload.fieldBaseTypes);
-var CustomerUpdatePayload$1 = Object.freeze(CustomerUpdatePayload);
-
-const CustomerUpdateInput = {
-  "name": "CustomerUpdateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "accessToken": "String",
-    "firstName": "String",
-    "lastName": "String",
-    "email": "String",
-    "password": "String",
-    "acceptsMarketing": "Boolean"
-  }
-};
-Object.freeze(CustomerUpdateInput.inputFieldBaseTypes);
-var CustomerUpdateInput$1 = Object.freeze(CustomerUpdateInput);
-
-const CheckoutAddLineItemsPayload = {
-  "name": "CheckoutAddLineItemsPayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "clientMutationId": "String",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutAddLineItemsPayload.fieldBaseTypes);
-var CheckoutAddLineItemsPayload$1 = Object.freeze(CheckoutAddLineItemsPayload);
-
-const CheckoutAddLineItemsInput = {
-  "name": "CheckoutAddLineItemsInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "clientMutationId": "String",
-    "lineItems": "LineItemInput",
-    "checkoutId": "ID"
-  }
-};
-Object.freeze(CheckoutAddLineItemsInput.inputFieldBaseTypes);
-var CheckoutAddLineItemsInput$1 = Object.freeze(CheckoutAddLineItemsInput);
-
-const LineItemInput = {
-  "name": "LineItemInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "variantId": "ID",
-    "quantity": "Int",
-    "customAttributes": "AttributeInput"
-  }
-};
-Object.freeze(LineItemInput.inputFieldBaseTypes);
-var LineItemInput$1 = Object.freeze(LineItemInput);
-
-const AttributeInput = {
-  "name": "AttributeInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "key": "String",
-    "value": "String"
-  }
-};
-Object.freeze(AttributeInput.inputFieldBaseTypes);
-var AttributeInput$1 = Object.freeze(AttributeInput);
 
 const CheckoutAttributesUpdatePayload = {
   "name": "CheckoutAttributesUpdatePayload",
@@ -1034,6 +749,18 @@ const CheckoutAttributesUpdatePayload = {
 Object.freeze(CheckoutAttributesUpdatePayload.fieldBaseTypes);
 var CheckoutAttributesUpdatePayload$1 = Object.freeze(CheckoutAttributesUpdatePayload);
 
+const UserError = {
+  "name": "UserError",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "field": "String",
+    "message": "String"
+  },
+  "implementsNode": false
+};
+Object.freeze(UserError.fieldBaseTypes);
+var UserError$1 = Object.freeze(UserError);
+
 const CheckoutAttributesUpdateInput = {
   "name": "CheckoutAttributesUpdateInput",
   "kind": "INPUT_OBJECT",
@@ -1041,11 +768,47 @@ const CheckoutAttributesUpdateInput = {
     "clientMutationId": "String",
     "checkoutId": "ID",
     "note": "String",
-    "customAttributes": "AttributeInput"
+    "customAttributes": "AttributeInput",
+    "allowPartialAddresses": "Boolean"
   }
 };
 Object.freeze(CheckoutAttributesUpdateInput.inputFieldBaseTypes);
 var CheckoutAttributesUpdateInput$1 = Object.freeze(CheckoutAttributesUpdateInput);
+
+const AttributeInput = {
+  "name": "AttributeInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "key": "String",
+    "value": "String"
+  }
+};
+Object.freeze(AttributeInput.inputFieldBaseTypes);
+var AttributeInput$1 = Object.freeze(AttributeInput);
+
+const CheckoutCompleteFreePayload = {
+  "name": "CheckoutCompleteFreePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "clientMutationId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CheckoutCompleteFreePayload.fieldBaseTypes);
+var CheckoutCompleteFreePayload$1 = Object.freeze(CheckoutCompleteFreePayload);
+
+const CheckoutCompleteFree = {
+  "name": "CheckoutCompleteFree",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "checkoutId": "ID"
+  }
+};
+Object.freeze(CheckoutCompleteFree.inputFieldBaseTypes);
+var CheckoutCompleteFree$1 = Object.freeze(CheckoutCompleteFree);
 
 const CheckoutCompleteWithCreditCardPayload = {
   "name": "CheckoutCompleteWithCreditCardPayload",
@@ -1141,6 +904,25 @@ const CheckoutCompleteWithCreditCardInput = {
 Object.freeze(CheckoutCompleteWithCreditCardInput.inputFieldBaseTypes);
 var CheckoutCompleteWithCreditCardInput$1 = Object.freeze(CheckoutCompleteWithCreditCardInput);
 
+const MailingAddressInput = {
+  "name": "MailingAddressInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "address1": "String",
+    "address2": "String",
+    "city": "String",
+    "company": "String",
+    "country": "String",
+    "firstName": "String",
+    "lastName": "String",
+    "phone": "String",
+    "province": "String",
+    "zip": "String"
+  }
+};
+Object.freeze(MailingAddressInput.inputFieldBaseTypes);
+var MailingAddressInput$1 = Object.freeze(MailingAddressInput);
+
 const CheckoutCompleteWithTokenizedPaymentPayload = {
   "name": "CheckoutCompleteWithTokenizedPaymentPayload",
   "kind": "OBJECT",
@@ -1192,14 +974,176 @@ const CheckoutCreateInput = {
   "inputFieldBaseTypes": {
     "clientMutationId": "String",
     "email": "String",
-    "lineItems": "LineItemInput",
+    "lineItems": "CheckoutLineItemInput",
     "shippingAddress": "MailingAddressInput",
     "note": "String",
-    "customAttributes": "AttributeInput"
+    "customAttributes": "AttributeInput",
+    "allowPartialAddresses": "Boolean"
   }
 };
 Object.freeze(CheckoutCreateInput.inputFieldBaseTypes);
 var CheckoutCreateInput$1 = Object.freeze(CheckoutCreateInput);
+
+const CheckoutLineItemInput = {
+  "name": "CheckoutLineItemInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "variantId": "ID",
+    "quantity": "Int",
+    "customAttributes": "AttributeInput"
+  }
+};
+Object.freeze(CheckoutLineItemInput.inputFieldBaseTypes);
+var CheckoutLineItemInput$1 = Object.freeze(CheckoutLineItemInput);
+
+const CheckoutCustomerAssociatePayload = {
+  "name": "CheckoutCustomerAssociatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "clientMutationId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CheckoutCustomerAssociatePayload.fieldBaseTypes);
+var CheckoutCustomerAssociatePayload$1 = Object.freeze(CheckoutCustomerAssociatePayload);
+
+const CheckoutCustomerAssociateInput = {
+  "name": "CheckoutCustomerAssociateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "checkoutId": "ID",
+    "customerAccessToken": "String"
+  }
+};
+Object.freeze(CheckoutCustomerAssociateInput.inputFieldBaseTypes);
+var CheckoutCustomerAssociateInput$1 = Object.freeze(CheckoutCustomerAssociateInput);
+
+const CheckoutCustomerDisassociatePayload = {
+  "name": "CheckoutCustomerDisassociatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "clientMutationId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CheckoutCustomerDisassociatePayload.fieldBaseTypes);
+var CheckoutCustomerDisassociatePayload$1 = Object.freeze(CheckoutCustomerDisassociatePayload);
+
+const CheckoutCustomerDisassociateInput = {
+  "name": "CheckoutCustomerDisassociateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "checkoutId": "ID"
+  }
+};
+Object.freeze(CheckoutCustomerDisassociateInput.inputFieldBaseTypes);
+var CheckoutCustomerDisassociateInput$1 = Object.freeze(CheckoutCustomerDisassociateInput);
+
+const CheckoutEmailUpdatePayload = {
+  "name": "CheckoutEmailUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "clientMutationId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CheckoutEmailUpdatePayload.fieldBaseTypes);
+var CheckoutEmailUpdatePayload$1 = Object.freeze(CheckoutEmailUpdatePayload);
+
+const CheckoutEmailUpdateInput = {
+  "name": "CheckoutEmailUpdateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "checkoutId": "ID",
+    "email": "String"
+  }
+};
+Object.freeze(CheckoutEmailUpdateInput.inputFieldBaseTypes);
+var CheckoutEmailUpdateInput$1 = Object.freeze(CheckoutEmailUpdateInput);
+
+const CheckoutGiftCardApplyPayload = {
+  "name": "CheckoutGiftCardApplyPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "clientMutationId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CheckoutGiftCardApplyPayload.fieldBaseTypes);
+var CheckoutGiftCardApplyPayload$1 = Object.freeze(CheckoutGiftCardApplyPayload);
+
+const CheckoutGiftCardApplyInput = {
+  "name": "CheckoutGiftCardApplyInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "giftCardCode": "String",
+    "checkoutId": "ID"
+  }
+};
+Object.freeze(CheckoutGiftCardApplyInput.inputFieldBaseTypes);
+var CheckoutGiftCardApplyInput$1 = Object.freeze(CheckoutGiftCardApplyInput);
+
+const CheckoutLineItemsAddPayload = {
+  "name": "CheckoutLineItemsAddPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "clientMutationId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CheckoutLineItemsAddPayload.fieldBaseTypes);
+var CheckoutLineItemsAddPayload$1 = Object.freeze(CheckoutLineItemsAddPayload);
+
+const CheckoutLineItemsAddInput = {
+  "name": "CheckoutLineItemsAddInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "lineItems": "CheckoutLineItemInput",
+    "checkoutId": "ID"
+  }
+};
+Object.freeze(CheckoutLineItemsAddInput.inputFieldBaseTypes);
+var CheckoutLineItemsAddInput$1 = Object.freeze(CheckoutLineItemsAddInput);
+
+const CheckoutLineItemsRemovePayload = {
+  "name": "CheckoutLineItemsRemovePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "clientMutationId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CheckoutLineItemsRemovePayload.fieldBaseTypes);
+var CheckoutLineItemsRemovePayload$1 = Object.freeze(CheckoutLineItemsRemovePayload);
+
+const CheckoutLineItemsRemoveInput = {
+  "name": "CheckoutLineItemsRemoveInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "checkoutId": "ID",
+    "lineItemIds": "ID"
+  }
+};
+Object.freeze(CheckoutLineItemsRemoveInput.inputFieldBaseTypes);
+var CheckoutLineItemsRemoveInput$1 = Object.freeze(CheckoutLineItemsRemoveInput);
 
 const CheckoutShippingAddressUpdatePayload = {
   "name": "CheckoutShippingAddressUpdatePayload",
@@ -1250,6 +1194,295 @@ const CheckoutShippingLineUpdateInput = {
 };
 Object.freeze(CheckoutShippingLineUpdateInput.inputFieldBaseTypes);
 var CheckoutShippingLineUpdateInput$1 = Object.freeze(CheckoutShippingLineUpdateInput);
+
+const CustomerAccessTokenCreatePayload = {
+  "name": "CustomerAccessTokenCreatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "clientMutationId": "String",
+    "customerAccessToken": "CustomerAccessToken",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerAccessTokenCreatePayload.fieldBaseTypes);
+var CustomerAccessTokenCreatePayload$1 = Object.freeze(CustomerAccessTokenCreatePayload);
+
+const CustomerAccessToken = {
+  "name": "CustomerAccessToken",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "accessToken": "String",
+    "expiresAt": "DateTime"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerAccessToken.fieldBaseTypes);
+var CustomerAccessToken$1 = Object.freeze(CustomerAccessToken);
+
+const CustomerAccessTokenCreateInput = {
+  "name": "CustomerAccessTokenCreateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "email": "String",
+    "password": "String"
+  }
+};
+Object.freeze(CustomerAccessTokenCreateInput.inputFieldBaseTypes);
+var CustomerAccessTokenCreateInput$1 = Object.freeze(CustomerAccessTokenCreateInput);
+
+const CustomerAccessTokenDeletePayload = {
+  "name": "CustomerAccessTokenDeletePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "clientMutationId": "String",
+    "deletedAccessToken": "String",
+    "deletedCustomerAccessTokenId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerAccessTokenDeletePayload.fieldBaseTypes);
+var CustomerAccessTokenDeletePayload$1 = Object.freeze(CustomerAccessTokenDeletePayload);
+
+const CustomerAccessTokenDeleteInput = {
+  "name": "CustomerAccessTokenDeleteInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "customerAccessToken": "String"
+  }
+};
+Object.freeze(CustomerAccessTokenDeleteInput.inputFieldBaseTypes);
+var CustomerAccessTokenDeleteInput$1 = Object.freeze(CustomerAccessTokenDeleteInput);
+
+const CustomerAccessTokenRenewPayload = {
+  "name": "CustomerAccessTokenRenewPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "clientMutationId": "String",
+    "customerAccessToken": "CustomerAccessToken",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerAccessTokenRenewPayload.fieldBaseTypes);
+var CustomerAccessTokenRenewPayload$1 = Object.freeze(CustomerAccessTokenRenewPayload);
+
+const CustomerAccessTokenRenewInput = {
+  "name": "CustomerAccessTokenRenewInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "customerAccessToken": "String"
+  }
+};
+Object.freeze(CustomerAccessTokenRenewInput.inputFieldBaseTypes);
+var CustomerAccessTokenRenewInput$1 = Object.freeze(CustomerAccessTokenRenewInput);
+
+const CustomerActivatePayload = {
+  "name": "CustomerActivatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "clientMutationId": "String",
+    "customer": "Customer",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerActivatePayload.fieldBaseTypes);
+var CustomerActivatePayload$1 = Object.freeze(CustomerActivatePayload);
+
+const CustomerActivateInput = {
+  "name": "CustomerActivateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "id": "ID",
+    "resetToken": "String",
+    "password": "String"
+  }
+};
+Object.freeze(CustomerActivateInput.inputFieldBaseTypes);
+var CustomerActivateInput$1 = Object.freeze(CustomerActivateInput);
+
+const CustomerAddressCreatePayload = {
+  "name": "CustomerAddressCreatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "clientMutationId": "String",
+    "customerAddress": "MailingAddress",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerAddressCreatePayload.fieldBaseTypes);
+var CustomerAddressCreatePayload$1 = Object.freeze(CustomerAddressCreatePayload);
+
+const CustomerAddressCreateInput = {
+  "name": "CustomerAddressCreateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "customerAccessToken": "String",
+    "address": "MailingAddressInput"
+  }
+};
+Object.freeze(CustomerAddressCreateInput.inputFieldBaseTypes);
+var CustomerAddressCreateInput$1 = Object.freeze(CustomerAddressCreateInput);
+
+const CustomerAddressDeletePayload = {
+  "name": "CustomerAddressDeletePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "clientMutationId": "String",
+    "deletedCustomerAddressId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerAddressDeletePayload.fieldBaseTypes);
+var CustomerAddressDeletePayload$1 = Object.freeze(CustomerAddressDeletePayload);
+
+const CustomerAddressDeleteInput = {
+  "name": "CustomerAddressDeleteInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "id": "ID",
+    "customerAccessToken": "String"
+  }
+};
+Object.freeze(CustomerAddressDeleteInput.inputFieldBaseTypes);
+var CustomerAddressDeleteInput$1 = Object.freeze(CustomerAddressDeleteInput);
+
+const CustomerAddressUpdatePayload = {
+  "name": "CustomerAddressUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "clientMutationId": "String",
+    "customerAddress": "MailingAddress",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerAddressUpdatePayload.fieldBaseTypes);
+var CustomerAddressUpdatePayload$1 = Object.freeze(CustomerAddressUpdatePayload);
+
+const CustomerAddressUpdateInput = {
+  "name": "CustomerAddressUpdateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "customerAccessToken": "String",
+    "id": "ID",
+    "address": "MailingAddressInput"
+  }
+};
+Object.freeze(CustomerAddressUpdateInput.inputFieldBaseTypes);
+var CustomerAddressUpdateInput$1 = Object.freeze(CustomerAddressUpdateInput);
+
+const CustomerCreatePayload = {
+  "name": "CustomerCreatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customer": "Customer",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerCreatePayload.fieldBaseTypes);
+var CustomerCreatePayload$1 = Object.freeze(CustomerCreatePayload);
+
+const CustomerCreateInput = {
+  "name": "CustomerCreateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "firstName": "String",
+    "lastName": "String",
+    "email": "String",
+    "password": "String",
+    "acceptsMarketing": "Boolean"
+  }
+};
+Object.freeze(CustomerCreateInput.inputFieldBaseTypes);
+var CustomerCreateInput$1 = Object.freeze(CustomerCreateInput);
+
+const CustomerRecoverPayload = {
+  "name": "CustomerRecoverPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "clientMutationId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerRecoverPayload.fieldBaseTypes);
+var CustomerRecoverPayload$1 = Object.freeze(CustomerRecoverPayload);
+
+const CustomerRecoverInput = {
+  "name": "CustomerRecoverInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "email": "String"
+  }
+};
+Object.freeze(CustomerRecoverInput.inputFieldBaseTypes);
+var CustomerRecoverInput$1 = Object.freeze(CustomerRecoverInput);
+
+const CustomerResetPayload = {
+  "name": "CustomerResetPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "clientMutationId": "String",
+    "customer": "Customer",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerResetPayload.fieldBaseTypes);
+var CustomerResetPayload$1 = Object.freeze(CustomerResetPayload);
+
+const CustomerResetInput = {
+  "name": "CustomerResetInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "clientMutationId": "String",
+    "id": "ID",
+    "resetToken": "String",
+    "password": "String"
+  }
+};
+Object.freeze(CustomerResetInput.inputFieldBaseTypes);
+var CustomerResetInput$1 = Object.freeze(CustomerResetInput);
+
+const CustomerUpdatePayload = {
+  "name": "CustomerUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customer": "Customer",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CustomerUpdatePayload.fieldBaseTypes);
+var CustomerUpdatePayload$1 = Object.freeze(CustomerUpdatePayload);
+
+const CustomerUpdateInput = {
+  "name": "CustomerUpdateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "firstName": "String",
+    "lastName": "String",
+    "email": "String",
+    "password": "String",
+    "acceptsMarketing": "Boolean"
+  }
+};
+Object.freeze(CustomerUpdateInput.inputFieldBaseTypes);
+var CustomerUpdateInput$1 = Object.freeze(CustomerUpdateInput);
 
 const __Schema = {
   "name": "__Schema",
@@ -1364,11 +1597,11 @@ const Types = {
 Types.types["Checkout"] = Checkout$1;
 Types.types["ID"] = ID$1;
 Types.types["Boolean"] = Boolean$1;
-Types.types["LineItemConnection"] = LineItemConnection$1;
+Types.types["CheckoutLineItemConnection"] = CheckoutLineItemConnection$1;
 Types.types["PageInfo"] = PageInfo$1;
-Types.types["LineItemEdge"] = LineItemEdge$1;
+Types.types["CheckoutLineItemEdge"] = CheckoutLineItemEdge$1;
 Types.types["String"] = String$1;
-Types.types["LineItem"] = LineItem$1;
+Types.types["CheckoutLineItem"] = CheckoutLineItem$1;
 Types.types["ProductVariant"] = ProductVariant$1;
 Types.types["Float"] = Float$1;
 Types.types["WeightUnit"] = WeightUnit$1;
@@ -1382,6 +1615,7 @@ Types.types["Product"] = Product$1;
 Types.types["CollectionConnection"] = CollectionConnection$1;
 Types.types["CollectionEdge"] = CollectionEdge$1;
 Types.types["Collection"] = Collection$1;
+Types.types["HTML"] = HTML$1;
 Types.types["DateTime"] = DateTime$1;
 Types.types["ProductConnection"] = ProductConnection$1;
 Types.types["ProductEdge"] = ProductEdge$1;
@@ -1394,55 +1628,35 @@ Types.types["ProductVariantEdge"] = ProductVariantEdge$1;
 Types.types["Attribute"] = Attribute$1;
 Types.types["MailingAddress"] = MailingAddress$1;
 Types.types["ShippingRate"] = ShippingRate$1;
-Types.types["Order"] = Order$1;
-Types.types["OrderCancelReason"] = OrderCancelReason$1;
-Types.types["CurrencyCode"] = CurrencyCode$1;
-Types.types["OrderDisplayFulfillmentStatus"] = OrderDisplayFulfillmentStatus$1;
-Types.types["OrderDisplayFinancialStatus"] = OrderDisplayFinancialStatus$1;
-Types.types["QueryRoot"] = QueryRoot$1;
+Types.types["AvailableShippingRates"] = AvailableShippingRates$1;
 Types.types["Customer"] = Customer$1;
 Types.types["MailingAddressConnection"] = MailingAddressConnection$1;
 Types.types["MailingAddressEdge"] = MailingAddressEdge$1;
 Types.types["OrderConnection"] = OrderConnection$1;
 Types.types["OrderEdge"] = OrderEdge$1;
+Types.types["Order"] = Order$1;
+Types.types["OrderCancelReason"] = OrderCancelReason$1;
+Types.types["CurrencyCode"] = CurrencyCode$1;
+Types.types["OrderDisplayFulfillmentStatus"] = OrderDisplayFulfillmentStatus$1;
+Types.types["OrderDisplayFinancialStatus"] = OrderDisplayFinancialStatus$1;
+Types.types["OrderLineItemConnection"] = OrderLineItemConnection$1;
+Types.types["OrderLineItemEdge"] = OrderLineItemEdge$1;
+Types.types["OrderLineItem"] = OrderLineItem$1;
 Types.types["OrderSortKeys"] = OrderSortKeys$1;
+Types.types["AppliedGiftCard"] = AppliedGiftCard$1;
+Types.types["QueryRoot"] = QueryRoot$1;
 Types.types["Shop"] = Shop$1;
 Types.types["Domain"] = Domain$1;
 Types.types["ShopPolicy"] = ShopPolicy$1;
 Types.types["CollectionSortKeys"] = CollectionSortKeys$1;
 Types.types["ProductSortKeys"] = ProductSortKeys$1;
 Types.types["Mutation"] = Mutation$1;
-Types.types["CustomerAccessTokenCreatePayload"] = CustomerAccessTokenCreatePayload$1;
-Types.types["UserError"] = UserError$1;
-Types.types["CustomerAccessToken"] = CustomerAccessToken$1;
-Types.types["CustomerAccessTokenCreateInput"] = CustomerAccessTokenCreateInput$1;
-Types.types["CustomerAccessTokenRenewPayload"] = CustomerAccessTokenRenewPayload$1;
-Types.types["CustomerAccessTokenRenewInput"] = CustomerAccessTokenRenewInput$1;
-Types.types["CustomerAccessTokenDeletePayload"] = CustomerAccessTokenDeletePayload$1;
-Types.types["CustomerAccessTokenDeleteInput"] = CustomerAccessTokenDeleteInput$1;
-Types.types["CustomerActivatePayload"] = CustomerActivatePayload$1;
-Types.types["CustomerActivateInput"] = CustomerActivateInput$1;
-Types.types["CustomerCreatePayload"] = CustomerCreatePayload$1;
-Types.types["CustomerCreateInput"] = CustomerCreateInput$1;
-Types.types["CustomerAddressCreatePayload"] = CustomerAddressCreatePayload$1;
-Types.types["CustomerAddressCreateInput"] = CustomerAddressCreateInput$1;
-Types.types["MailingAddressInput"] = MailingAddressInput$1;
-Types.types["CustomerAddressDeletePayload"] = CustomerAddressDeletePayload$1;
-Types.types["CustomerAddressDeleteInput"] = CustomerAddressDeleteInput$1;
-Types.types["CustomerAddressUpdatePayload"] = CustomerAddressUpdatePayload$1;
-Types.types["CustomerAddressUpdateInput"] = CustomerAddressUpdateInput$1;
-Types.types["CustomerRecoverPayload"] = CustomerRecoverPayload$1;
-Types.types["CustomerRecoverInput"] = CustomerRecoverInput$1;
-Types.types["CustomerResetPayload"] = CustomerResetPayload$1;
-Types.types["CustomerResetInput"] = CustomerResetInput$1;
-Types.types["CustomerUpdatePayload"] = CustomerUpdatePayload$1;
-Types.types["CustomerUpdateInput"] = CustomerUpdateInput$1;
-Types.types["CheckoutAddLineItemsPayload"] = CheckoutAddLineItemsPayload$1;
-Types.types["CheckoutAddLineItemsInput"] = CheckoutAddLineItemsInput$1;
-Types.types["LineItemInput"] = LineItemInput$1;
-Types.types["AttributeInput"] = AttributeInput$1;
 Types.types["CheckoutAttributesUpdatePayload"] = CheckoutAttributesUpdatePayload$1;
+Types.types["UserError"] = UserError$1;
 Types.types["CheckoutAttributesUpdateInput"] = CheckoutAttributesUpdateInput$1;
+Types.types["AttributeInput"] = AttributeInput$1;
+Types.types["CheckoutCompleteFreePayload"] = CheckoutCompleteFreePayload$1;
+Types.types["CheckoutCompleteFree"] = CheckoutCompleteFree$1;
 Types.types["CheckoutCompleteWithCreditCardPayload"] = CheckoutCompleteWithCreditCardPayload$1;
 Types.types["Payment"] = Payment$1;
 Types.types["CreditCard"] = CreditCard$1;
@@ -1450,14 +1664,51 @@ Types.types["Transaction"] = Transaction$1;
 Types.types["TransactionKind"] = TransactionKind$1;
 Types.types["TransactionStatus"] = TransactionStatus$1;
 Types.types["CheckoutCompleteWithCreditCardInput"] = CheckoutCompleteWithCreditCardInput$1;
+Types.types["MailingAddressInput"] = MailingAddressInput$1;
 Types.types["CheckoutCompleteWithTokenizedPaymentPayload"] = CheckoutCompleteWithTokenizedPaymentPayload$1;
 Types.types["CheckoutCompleteWithTokenizedPaymentInput"] = CheckoutCompleteWithTokenizedPaymentInput$1;
 Types.types["CheckoutCreatePayload"] = CheckoutCreatePayload$1;
 Types.types["CheckoutCreateInput"] = CheckoutCreateInput$1;
+Types.types["CheckoutLineItemInput"] = CheckoutLineItemInput$1;
+Types.types["CheckoutCustomerAssociatePayload"] = CheckoutCustomerAssociatePayload$1;
+Types.types["CheckoutCustomerAssociateInput"] = CheckoutCustomerAssociateInput$1;
+Types.types["CheckoutCustomerDisassociatePayload"] = CheckoutCustomerDisassociatePayload$1;
+Types.types["CheckoutCustomerDisassociateInput"] = CheckoutCustomerDisassociateInput$1;
+Types.types["CheckoutEmailUpdatePayload"] = CheckoutEmailUpdatePayload$1;
+Types.types["CheckoutEmailUpdateInput"] = CheckoutEmailUpdateInput$1;
+Types.types["CheckoutGiftCardApplyPayload"] = CheckoutGiftCardApplyPayload$1;
+Types.types["CheckoutGiftCardApplyInput"] = CheckoutGiftCardApplyInput$1;
+Types.types["CheckoutLineItemsAddPayload"] = CheckoutLineItemsAddPayload$1;
+Types.types["CheckoutLineItemsAddInput"] = CheckoutLineItemsAddInput$1;
+Types.types["CheckoutLineItemsRemovePayload"] = CheckoutLineItemsRemovePayload$1;
+Types.types["CheckoutLineItemsRemoveInput"] = CheckoutLineItemsRemoveInput$1;
 Types.types["CheckoutShippingAddressUpdatePayload"] = CheckoutShippingAddressUpdatePayload$1;
 Types.types["CheckoutShippingAddressUpdateInput"] = CheckoutShippingAddressUpdateInput$1;
 Types.types["CheckoutShippingLineUpdatePayload"] = CheckoutShippingLineUpdatePayload$1;
 Types.types["CheckoutShippingLineUpdateInput"] = CheckoutShippingLineUpdateInput$1;
+Types.types["CustomerAccessTokenCreatePayload"] = CustomerAccessTokenCreatePayload$1;
+Types.types["CustomerAccessToken"] = CustomerAccessToken$1;
+Types.types["CustomerAccessTokenCreateInput"] = CustomerAccessTokenCreateInput$1;
+Types.types["CustomerAccessTokenDeletePayload"] = CustomerAccessTokenDeletePayload$1;
+Types.types["CustomerAccessTokenDeleteInput"] = CustomerAccessTokenDeleteInput$1;
+Types.types["CustomerAccessTokenRenewPayload"] = CustomerAccessTokenRenewPayload$1;
+Types.types["CustomerAccessTokenRenewInput"] = CustomerAccessTokenRenewInput$1;
+Types.types["CustomerActivatePayload"] = CustomerActivatePayload$1;
+Types.types["CustomerActivateInput"] = CustomerActivateInput$1;
+Types.types["CustomerAddressCreatePayload"] = CustomerAddressCreatePayload$1;
+Types.types["CustomerAddressCreateInput"] = CustomerAddressCreateInput$1;
+Types.types["CustomerAddressDeletePayload"] = CustomerAddressDeletePayload$1;
+Types.types["CustomerAddressDeleteInput"] = CustomerAddressDeleteInput$1;
+Types.types["CustomerAddressUpdatePayload"] = CustomerAddressUpdatePayload$1;
+Types.types["CustomerAddressUpdateInput"] = CustomerAddressUpdateInput$1;
+Types.types["CustomerCreatePayload"] = CustomerCreatePayload$1;
+Types.types["CustomerCreateInput"] = CustomerCreateInput$1;
+Types.types["CustomerRecoverPayload"] = CustomerRecoverPayload$1;
+Types.types["CustomerRecoverInput"] = CustomerRecoverInput$1;
+Types.types["CustomerResetPayload"] = CustomerResetPayload$1;
+Types.types["CustomerResetInput"] = CustomerResetInput$1;
+Types.types["CustomerUpdatePayload"] = CustomerUpdatePayload$1;
+Types.types["CustomerUpdateInput"] = CustomerUpdateInput$1;
 Types.types["__Schema"] = __Schema$1;
 Types.types["__Type"] = __Type$1;
 Types.types["__TypeKind"] = __TypeKind$1;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './css/App.css';
-import Client, {Config} from 'shopify-buy';
 import Product from './components/Product';
 import Cart from './components/Cart';
+import {client} from './config';
+
 
 class App extends Component {
   constructor() {
@@ -11,9 +12,19 @@ class App extends Component {
     this.state = {
       isCartOpen: true,
       products: [],
+      checkout: { lineItems: [] }
     };
 
+    client.createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}})
+      .then((res) => {
+        this.setState({
+          checkout: res,
+        });
+      });
+
     this.handleCartClose = this.handleCartClose.bind(this);
+    this.addVariantToCart = this.addVariantToCart.bind(this);
+    this.removeVariantFromCart = this.removeVariantFromCart.bind(this);
   }
 
   handleCartClose() {
@@ -23,12 +34,6 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const config = new Config({
-      storefrontAccessToken: '663365cfae2c84f0f68ca1006329a694',
-      domain: 'graphql.myshopify.com',
-    });
-
-    const client = new Client(config);
     client.fetchAllProducts()
       .then((res) => {
         this.setState({
@@ -37,10 +42,36 @@ class App extends Component {
       });
   }
 
+  addVariantToCart(variantId, quantity){
+    const input = {
+      checkoutId: this.state.checkout.id,
+      lineItems: [{variantId, quantity: parseInt(quantity, 10)}]
+    }
+
+    return client.addLineItems(input).then(res => {
+      this.setState({
+        checkout: res,
+      });
+    });
+  }
+
+  removeVariantFromCart(lineItemId){
+    const input = {
+      checkoutId: this.state.checkout.id,
+      lineItemIds: [lineItemId]
+    }
+
+    return client.removeLineItems(input).then(res => {
+      this.setState({
+        checkout: res,
+      });
+    });
+  }
+
   render() {
     let products = this.state.products.map((product) => {
       return (
-        <Product key={product.id.toString()} product={product} />
+        <Product addVariantToCart={this.addVariantToCart} checkout={this.state.checkout} key={product.id.toString()} product={product} />
       );
     });
 
@@ -53,7 +84,7 @@ class App extends Component {
         <div className="Product-wrapper">
           {products}
         </div>
-        <Cart isCartOpen={this.state.isCartOpen} handleCartClose={this.handleCartClose} />
+        <Cart removeVariantFromCart={this.removeVariantFromCart} checkout={this.state.checkout} isCartOpen={this.state.isCartOpen} handleCartClose={this.handleCartClose} />
       </div>
     );
   }

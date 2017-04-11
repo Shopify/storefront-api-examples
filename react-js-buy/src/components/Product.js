@@ -1,43 +1,20 @@
 import React, {Component} from 'react';
 import '../css/Product.css';
+import {client} from '../config';
 
 class Product extends Component {
   constructor(props) {
     super(props);
-    // this.generateSelectors = this.generateSelectors.bind(this);
-    // this.handleOptionChange = this.handleOptionChange.bind(this);
 
+    this.state = {
+    };
+
+    this.handleOptionChange = this.handleOptionChange.bind(this);
+    this.handleQuantityChange = this.handleQuantityChange.bind(this);
     this.buildSelectors = this.buildSelectors.bind(this);
     this.selectedOptions = this.selectedOptions.bind(this);
-    this.getVariantForOptions = this.getVariantForOptions.bind(this);
     this.findImage = this.findImage.bind(this);
-
-    // const selectors = this.buildSelectors();
-    // let selectedOptions = this.selectedOptions(selectors);
-    // let selectedVariant = this.getVariantForOptions(selectedOptions);
-    // let selectedImage = this.findImage(this.props.product.images, 0);
-    //
-    // this.state = {
-    //   selectors: selectors,
-    //   selectedOptions: selectedOptions,
-    //   selectedVariant: selectedVariant,
-    //   variantImage: selectedImage
-    // }
   }
-
-  // getInitialState() {
-  //   const selectors = this.buildSelectors();
-  //   let selectedOptions = this.selectedOptions(selectors);
-  //   let selectedVariant = this.getVariantForOptions(selectedOptions);
-  //   let selectedImage = this.findImage(this.props.product.images, 0);
-  //
-  //   return {
-  //     selectors: selectors,
-  //     selectedOptions: selectedOptions,
-  //     selectedVariant: selectedVariant,
-  //     variantImage: selectedImage
-  //   };
-  // }
 
   buildSelectors() {
     if (this.props.product.variants.length > 1) {
@@ -70,25 +47,6 @@ class Product extends Component {
     });
   }
 
-  getVariantForOptions(selectedOptions) {
-    if (this.props.product.variants.length > 1) {
-      return this.props.product.variants.filter(function (variant) {
-        var matches = true;
-        selectedOptions.forEach(function (selectedOption) {
-          var matching_option = variant.option_values.filter(function (value) {
-            return value.option_id === selectedOption.id;
-          })[0];
-          if (!(matching_option.value === selectedOption.value)) {
-            matches = false;
-          }
-        }.bind(this));
-        return matches;
-      }.bind(this))[0];
-    } else {
-      return this.props.product.variants[0];
-    }
-  }
-
   findImage(images, variantId) {
     const primary = images[0];
 
@@ -99,38 +57,64 @@ class Product extends Component {
     return (image || primary).src;
   }
 
-  // generateSelectors() {
-  //   return this.props.product.options.map((option) => {
-  //     return (
-  //       <select
-  //         className="Product__option"
-  //         name={option.name}
-  //         key={option.name}
-  //         onChange={this.handleOptionChange}
-  //       >
-  //         {option.values.map((value) => {
-  //           return (
-  //             <option value={value} key={`${option.name}-${value}`}>{`${value}`}</option>
-  //           )
-  //         })}
-  //       </select>
-  //     );
-  //   });
-  // }
+  generateSelectors() {
+    return this.props.product.options.map((option) => {
+      return (
+        <select
+          className="Product__option"
+          name={option.name}
+          key={option.name}
+          onChange={this.handleOptionChange}
+        >
+          {option.values.map((value) => {
+            return (
+              <option value={value} key={`${option.name}-${value}`}>{`${value}`}</option>
+            )
+          })}
+        </select>
+      );
+    });
+  }
 
-  // handleOptionChange() {
-  //   console.log('omg');
-  // }
+  handleOptionChange() {
+
+    const selectedOptions = {};
+
+    Array.from(this.refs["variantSelectors"].children).forEach((selector) => {
+      selectedOptions[selector.name] = selector.value;
+    });
+
+    const selectedVariant = client.Product.Helpers.variantForOptions(this.props.product, selectedOptions)
+
+    this.setState({
+      selectedVariant: selectedVariant,
+      selectedVariantImage: selectedVariant.attrs.image.src
+    });
+  }
+
+  handleQuantityChange(event) {
+    this.setState({
+      selectedVariantQuantity: event.target.value
+    });
+  }
 
   render() {
-    console.log(this.props.product);
+    let variantImage = this.state.selectedVariantImage || this.props.product.images[0].src
+    let variant = this.state.selectedVariant || this.props.product.variants[0]
+    let variantQuantity = this.state.selectedVariantQuantity || 1
     return (
       <div className="Product">
-        {this.props.product.images.length ? <img src={this.props.product.images[0].src} alt={`${this.props.product.title} product shot`}/> : null}
+        {this.props.product.images.length ? <img src={variantImage} alt={`${this.props.product.title} product shot`}/> : null}
         <h5 className="Product__title">{this.props.product.title}</h5>
-        <span className="Product__price">${this.props.product.variants[0].price}</span>
-        {/* {this.generateSelectors()} */}
-        <button className="Product__buy button">Add to Cart</button>
+        <span className="Product__price">${variant.price}</span>
+        <div ref="variantSelectors">
+          { this.generateSelectors() }
+        </div>
+        <label className="Product__option">
+          Quantity
+          <input min="1" type="number" defaultValue={variantQuantity} onChange={this.handleQuantityChange}></input>
+        </label>
+        <button className="Product__buy button" onClick={() => this.props.addVariantToCart(variant.id, variantQuantity)}>Add to Cart</button>
       </div>
     );
   }

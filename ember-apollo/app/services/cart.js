@@ -63,8 +63,8 @@ export default Service.extend({
 
     return this.get('apollo').mutate({
       mutation: gql`
-        mutation ($input: CheckoutAddLineItemsInput!) {
-          checkoutAddLineItems(input: $input) {
+        mutation ($input: CheckoutLineItemsAddInput!) {
+          checkoutLineItemsAdd(input: $input) {
             userErrors {
               message
               field
@@ -78,7 +78,7 @@ export default Service.extend({
       `,
       variables: {input}
     }).then((result) => {
-      this.set('checkout', result.checkoutAddLineItems.checkout);
+      this.set('checkout', result.checkoutLineItemsAdd.checkout);
     });
   },
 /*

@@ -9,7 +9,7 @@ export default Component.extend({
 
   checkoutDisabled: computed('cart.lineItems.[]', {
     get() {
-      return this.get('lineItems.length') < 1;
+      return this.get('cart.lineItems.length') < 1;
     }
   }),
 

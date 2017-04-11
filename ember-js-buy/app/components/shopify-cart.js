@@ -7,6 +7,12 @@ export default Component.extend({
 
   cart: computed.alias('cartService.checkout'),
 
+  subtotalPrice: computed.alias('cart.checkout.subtotalPrice'),
+
+  totalTax: computed.alias('cart.checkout.totalTax'),
+
+  totalPrice: computed.alias('cart.checkout.totalPrice'),
+
   checkoutDisabled: computed('cart.lineItems.[]', {
     get() {
       return this.get('lineItems.length') < 1;

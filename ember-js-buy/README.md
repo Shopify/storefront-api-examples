@@ -8,6 +8,7 @@ You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with NPM)
+* [Yarn](https://yarnpkg.com/en/)
 * [Ember CLI](https://ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
 
@@ -15,7 +16,7 @@ You will need the following things properly installed on your computer.
 
 * `git clone git@github.com:Shopify/storefront-api-examples.git` this repository
 * `cd ember-js-buy`
-* `npm install`
+* `yarn install`
 
 ## Configuring
 

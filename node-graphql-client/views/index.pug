@@ -44,6 +44,21 @@ html(lang='en', data-framework='javascript')
                   form(method='post' action='/line_item' + item.variant.id.substring(item.variant.id.lastIndexOf('/')))
                     input(type="hidden" name="method" value="delete")
                     button.destroy(type='submit')
+            li
+              .view
+                label
+                  strong Subtotal:
+                  =` $${cart.subtotalPrice}`
+            li
+              .view
+                label
+                  strong Taxes:
+                  =` $${cart.totalTax}`
+            li
+              .view
+                label
+                  strong Total:
+                  =` $${cart.totalPrice}`
         footer.cart-footer
             button.button#checkout-button(type='submit', disabled=!cart.lineItems.length) Checkout
     script.
@@ -64,15 +79,8 @@ html(lang='en', data-framework='javascript')
         window.open('#{cart.webUrl}');
       };
 
-      document.getElementById('add-to-cart-button').onclick = function () {
-        openCart();
-      }
+      document.getElementById('add-to-cart-button').onsubmit = openCart;
 
-      document.getElementById('view-cart-button').onclick = function () {
-        openCart();
-      }
+      document.getElementById('view-cart-button').onclick = openCart;
 
-      document.getElementById('close-cart-button').onclick = function () {
-        closeCart();
-      }
-
+      document.getElementById('close-cart-button').onclick = closeCart;

@@ -78,28 +78,13 @@ app.get('/', (req, res) => {
   if (!checkoutId) {
     return client.send(gql`
       mutation {
-        checkoutCreate(input: {}) {
+        checkoutCreate(input: {allowPartialAddresses: true, shippingAddress: {city: "Toronto", province: "ON", country: "Canada"}}) {
           userErrors {
             message
             field
           }
           checkout {
-            webUrl
-            lineItems (first:250) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-              }
-              edges {
-                node {
-                  title
-                  variant {
-                    title
-                  }
-                  quantity
-                }
-              }
-            }
+            id
           }
         }
       }
@@ -114,6 +99,9 @@ app.get('/', (req, res) => {
       node(id: $checkoutId) {
         ... on Checkout {
           webUrl
+          subtotalPrice
+          totalTax
+          totalPrice
           lineItems (first:250) {
             pageInfo {
               hasNextPage

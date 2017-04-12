@@ -25,6 +25,7 @@ html(lang='en', data-framework='javascript')
                             =value
                     label Quantity
                     input(min='1', type='number', name='quantity', value='1')
+                    input(type="hidden" name="checkoutId" value=cart.id)
                     .buy-button-wrapper
                       button.buy-button.button#add-to-cart-button(type='submit')
                         | Add to cart

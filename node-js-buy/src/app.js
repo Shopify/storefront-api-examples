@@ -4,7 +4,6 @@ import path from 'path';
 import client from './js-buy-sdk';
 
 const app = express();
-let cartPromise = client.createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}});
 const productsPromise = client.fetchAllProducts();
 const shopPromise = client.fetchShopInfo();
 
@@ -15,6 +14,18 @@ app.use(express.static(path.join(__dirname, '../../shared')));
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
+  const checkoutId = req.query.checkoutId;
+
+  // Create a checkout if it doesn't exist yet
+  if (!checkoutId) {
+    return client.createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}).then((checkout) => {
+      res.redirect(`/?checkoutId=${checkout.id.substring(checkout.id.lastIndexOf('/') + 1)}`);
+    });
+  }
+
+  // Fetch the checkout
+  const cartPromise = client.fetchCheckout(checkoutId);
+
   return Promise.all([productsPromise, cartPromise, shopPromise]).then(([products, cart, shop]) => {
     res.render('index', {
       products,
@@ -28,11 +39,13 @@ app.get('/', (req, res) => {
 app.post('/line_item/:id', (req, res) => {
   const options = req.body;
   const productId = req.params.id;
+  const checkoutId = options.checkoutId;
   const quantity = parseInt(options.quantity, 10);
 
   delete options.quantity;
+  delete options.checkoutId;
 
-  return Promise.all([productsPromise, cartPromise]).then(([products, cart]) => {
+  return productsPromise.then((products) => {
     // Find the product that is selected
     const targetProduct = products.find((product) => {
       return product.id.substring(product.id.lastIndexOf('/')) === `/${productId}`;
@@ -43,14 +56,12 @@ app.post('/line_item/:id', (req, res) => {
 
     // Add the variant to our cart
     const input = {
-      checkoutId: cart.id,
+      checkoutId,
       lineItems: [{variantId: selectedVariant.id, quantity}]
     };
 
-    cartPromise = client.addLineItems(input).then((checkout) => {
-      res.redirect('/?cart=true');
-
-      return checkout;
+    return client.addLineItems(input).then((checkout) => {
+      res.redirect(`/?cart=true&checkoutId=${checkout.id.substring(checkout.id.lastIndexOf('/') + 1)}`);
     });
   });
 });

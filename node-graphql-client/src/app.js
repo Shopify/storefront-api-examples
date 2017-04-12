@@ -171,27 +171,11 @@ app.post('/line_item/:productId', (req, res) => {
             field
           }
           checkout {
-            webUrl
-            lineItems (first:250) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-              }
-              edges {
-                node {
-                  title
-                  variant {
-                    title
-                  }
-                  quantity
-                }
-              }
-            }
+            id
           }
         }
       }
     `, {input}).then((result) => {
-      console.log(result);
       res.redirect(`/?cart=true&checkoutId=${result.model.checkoutLineItemsAdd.checkout.id}`);
     });
   });

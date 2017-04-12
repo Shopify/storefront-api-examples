@@ -51,10 +51,6 @@ export default Service.extend({
     });
   },
 
-  checkoutUrl: computed.alias('checkout.webUrl'),
-
-  lineItems: computed.alias('checkout.lineItems'),
-
   addVariants({variantId, quantity}) {
     const input = {
       checkoutId: this.get('checkout.id'),

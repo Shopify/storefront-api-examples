@@ -3,21 +3,13 @@ import Ember from 'ember';
 const { Component, inject, computed, get } = Ember;
 
 export default Component.extend({
-  cart: inject.service(),
+  cartService: inject.service('cart'),
 
-  lineItems: computed.alias('cart.lineItems.edges'),
+  cart: computed.alias('cartService.checkout'),
 
-  checkoutUrl: computed.alias('cart.checkoutUrl'),
-
-  subtotalPrice: computed.alias('cart.checkout.subtotalPrice'),
-
-  totalTax: computed.alias('cart.checkout.totalTax'),
-
-  totalPrice: computed.alias('cart.checkout.totalPrice'),
-
-  checkoutDisabled: computed('lineItems.[]', {
+  checkoutDisabled: computed('cart.lineItems.edges.[]', {
     get() {
-      return this.get('lineItems.length') < 1;
+      return this.get('cart.lineItems.edges.length') < 1;
     }
   }),
 
@@ -26,7 +18,7 @@ export default Component.extend({
       this.get('cart').removeLineItem(get(item, 'id'));
     },
     openCheckout() {
-      window.open(this.get('checkoutUrl'));
+      window.open(this.get('cart.webUrl'));
     },
     close() {
       this.sendAction('close');

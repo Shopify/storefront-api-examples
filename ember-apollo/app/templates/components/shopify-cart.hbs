@@ -4,7 +4,7 @@
   </button>
   <h2>Cart</h2>
   <ul class="cart-list">
-    {{#each lineItems as |item|}}
+    {{#each cart.lineItems.edges as |item|}}
       <li>
         <div class="view">
           <label>
@@ -22,7 +22,7 @@
       <div class="view">
         <label>
           <strong>Subtotal:</strong>
-          $ {{subtotalPrice}}
+          $ {{cart.subtotalPrice}}
         </label>
       </div>
     </li>
@@ -30,7 +30,7 @@
       <div class="view">
         <label>
           <strong>Taxes:</strong>
-          $ {{totalTax}}
+          $ {{cart.totalTax}}
         </label>
       </div>
     </li>
@@ -38,7 +38,7 @@
       <div class="view">
         <label>
           <strong>Total:</strong>
-          $ {{totalPrice}}
+          $ {{cart.totalPrice}}
         </label>
       </div>
     </li>

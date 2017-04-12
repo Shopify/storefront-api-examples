@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Service, RSVP, computed, inject } = Ember;
+const { Service, RSVP, inject } = Ember;
 
 export default Service.extend({
   client: inject.service('graphql-js-client'),
@@ -86,7 +86,7 @@ export default Service.extend({
       }
     `;
 
-    client.send(mutation, {input}).then((result) => {
+    return client.send(mutation, {input}).then((result) => {
       this.set('checkout', result.model.checkoutLineItemsAdd.checkout);
     });
   },
@@ -107,19 +107,49 @@ export default Service.extend({
 
     return result;
   },
-
-  clearLineItems() {
-    this.set('lineItems', []);
-
-    return this.update();
-  },
+  */
 
   removeLineItem(lineItemId) {
-    const lineItemsWithoutItem = this.get('lineItems').rejectBy('id', lineItemId);
+    const client = this.get('client');
+    const input = {
+      checkoutId: this.get('checkout.id'),
+      lineItemIds: [lineItemId]
+    }
 
-    this.set('lineItems', lineItemsWithoutItem);
+    const mutation = gql(client)`
+      mutation ($input: CheckoutLineItemsRemoveInput!) {
+        checkoutLineItemsRemove(input: $input) {
+          userErrors {
+            message
+            field
+          }
+          checkout {
+            webUrl
+            subtotalPrice
+            totalTax
+            totalPrice
+            lineItems (first:250) {
+              pageInfo {
+                hasNextPage
+                hasPreviousPage
+              }
+              edges {
+                node {
+                  title
+                  variant {
+                    title
+                  }
+                  quantity
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
 
-    return this.update();
+    return client.send(mutation, {input}).then((result) => {
+      this.set('checkout', result.model.checkoutLineItemsRemove.checkout);
+    });
   },
-*/
 });

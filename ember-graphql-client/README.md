@@ -26,7 +26,7 @@ const client = new Client(typeBundle, {
   url: 'https://your-shop-name.myshopify.com/api/graphql',
   fetcherOptions: {
     headers: {
-      Authorization: 'Basic your-base64-encoded-storefront-access-token'
+      'X-Shopify-Storefront-Access-Token': 'your-storefront-access-token'
     }
   }
 });

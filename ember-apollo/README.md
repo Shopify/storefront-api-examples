@@ -30,11 +30,11 @@ var ENV = {
   ...
 }
 ```
-Then, add your base64-encoded storefront access token to `app/services/apollo.js`:
+Then, add your storefront access token to `app/services/apollo.js`:
 ```js
 _runAuthorize(req, next) {
   ...
-  req.options.headers.authorization = 'Basic your-base64-encoded-storefront-access-token';
+  req.options.headers['X-Shopify-Storefront-Access-Token']= 'your-storefront-access-token';
   ...
 }
 ```

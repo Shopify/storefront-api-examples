@@ -7,62 +7,86 @@ export default Service.extend({
   checkout: null,
 
   init() {
-    const mutation = this.get('client').mutation((root) => {
-      root.add('checkoutCreate', {args: {input: {allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}}}, (checkoutCreate) => {
-        checkoutCreate.add('userErrors', (userErrors) => {
-          userErrors.add('message');
-          userErrors.add('field');
-        });
-        checkoutCreate.add('checkout', (checkout) => {
-          checkout.add('webUrl');
-          checkout.add('subtotalPrice');
-          checkout.add('totalTax');
-          checkout.add('totalPrice');
-          checkout.addConnection('lineItems', {args: {first: 250}}, (lineItems) => {
-            lineItems.add('title');
-            lineItems.add('variant', (variant) => {
-              variant.add('title');
-            });
-            lineItems.add('quantity');
-          });
-        });
-      });
-    });
+    const client = this.get('client');
 
-    return this.get('client').send(mutation).then((result) => {
+    const mutation = gql(client)`
+      mutation {
+        checkoutCreate(input: {allowPartialAddresses: true, shippingAddress: {city: "Toronto", province: "ON", country: "Canada"}}) {
+          userErrors {
+            message
+            field
+          }
+          checkout {
+            id
+            webUrl
+            subtotalPrice
+            totalTax
+            totalPrice
+            lineItems (first:250) {
+              pageInfo {
+                hasNextPage
+                hasPreviousPage
+              }
+              edges {
+                node {
+                  title
+                  variant {
+                    title
+                  }
+                  quantity
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    return client.send(mutation).then((result) => {
       this.set('checkout', result.model.checkoutCreate.checkout);
     });
   },
 
   addVariants({variantId, quantity}) {
+    const client = this.get('client');
     const input = {
       checkoutId: this.get('checkout.id'),
       lineItems: [{variantId, quantity}]
     }
 
-    const mutation = this.get('client').mutation((root) => {
-      root.add('checkoutLineItemsAdd', {args: {input}}, (checkoutLineItemsAdd) => {
-        checkoutLineItemsAdd.add('userErrors', (userErrors) => {
-          userErrors.add('message');
-          userErrors.add('field');
-        });
-        checkoutLineItemsAdd.add('checkout', (checkout) => {
-          checkout.add('webUrl');
-          checkout.add('subtotalPrice');
-          checkout.add('totalTax');
-          checkout.add('totalPrice');
-          checkout.addConnection('lineItems', {args: {first: 250}}, (lineItems) => {
-            lineItems.add('title');
-            lineItems.add('variant', (variant) => {
-              variant.add('title');
-            });
-            lineItems.add('quantity');
-          });
-        });
-      });
-    });
+    const mutation = gql(client)`
+      mutation ($input: CheckoutLineItemsAddInput!) {
+        checkoutLineItemsAdd(input: $input) {
+          userErrors {
+            message
+            field
+          }
+          checkout {
+            webUrl
+            subtotalPrice
+            totalTax
+            totalPrice
+            lineItems (first:250) {
+              pageInfo {
+                hasNextPage
+                hasPreviousPage
+              }
+              edges {
+                node {
+                  title
+                  variant {
+                    title
+                  }
+                  quantity
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
 
-    this.get('client').send(mutation).then((result) => {
+    client.send(mutation, {input}).then((result) => {
       this.set('checkout', result.model.checkoutLineItemsAdd.checkout);
     });
   },

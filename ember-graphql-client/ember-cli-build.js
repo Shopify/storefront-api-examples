@@ -4,10 +4,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     babel: {
-      compileModules: true
-
-      // We can't use this until Ember supports Babel 6 (whenever 2.13.0 is released)
-      //plugins: ['../../babel-plugin-graphql-js-client-transform']
+      plugins: ['graphql-js-client-transform']
     }
   });
 

@@ -6,33 +6,59 @@ export default Ember.Route.extend({
   model() {
     const client = this.get('client');
 
-    const query = client.query((root) => {
-      root.add('shop', (shop) => {
-        shop.add('name');
-        shop.addConnection('products', {args: {first: 20}}, (products) => {
-          products.add('id');
-          products.add('title');
-          products.add('options', (options) => {
-            options.add('name');
-            options.add('values');
-          });
-          products.addConnection('variants', {args: {first:250}}, (variants) => {
-            variants.add('title');
-            variants.add('selectedOptions', (selectedOptions) => {
-              selectedOptions.add('name');
-              selectedOptions.add('value');
-            });
-            variants.add('image', (image) => {
-              image.add('src');
-            });
-            variants.add('price');
-          });
-          products.addConnection('images', {args: {first:250}}, (images) => {
-            images.add('src');
-          });
-        });
-      });
-    });
+    const query = gql(client)`
+      query {
+        shop {
+          name
+          products(first:20) {
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+            }
+            edges {
+              node {
+                id
+                title
+                options {
+                  name
+                  values
+                }
+                variants(first: 250) {
+                  pageInfo {
+                    hasNextPage
+                    hasPreviousPage
+                  }
+                  edges {
+                    node {
+                      title
+                      selectedOptions {
+                        name
+                        value
+                      }
+                      image {
+                        src
+                      }
+                      price
+                    }
+                  }
+                }
+                images(first: 250) {
+                  pageInfo {
+                    hasNextPage
+                    hasPreviousPage
+                  }
+                  edges {
+                    node {
+                      src
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
 
     return client.send(query).then((result) => {
       return {

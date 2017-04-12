@@ -4,7 +4,7 @@ import Client, {Config} from 'shopify-buy';
 global.fetch = fetch;
 
 const config = new Config({
-  storefrontAccessToken: '663365cfae2c84f0f68ca1006329a694',
+  storefrontAccessToken: 'dd4d4dc146542ba7763305d71d1b3d38',
   domain: 'graphql.myshopify.com'
 });
 

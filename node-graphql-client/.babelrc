@@ -4,6 +4,6 @@
   ],
   "plugins": [
     ["add-shopify-header", {"files": [ "src/index.js" ]}],
-    "../../babel-plugin-graphql-js-client-transform"
+    "graphql-js-client-transform"
   ]
 }

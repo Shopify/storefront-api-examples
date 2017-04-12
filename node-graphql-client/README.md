@@ -20,11 +20,11 @@ yarn install
 
 If you would like to connect your store to this example, open up `src/graphql-js-client.js` and update the `url` and `Authorization` header:
 ```js
-const client = new Client(typeBundle, {
+export default new Client(typeBundle, {
   url: 'https://your-shop-name.myshopify.com/api/graphql',
   fetcherOptions: {
     headers: {
-      Authorization: 'Basic your-base64-encoded-storefront-access-token'
+      'X-Shopify-Storefront-Access-Token': 'your-storefront-access-token'
     }
   }
 });

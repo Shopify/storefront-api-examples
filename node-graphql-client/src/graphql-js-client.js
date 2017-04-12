@@ -8,7 +8,7 @@ export default new Client(typeBundle, {
   url: 'https://graphql.myshopify.com/api/graphql',
   fetcherOptions: {
     headers: {
-      Authorization: 'Basic NjYzMzY1Y2ZhZTJjODRmMGY2OGNhMTAwNjMyOWE2OTQK'
+      'X-Shopify-Storefront-Access-Token': 'dd4d4dc146542ba7763305d71d1b3d38'
     }
   }
 });

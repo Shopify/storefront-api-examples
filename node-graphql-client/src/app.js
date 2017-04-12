@@ -9,7 +9,7 @@ function gql() {
 
 const app = express();
 
-const shopNameAndProductsPromise = client.send(gql`
+const shopNameAndProductsPromise = client.send(gql(client)`
     query {
       shop {
         name
@@ -76,7 +76,7 @@ app.get('/', (req, res) => {
 
   // Create a checkout if it doesn't exist yet
   if (!checkoutId) {
-    return client.send(gql`
+    return client.send(gql(client)`
       mutation {
         checkoutCreate(input: {allowPartialAddresses: true, shippingAddress: {city: "Toronto", province: "ON", country: "Canada"}}) {
           userErrors {
@@ -94,7 +94,7 @@ app.get('/', (req, res) => {
   }
 
   // Fetch the checkout
-  const cartPromise = client.send(gql`
+  const cartPromise = client.send(gql(client)`
     query ($checkoutId: ID!) {
       node(id: $checkoutId) {
         ... on Checkout {
@@ -163,9 +163,9 @@ app.post('/line_item/:productId', (req, res) => {
       lineItems: [{variantId: selectedVariant.id, quantity}]
     };
 
-    return client.send(gql`
-      mutation ($input: CheckoutAddLineItemsInput!) {
-        checkoutAddLineItems(input: $input) {
+    return client.send(gql(client)`
+      mutation ($input: CheckoutLineItemsAddInput!) {
+        checkoutLineItemsAdd(input: $input) {
           userErrors {
             message
             field
@@ -191,7 +191,8 @@ app.post('/line_item/:productId', (req, res) => {
         }
       }
     `, {input}).then((result) => {
-      res.redirect(`/?cart=true&checkoutId=${result.model.checkoutAddLineItems.checkout.id}`);
+      console.log(result);
+      res.redirect(`/?cart=true&checkoutId=${result.model.checkoutLineItemsAdd.checkout.id}`);
     });
   });
 });

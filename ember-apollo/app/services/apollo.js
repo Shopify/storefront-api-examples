@@ -12,7 +12,7 @@ export default ApolloService.extend({
     if (!req.options.headers) {
       req.options.headers = {}; // Create the headers object if needed.
     }
-    req.options.headers.authorization = 'Basic ZGQ0ZDRkYzE0NjU0MmJhNzc2MzMwNWQ3MWQxYjNkMzg=';
+    req.options.headers['X-Shopify-Storefront-Access-Token']= 'dd4d4dc146542ba7763305d71d1b3d38';
     next();
   }
 });

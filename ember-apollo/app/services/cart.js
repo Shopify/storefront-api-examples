@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import gql from 'npm:graphql-tag';
 
-const { Service, RSVP, computed, inject } = Ember;
+const { Service, RSVP, inject } = Ember;
 
 const CheckoutFragment = gql`
   fragment CheckoutFragment on Checkout {
@@ -13,6 +13,7 @@ const CheckoutFragment = gql`
     lineItems (first: 250) {
       edges {
         node {
+          id
           title
           variant {
             id
@@ -94,20 +95,33 @@ export default Service.extend({
 
     return result;
   },
-
-  clearLineItems() {
-    this.set('lineItems', []);
-
-    return this.update();
-  },
+*/
 
   removeLineItem(lineItemId) {
-    const lineItemsWithoutItem = this.get('lineItems').rejectBy('id', lineItemId);
+    const input = {
+      checkoutId: this.get('checkout.id'),
+      lineItemIds: [lineItemId]
+    }
 
-    this.set('lineItems', lineItemsWithoutItem);
-
-    return this.update();
+    return this.get('apollo').mutate({
+      mutation: gql`
+        mutation ($input: CheckoutLineItemsRemoveInput!) {
+          checkoutLineItemsRemove(input: $input) {
+            userErrors {
+              message
+              field
+            }
+            checkout {
+              ...CheckoutFragment
+            }
+          }
+        }
+        ${CheckoutFragment}
+      `,
+      variables: {input}
+    }).then((result) => {
+      this.set('checkout', result.checkoutLineItemsRemove.checkout);
+    });
   },
-*/
 });
 

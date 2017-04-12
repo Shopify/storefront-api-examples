@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.post('/line_item/:id', (req, res) => {
+app.post('/add_line_item/:id', (req, res) => {
   const options = req.body;
   const productId = req.params.id;
   const checkoutId = options.checkoutId;
@@ -63,6 +63,18 @@ app.post('/line_item/:id', (req, res) => {
     return client.addLineItems(input).then((checkout) => {
       res.redirect(`/?cart=true&checkoutId=${checkout.id.substring(checkout.id.lastIndexOf('/') + 1)}`);
     });
+  });
+});
+
+app.post('/remove_line_item/:id', (req, res) => {
+  const checkoutId = req.body.checkoutId;
+  const input = {
+    checkoutId,
+    lineItemIds: [`gid://shopify/CheckoutLineItem/${req.params.id}`]
+  };
+
+  return client.removeLineItems(input).then((checkout) => {
+    res.redirect(`/?cart=true&checkoutId=${checkout.id.substring(checkout.id.lastIndexOf('/') + 1)}`);
   });
 });
 

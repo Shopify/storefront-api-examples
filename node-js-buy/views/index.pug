@@ -16,7 +16,7 @@ html(lang='en', data-framework='javascript')
                 img(src=product.images[0].src)
                 .product-info
                   h2=product.title
-                  form(method='post' action='/line_item' + product.id.substring(product.id.lastIndexOf('/')))
+                  form(method='post' action='/add_line_item' + product.id.substring(product.id.lastIndexOf('/')))
                     each option in product.options
                       label=option.name
                       select(name=option.name)
@@ -41,8 +41,8 @@ html(lang='en', data-framework='javascript')
               li
                 .view
                   label=`${item.quantity} - ${item.title}: ${item.variant.title}`
-                  form(method='post' action='/line_item' + item.variant.id.substring(item.variant.id.lastIndexOf('/')))
-                    input(type="hidden" name="method" value="delete")
+                  form(method='post' action='/remove_line_item' + item.id.substring(item.id.lastIndexOf('/')))
+                    input(type="hidden" name="checkoutId" value=cart.id)
                     button.destroy(type='submit')
             li
               .view

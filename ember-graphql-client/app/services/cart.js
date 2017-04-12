@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
-const { Service, RSVP, inject } = Ember;
+const { Service, inject } = Ember;
+let gql;
 
 export default Service.extend({
   client: inject.service('graphql-js-client'),

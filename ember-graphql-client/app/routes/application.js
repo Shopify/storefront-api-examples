@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+let gql;
+
 export default Ember.Route.extend({
   cart: Ember.inject.service(),
 

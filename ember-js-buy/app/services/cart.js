@@ -1,5 +1,6 @@
+import Ember from 'ember';
 
-const { Service, RSVP, computed, inject } = Ember;
+const { Service, inject } = Ember;
 
 export default Service.extend({
   client: inject.service('js-buy-sdk-client'),

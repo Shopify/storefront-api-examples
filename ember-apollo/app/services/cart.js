@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import gql from 'npm:graphql-tag';
 
-const { Service, RSVP, inject } = Ember;
+const { Service, inject } = Ember;
 
 const CheckoutFragment = gql`
   fragment CheckoutFragment on Checkout {

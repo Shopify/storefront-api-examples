@@ -14,7 +14,7 @@
             : {{item.variant.title}}
             {{/if}}
           </label>
-          <button class="destroy" {{action "removeItem" item}}></button>
+          <button class="destroy" {{action "removeItem" item.id}}></button>
         </div>
       </li>
     {{/each}}

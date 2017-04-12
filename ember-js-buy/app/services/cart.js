@@ -39,19 +39,16 @@ export default Service.extend({
 
     return result;
   },
-
-  clearLineItems() {
-    this.set('lineItems', []);
-
-    return this.update();
-  },
+  */
 
   removeLineItem(lineItemId) {
-    const lineItemsWithoutItem = this.get('lineItems').rejectBy('id', lineItemId);
+    const input = {
+      checkoutId: this.get('checkout.id'),
+      lineItemIds: [lineItemId]
+    }
 
-    this.set('lineItems', lineItemsWithoutItem);
-
-    return this.update();
-  },
-*/
+    return this.get('client').removeLineItems(input).then(checkout => {
+      this.set('checkout', checkout);
+    });
+  }
 });

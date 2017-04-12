@@ -14,8 +14,8 @@ export default Component.extend({
   }),
 
   actions: {
-    removeItem(item) {
-      this.get('cart').removeLineItem(get(item, 'id'));
+    removeItem(lineItemId) {
+      this.get('cartService').removeLineItem(lineItemId);
     },
     openCheckout() {
       window.open(this.get('cart.webUrl'));

@@ -5407,9 +5407,9 @@ shellwords@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.0.tgz#66afd47b6a12932d9071cbfd98a52e785cd0ba14"
 
-shopify-buy@alpha:
-  version "1.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/shopify-buy/-/shopify-buy-1.0.0-alpha.3.tgz#aa55672376cd14001acf476fc1f2b831ec23d8a9"
+shopify-buy@1.0.0-alpha.4:
+  version "1.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/shopify-buy/-/shopify-buy-1.0.0-alpha.4.tgz#672e8be2c26dd3165591620170a94d62a36f0adc"
 
 signal-exit@^3.0.0:
   version "3.0.2"

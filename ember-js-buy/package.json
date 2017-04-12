@@ -37,7 +37,7 @@
     "ember-source": "~2.12.0",
     "ember-welcome-page": "^2.0.2",
     "loader.js": "^4.2.3",
-    "shopify-buy": "alpha"
+    "shopify-buy": "1.0.0-alpha.4"
   },
   "engines": {
     "node": ">= 4"

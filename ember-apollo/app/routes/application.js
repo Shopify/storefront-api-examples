@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import RSVP from 'rsvp';
 import gql from 'npm:graphql-tag';
 
 export default Ember.Route.extend({

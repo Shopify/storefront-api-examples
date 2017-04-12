@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import RSVP from 'rsvp';
 
 export default Ember.Route.extend({
   cart: Ember.inject.service(),
@@ -7,14 +6,9 @@ export default Ember.Route.extend({
   model() {
     const client = this.get('client');
 
-    const shopQuery = client.query((root) => {
+    const query = client.query((root) => {
       root.add('shop', (shop) => {
         shop.add('name');
-      });
-    });
-
-    const productsQuery = client.query((root) => {
-      root.add('shop', (shop) => {
         shop.addConnection('products', {args: {first: 20}}, (products) => {
           products.add('id');
           products.add('title');
@@ -40,18 +34,12 @@ export default Ember.Route.extend({
       });
     });
 
-    const products = client.send(productsQuery).then((result) => {
-      return result.model.shop.products;
-    });
-
-    const shopName = client.send(shopQuery).then((result) => {
-      return result.model.shop.name;
-    });
-
-    return RSVP.hash({
-      isCartOpen: false,
-      shopName,
-      products
+    return client.send(query).then((result) => {
+      return {
+        products: result.model.shop.products,
+        shopName: result.model.shop.name,
+        isCartOpen: false
+      };
     });
   },
 

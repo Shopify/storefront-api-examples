@@ -1,0 +1,30 @@
+.App__header {
+  background-color: #222;
+  background-image: url('https://unsplash.it/1000/300?image=823');
+  background-size: cover;
+  padding: 80px 20px;
+  color: white;
+  text-align: center;
+}
+
+.Product-wrapper {
+  max-width: 900px;
+  margin: 40px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button {
+  background-color: #2752ff;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  padding: 10px 17px;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+  background-color: #222222;
+}

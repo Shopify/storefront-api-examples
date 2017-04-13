@@ -1,0 +1,11 @@
+.Line-item {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.Line-item---temp {
+  height: 40px;
+  width: 40px;
+  background: #e5e5e5;
+  margin-right: 10px;
+}

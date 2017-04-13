@@ -135,9 +135,9 @@ app.get('/', (req, res) => {
   });
 });
 
-app.post('/line_item/:productId', (req, res) => {
+app.post('/add_line_item/:id', (req, res) => {
   const options = req.body;
-  const productId = req.params.productId;
+  const productId = req.params.id;
   const checkoutId = options.checkoutId;
   const quantity = parseInt(options.quantity, 10);
 
@@ -180,6 +180,31 @@ app.post('/line_item/:productId', (req, res) => {
     });
   });
 });
+
+app.post('/remove_line_item/:id', (req, res) => {
+  const checkoutId = req.body.checkoutId;
+  const input = {
+    checkoutId,
+    lineItemIds: [`gid://shopify/CheckoutLineItem/${req.params.id}`]
+  };
+
+  return client.send(gql(client)`
+    mutation ($input: CheckoutLineItemsRemoveInput!) {
+      checkoutLineItemsRemove(input: $input) {
+        userErrors {
+          message
+          field
+        }
+        checkout {
+          id
+        }
+      }
+    }
+  `, {input}).then((result) => {
+    res.redirect(`/?cart=true&checkoutId=${result.model.checkoutLineItemsRemove.checkout.id}`);
+  });
+});
+
 
 app.listen(4200, () => {
   console.log('Example app listening on port 4200!'); // eslint-disable-line no-console

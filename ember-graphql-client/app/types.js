@@ -691,6 +691,7 @@ const Mutation = {
     "checkoutGiftCardApply": "CheckoutGiftCardApplyPayload",
     "checkoutLineItemsAdd": "CheckoutLineItemsAddPayload",
     "checkoutLineItemsRemove": "CheckoutLineItemsRemovePayload",
+    "checkoutLineItemsUpdate": "CheckoutLineItemsUpdatePayload",
     "checkoutShippingAddressUpdate": "CheckoutShippingAddressUpdatePayload",
     "checkoutShippingLineUpdate": "CheckoutShippingLineUpdatePayload",
     "customerAccessTokenCreate": "CustomerAccessTokenCreatePayload",
@@ -960,7 +961,6 @@ const CheckoutCreatePayload = {
   "kind": "OBJECT",
   "fieldBaseTypes": {
     "checkout": "Checkout",
-    "clientMutationId": "String",
     "userErrors": "UserError"
   },
   "implementsNode": false
@@ -972,7 +972,6 @@ const CheckoutCreateInput = {
   "name": "CheckoutCreateInput",
   "kind": "INPUT_OBJECT",
   "inputFieldBaseTypes": {
-    "clientMutationId": "String",
     "email": "String",
     "lineItems": "CheckoutLineItemInput",
     "shippingAddress": "MailingAddressInput",
@@ -1144,6 +1143,31 @@ const CheckoutLineItemsRemoveInput = {
 };
 Object.freeze(CheckoutLineItemsRemoveInput.inputFieldBaseTypes);
 var CheckoutLineItemsRemoveInput$1 = Object.freeze(CheckoutLineItemsRemoveInput);
+
+const CheckoutLineItemsUpdatePayload = {
+  "name": "CheckoutLineItemsUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+Object.freeze(CheckoutLineItemsUpdatePayload.fieldBaseTypes);
+var CheckoutLineItemsUpdatePayload$1 = Object.freeze(CheckoutLineItemsUpdatePayload);
+
+const CheckoutLineItemUpdateInput = {
+  "name": "CheckoutLineItemUpdateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "id": "ID",
+    "variantId": "ID",
+    "quantity": "Int",
+    "customAttributes": "AttributeInput"
+  }
+};
+Object.freeze(CheckoutLineItemUpdateInput.inputFieldBaseTypes);
+var CheckoutLineItemUpdateInput$1 = Object.freeze(CheckoutLineItemUpdateInput);
 
 const CheckoutShippingAddressUpdatePayload = {
   "name": "CheckoutShippingAddressUpdatePayload",
@@ -1682,6 +1706,8 @@ Types.types["CheckoutLineItemsAddPayload"] = CheckoutLineItemsAddPayload$1;
 Types.types["CheckoutLineItemsAddInput"] = CheckoutLineItemsAddInput$1;
 Types.types["CheckoutLineItemsRemovePayload"] = CheckoutLineItemsRemovePayload$1;
 Types.types["CheckoutLineItemsRemoveInput"] = CheckoutLineItemsRemoveInput$1;
+Types.types["CheckoutLineItemsUpdatePayload"] = CheckoutLineItemsUpdatePayload$1;
+Types.types["CheckoutLineItemUpdateInput"] = CheckoutLineItemUpdateInput$1;
 Types.types["CheckoutShippingAddressUpdatePayload"] = CheckoutShippingAddressUpdatePayload$1;
 Types.types["CheckoutShippingAddressUpdateInput"] = CheckoutShippingAddressUpdateInput$1;
 Types.types["CheckoutShippingLineUpdatePayload"] = CheckoutShippingLineUpdatePayload$1;

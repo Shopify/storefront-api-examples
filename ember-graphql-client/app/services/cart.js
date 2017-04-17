@@ -56,8 +56,8 @@ export default Service.extend({
     }
 
     const mutation = gql(client)`
-      mutation ($input: CheckoutLineItemsAddInput!) {
-        checkoutLineItemsAdd(input: $input) {
+      mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]) {
+        checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
           userErrors {
             message
             field
@@ -87,28 +87,50 @@ export default Service.extend({
       }
     `;
 
-    return client.send(mutation, {input}).then((result) => {
+    return client.send(mutation, input).then((result) => {
       this.set('checkout', result.model.checkoutLineItemsAdd.checkout);
     });
   },
-/*
+
   updateLineItem(lineItemId, quantity) {
-    const lineItem = this.get('lineItems').findBy('id', lineItemId);
+    const client = this.get('client');
 
-    let result;
+    const mutation = gql(client)`
+      mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
+        checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
+          userErrors {
+            message
+            field
+          }
+          checkout {
+            webUrl
+            subtotalPrice
+            totalTax
+            totalPrice
+            lineItems (first:250) {
+              pageInfo {
+                hasNextPage
+                hasPreviousPage
+              }
+              edges {
+                node {
+                  title
+                  variant {
+                    title
+                  }
+                  quantity
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
 
-    if (lineItem) {
-      lineItem.quantity = quantity;
-      result = this.update();
-    } else {
-      result = new RSVP.Promise((resolve, reject) => {
-        reject(new Error(`Line Item id: ${lineItemId} does not exist`));
-      });
-    }
-
-    return result;
+    return client.send(mutation, {checkoutId: this.get('checkout.id'), lineItems: [{id: lineItemId, quantity}]}).then((result) => {
+      this.set('checkout', result.model.checkoutLineItemsUpdate.checkout);
+    });
   },
-  */
 
   removeLineItem(lineItemId) {
     const client = this.get('client');
@@ -118,8 +140,8 @@ export default Service.extend({
     }
 
     const mutation = gql(client)`
-      mutation ($input: CheckoutLineItemsRemoveInput!) {
-        checkoutLineItemsRemove(input: $input) {
+      mutation ($checkoutId: ID!, $lineItemIds: [ID!]!) {
+        checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
           userErrors {
             message
             field
@@ -149,7 +171,7 @@ export default Service.extend({
       }
     `;
 
-    return client.send(mutation, {input}).then((result) => {
+    return client.send(mutation, input).then((result) => {
       this.set('checkout', result.model.checkoutLineItemsRemove.checkout);
     });
   },

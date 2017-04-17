@@ -13,42 +13,19 @@ export default Service.extend({
   },
 
   addVariants({variantId, quantity}) {
-    const input = {
-      checkoutId: this.get('checkout.id'),
-      lineItems: [{variantId, quantity}]
-    }
-
-    return this.get('client').addLineItems(input).then(checkout => {
+    return this.get('client').addLineItems(this.get('checkout.id'), [{variantId, quantity}]).then(checkout => {
       this.set('checkout', checkout);
     });
   },
 
-  /*
-  updateLineItem(lineItemId, quantity) {
-    const lineItem = this.get('lineItems').findBy('id', lineItemId);
-
-    let result;
-
-    if (lineItem) {
-      lineItem.quantity = quantity;
-      result = this.update();
-    } else {
-      result = new RSVP.Promise((resolve, reject) => {
-        reject(new Error(`Line Item id: ${lineItemId} does not exist`));
-      });
-    }
-
-    return result;
+  updateLineItem(id, quantity) {
+    return this.get('client').updateLineItems(this.get('checkout.id'), [{id, quantity}]).then(checkout => {
+      this.set('checkout', checkout);
+    });
   },
-  */
 
   removeLineItem(lineItemId) {
-    const input = {
-      checkoutId: this.get('checkout.id'),
-      lineItemIds: [lineItemId]
-    }
-
-    return this.get('client').removeLineItems(input).then(checkout => {
+    return this.get('client').removeLineItems(this.get('checkout.id'), [lineItemId]).then(checkout => {
       this.set('checkout', checkout);
     });
   }

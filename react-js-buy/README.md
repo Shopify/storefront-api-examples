@@ -17,7 +17,7 @@ yarn install
 
 ## Configure
 
-If you would like to connect your store to this example, open up `config.js` and update the `domain` and `storefrontAccessToken`:
+If you would like to connect your store to this example, update the `domain` and `storefrontAccessToken` in `config.js`:
 
 ```js
 const config = new Config({

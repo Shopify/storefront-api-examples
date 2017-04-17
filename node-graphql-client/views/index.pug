@@ -40,7 +40,10 @@ html(lang='en', data-framework='javascript')
             each item in cart.lineItems
               li
                 .view
-                  label=`${item.quantity} - ${item.title}: ${item.variant.title}`
+                  form(method='post' action='/update_line_item' + item.id.substring(item.id.lastIndexOf('/')))
+                    input(type='hidden' name='checkoutId' value=cart.id)
+                    input.quantity#quantity(min='1' type='number' name='quantity' value=item.quantity)
+                  label=`${item.title}: ${item.variant.title}`
                   form(method='post' action='/remove_line_item' + item.id.substring(item.id.lastIndexOf('/')))
                     input(type="hidden" name="checkoutId" value=cart.id)
                     button.destroy(type='submit')
@@ -73,6 +76,12 @@ html(lang='en', data-framework='javascript')
         if (!isCartOpen()) {
           document.getElementById('cart').className += ' cart--open';
         }
+      }
+
+      if (document.getElementById('quantity')) {
+        document.getElementById('quantity').onchange = function() {
+          this.form.submit();
+        };
       }
 
       document.getElementById('checkout-button').onclick = function () {

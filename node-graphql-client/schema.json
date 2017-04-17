@@ -5422,6 +5422,20 @@
               "description": "Updates the attributes of a checkout.",
               "args": [
                 {
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
                   "name": "input",
                   "description": null,
                   "type": {
@@ -5449,14 +5463,14 @@
               "description": null,
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CheckoutCompleteFree",
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -5476,14 +5490,28 @@
               "description": "Completes a checkout using a credit card token from Shopify's Vault",
               "args": [
                 {
-                  "name": "input",
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "payment",
                   "description": null,
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "CheckoutCompleteWithCreditCardInput",
+                      "name": "CreditCardPaymentInput",
                       "ofType": null
                     }
                   },
@@ -5503,14 +5531,28 @@
               "description": "Completes a checkout with a tokenized payment.",
               "args": [
                 {
-                  "name": "input",
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "payment",
                   "description": null,
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "CheckoutCompleteWithTokenizedPaymentInput",
+                      "name": "TokenizedPaymentInput",
                       "ofType": null
                     }
                   },
@@ -5557,14 +5599,28 @@
               "description": "Associates a customer to the checkout.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CheckoutCustomerAssociateInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "customerAccessToken",
+                  "description": "The customer access token of the customer to associate.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
                       "ofType": null
                     }
                   },
@@ -5584,14 +5640,14 @@
               "description": "Disassociates the current checkout customer from the checkout.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CheckoutCustomerDisassociateInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -5611,14 +5667,28 @@
               "description": "Updates the email on an existing checkout.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CheckoutEmailUpdateInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "email",
+                  "description": "The email to update the checkout with.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
                       "ofType": null
                     }
                   },
@@ -5638,14 +5708,28 @@
               "description": "Applies a gift card to an existing checkout using a gift card code.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "giftCardCode",
+                  "description": "The code of the gift card to apply on the checkout.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CheckoutGiftCardApplyInput",
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -5661,18 +5745,77 @@
               "deprecationReason": null
             },
             {
-              "name": "checkoutLineItemsAdd",
-              "description": null,
+              "name": "checkoutGiftCardRemove",
+              "description": "Removes an applied gift card from the checkout.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "appliedGiftCardId",
+                  "description": "The ID of the Applied Gift Card to remove from the Checkout",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CheckoutLineItemsAddInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "checkoutId",
+                  "description": "The ID of the Checkout",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "CheckoutGiftCardRemovePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "checkoutLineItemsAdd",
+              "description": null,
+              "args": [
+                {
+                  "name": "lineItems",
+                  "description": "A list of line item objects to add to the checkout.",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "CheckoutLineItemInput",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -5692,15 +5835,37 @@
               "description": "Removes line items from an existing checkout",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "checkoutId",
+                  "description": "the checkout on which to remove line items",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CheckoutLineItemsRemoveInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "lineItemIds",
+                  "description": "line item ids to remove",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "LIST",
+                      "name": null,
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "name": null,
+                        "ofType": {
+                          "kind": "SCALAR",
+                          "name": "ID",
+                          "ofType": null
+                        }
+                      }
                     }
                   },
                   "defaultValue": null
@@ -5715,18 +5880,81 @@
               "deprecationReason": null
             },
             {
+              "name": "checkoutLineItemsUpdate",
+              "description": "Update line items on a checkout",
+              "args": [
+                {
+                  "name": "checkoutId",
+                  "description": "the checkout on which to update line items",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "lineItems",
+                  "description": "line items to update",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "LIST",
+                      "name": null,
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "name": null,
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "CheckoutLineItemUpdateInput",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "CheckoutLineItemsUpdatePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "checkoutShippingAddressUpdate",
               "description": null,
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "shippingAddress",
+                  "description": "The shipping address to where the line items will be shipped.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "CheckoutShippingAddressUpdateInput",
+                      "name": "MailingAddressInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -5746,14 +5974,28 @@
               "description": null,
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "checkoutId",
+                  "description": "The ID of the checkout.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CheckoutShippingLineUpdateInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "shippingRateHandle",
+                  "description": "A concatenation of a Checkout’s shipping provider, price, and title, enabling the customer to select the availableShippingRates.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
                       "ofType": null
                     }
                   },
@@ -5800,14 +6042,14 @@
               "description": "Permanently destroys a customer access token.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "customerAccessToken",
+                  "description": "The access token used to identify the customer.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CustomerAccessTokenDeleteInput",
+                      "kind": "SCALAR",
+                      "name": "String",
                       "ofType": null
                     }
                   },
@@ -5827,14 +6069,14 @@
               "description": "Renews a customer access token.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "customerAccessToken",
+                  "description": "The access token used to identify the customer.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CustomerAccessTokenRenewInput",
+                      "kind": "SCALAR",
+                      "name": "String",
                       "ofType": null
                     }
                   },
@@ -5853,6 +6095,20 @@
               "name": "customerActivate",
               "description": "Activates a customer.",
               "args": [
+                {
+                  "name": "id",
+                  "description": "Specifies the customer to activate.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
                 {
                   "name": "input",
                   "description": null,
@@ -5881,14 +6137,28 @@
               "description": "Creates a new address for a customer.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "customerAccessToken",
+                  "description": "The access token used to identify the customer.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "address",
+                  "description": "The customer mailing address to create.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "CustomerAddressCreateInput",
+                      "name": "MailingAddressInput",
                       "ofType": null
                     }
                   },
@@ -5908,14 +6178,28 @@
               "description": "Permanently deletes the address of an existing customer.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "id",
+                  "description": "Specifies the address to delete.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CustomerAddressDeleteInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "customerAccessToken",
+                  "description": "The access token used to identify the customer.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
                       "ofType": null
                     }
                   },
@@ -5935,14 +6219,42 @@
               "description": "Updates the address of an existing customer.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "customerAccessToken",
+                  "description": "The access token used to identify the customer.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "id",
+                  "description": "Specifies the customer address to update.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "address",
+                  "description": "The customer’s mailing address.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "CustomerAddressUpdateInput",
+                      "name": "MailingAddressInput",
                       "ofType": null
                     }
                   },
@@ -5989,14 +6301,14 @@
               "description": "Sends a reset password email to the customer, as the first step in the reset password process.",
               "args": [
                 {
-                  "name": "input",
-                  "description": null,
+                  "name": "email",
+                  "description": "The email address of the customer to recover.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "CustomerRecoverInput",
+                      "kind": "SCALAR",
+                      "name": "String",
                       "ofType": null
                     }
                   },
@@ -6015,6 +6327,20 @@
               "name": "customerReset",
               "description": "Resets a customer’s password with a token received from `CustomerRecover`.",
               "args": [
+                {
+                  "name": "id",
+                  "description": "Specifies the customer to reset.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
                 {
                   "name": "input",
                   "description": null,
@@ -6107,18 +6433,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -6201,30 +6515,6 @@
           "description": "Specifies the fields required to update a checkout's attributes.\n",
           "fields": null,
           "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
             {
               "name": "note",
               "description": "The text of an optional note that a shop owner can attach to the checkout.",
@@ -6325,18 +6615,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -6367,41 +6645,6 @@
           "possibleTypes": null
         },
         {
-          "kind": "INPUT_OBJECT",
-          "name": "CheckoutCompleteFree",
-          "description": "Specifies the fields required to complete a free checkout.\n",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
           "kind": "OBJECT",
           "name": "CheckoutCompleteWithCreditCardPayload",
           "description": null,
@@ -6421,18 +6664,6 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
-            },
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
             },
             {
               "name": "payment",
@@ -6893,34 +7124,10 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "CheckoutCompleteWithCreditCardInput",
-          "description": "Specifies the fields required to complete a checkout with\na Shopify vaulted credit card ID.\n",
+          "name": "CreditCardPaymentInput",
+          "description": "Specifies the fields required to complete a checkout with\na Shopify vaulted credit card payment.\n",
           "fields": null,
           "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
             {
               "name": "amount",
               "description": "The amount of the payment.",
@@ -7125,18 +7332,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "payment",
               "description": null,
               "args": [],
@@ -7180,34 +7375,10 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "CheckoutCompleteWithTokenizedPaymentInput",
+          "name": "TokenizedPaymentInput",
           "description": "Specifies the fields required to complete a checkout with\na tokenized payment.\n",
           "fields": null,
           "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
             {
               "name": "amount",
               "description": "The amount of the payment.",
@@ -7321,18 +7492,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -7368,16 +7527,6 @@
           "description": "Specifies the fields required to create a checkout.\n",
           "fields": null,
           "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
             {
               "name": "email",
               "description": "The email with which the customer wants to checkout.",
@@ -7538,18 +7687,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -7576,55 +7713,6 @@
           ],
           "inputFields": null,
           "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "CheckoutCustomerAssociateInput",
-          "description": "Specifies the fields required to associate a customer to a checkout.\n",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "customerAccessToken",
-              "description": "The customer access token of the customer to associate.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -7650,18 +7738,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -7688,41 +7764,6 @@
           ],
           "inputFields": null,
           "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "CheckoutCustomerDisassociateInput",
-          "description": "Specifies the fields required to disassociate the customer from a checkout.\n",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -7748,18 +7789,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -7786,55 +7815,6 @@
           ],
           "inputFields": null,
           "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "CheckoutEmailUpdateInput",
-          "description": "Specifies the fields required to update the email of a checkout.\n",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "email",
-              "description": "The email to update the checkout with.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -7860,18 +7840,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -7902,51 +7870,53 @@
           "possibleTypes": null
         },
         {
-          "kind": "INPUT_OBJECT",
-          "name": "CheckoutGiftCardApplyInput",
-          "description": "Specifies the fields required to apply a gift card to a checkout.\n",
-          "fields": null,
-          "inputFields": [
+          "kind": "OBJECT",
+          "name": "CheckoutGiftCardRemovePayload",
+          "description": null,
+          "fields": [
             {
-              "name": "clientMutationId",
+              "name": "checkout",
+              "description": "The updated checkout object.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Checkout",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userErrors",
               "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "giftCardCode",
-              "description": "The code of the gift card to apply on the checkout.",
+              "args": [],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "UserError",
+                      "ofType": null
+                    }
+                  }
                 }
               },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
-          "interfaces": null,
+          "inputFields": null,
+          "interfaces": [],
           "enumValues": null,
           "possibleTypes": null
         },
@@ -7968,18 +7938,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -8006,59 +7964,6 @@
           ],
           "inputFields": null,
           "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "CheckoutLineItemsAddInput",
-          "description": "Specifies the fields required to add line items to a checkout.\n",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "lineItems",
-              "description": "A list of line item objects to add to the checkout.",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "CheckoutLineItemInput",
-                    "ofType": null
-                  }
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -8080,16 +7985,51 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
+              "name": "userErrors",
               "description": null,
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "UserError",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "CheckoutLineItemsUpdatePayload",
+          "description": null,
+          "fields": [
+            {
+              "name": "checkout",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Checkout",
                 "ofType": null
               },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
+              "isDeprecated": false,
+              "deprecationReason": null
             },
             {
               "name": "userErrors",
@@ -8123,51 +8063,53 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "CheckoutLineItemsRemoveInput",
+          "name": "CheckoutLineItemUpdateInput",
           "description": null,
           "fields": null,
           "inputFields": [
             {
-              "name": "clientMutationId",
+              "name": "id",
               "description": null,
               "type": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "ID",
                 "ofType": null
               },
               "defaultValue": null
             },
             {
-              "name": "checkoutId",
-              "description": "the checkout on which to remove line items",
+              "name": "variantId",
+              "description": null,
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
               },
               "defaultValue": null
             },
             {
-              "name": "lineItemIds",
-              "description": "line item ids to remove",
+              "name": "quantity",
+              "description": null,
               "type": {
-                "kind": "NON_NULL",
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "customAttributes",
+              "description": null,
+              "type": {
+                "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "LIST",
+                  "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "ID",
-                      "ofType": null
-                    }
+                    "kind": "INPUT_OBJECT",
+                    "name": "AttributeInput",
+                    "ofType": null
                   }
                 }
               },
@@ -8200,18 +8142,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -8238,55 +8168,6 @@
           ],
           "inputFields": null,
           "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "CheckoutShippingAddressUpdateInput",
-          "description": "Specifies the input fields required to update the shipping address for a checkout.\n",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "shippingAddress",
-              "description": "The shipping address to where the line items will be shipped.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "MailingAddressInput",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -8308,18 +8189,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -8350,74 +8219,13 @@
           "possibleTypes": null
         },
         {
-          "kind": "INPUT_OBJECT",
-          "name": "CheckoutShippingLineUpdateInput",
-          "description": "Specifies the fields required to update a Checkout’s shipping line.\n",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "checkoutId",
-              "description": "The ID of the checkout.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "shippingRateHandle",
-              "description": "A concatenation of a Checkout’s shipping provider, price, and title, enabling the customer to select the availableShippingRates.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
           "kind": "OBJECT",
           "name": "CustomerAccessTokenCreatePayload",
           "description": null,
           "fields": [
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "customerAccessToken",
-              "description": "The customer access token, used to modify the customer object.",
+              "description": "The newly created customer access token object.",
               "args": [],
               "type": {
                 "kind": "OBJECT",
@@ -8507,16 +8315,6 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
               "name": "email",
               "description": "The email associated to the customer.",
               "type": {
@@ -8554,18 +8352,6 @@
           "name": "CustomerAccessTokenDeletePayload",
           "description": null,
           "fields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
             {
               "name": "deletedAccessToken",
               "description": "The destroyed access token.",
@@ -8621,60 +8407,13 @@
           "possibleTypes": null
         },
         {
-          "kind": "INPUT_OBJECT",
-          "name": "CustomerAccessTokenDeleteInput",
-          "description": null,
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "customerAccessToken",
-              "description": "The access token used to identify the customer",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
           "kind": "OBJECT",
           "name": "CustomerAccessTokenRenewPayload",
           "description": null,
           "fields": [
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "customerAccessToken",
-              "description": "The renewed customer access token.",
+              "description": "The renewed customer access token object.",
               "args": [],
               "type": {
                 "kind": "OBJECT",
@@ -8715,57 +8454,10 @@
           "possibleTypes": null
         },
         {
-          "kind": "INPUT_OBJECT",
-          "name": "CustomerAccessTokenRenewInput",
-          "description": null,
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "customerAccessToken",
-              "description": "The access token used to identify the customer.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
           "kind": "OBJECT",
           "name": "CustomerActivatePayload",
           "description": null,
           "fields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
             {
               "name": "customer",
               "description": "The customer object.",
@@ -8815,32 +8507,8 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "id",
-              "description": "Specifies the customer to activate.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "resetToken",
-              "description": "The reset token required to activate the customer.",
+              "name": "activationToken",
+              "description": "The activation token required to activate the customer",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -8876,18 +8544,6 @@
           "name": "CustomerAddressCreatePayload",
           "description": null,
           "fields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
             {
               "name": "customerAddress",
               "description": "The new customer address object.",
@@ -8931,71 +8587,10 @@
           "possibleTypes": null
         },
         {
-          "kind": "INPUT_OBJECT",
-          "name": "CustomerAddressCreateInput",
-          "description": "Specifies the fields required to create a new Customer Address.",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "customerAccessToken",
-              "description": "The access token used to identify the customer.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "address",
-              "description": "The customer mailing address to create.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "MailingAddressInput",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
           "kind": "OBJECT",
           "name": "CustomerAddressDeletePayload",
           "description": null,
           "fields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
             {
               "name": "deletedCustomerAddressId",
               "description": "ID of the deleted customer address.",
@@ -9039,71 +8634,10 @@
           "possibleTypes": null
         },
         {
-          "kind": "INPUT_OBJECT",
-          "name": "CustomerAddressDeleteInput",
-          "description": "Specifies the fields required to destroy a Customer address.",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "id",
-              "description": "Specifies the address to delete.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "customerAccessToken",
-              "description": "The access token used to identify the customer.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
           "kind": "OBJECT",
           "name": "CustomerAddressUpdatePayload",
           "description": null,
           "fields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
             {
               "name": "customerAddress",
               "description": "The customer’s updated mailing address.",
@@ -9143,69 +8677,6 @@
           ],
           "inputFields": null,
           "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "CustomerAddressUpdateInput",
-          "description": "Specifies the fields required to update a Customer address.",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "customerAccessToken",
-              "description": "The access token used to identify the customer.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "id",
-              "description": "Specifies the customer address to update.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "address",
-              "description": "The customer’s mailing address.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "MailingAddressInput",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -9331,18 +8802,6 @@
           "description": null,
           "fields": [
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -9373,57 +8832,10 @@
           "possibleTypes": null
         },
         {
-          "kind": "INPUT_OBJECT",
-          "name": "CustomerRecoverInput",
-          "description": "Specifies the fields required to send a reset password email to the Customer.",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "email",
-              "description": "The email address of the customer to recover.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
           "kind": "OBJECT",
           "name": "CustomerResetPayload",
           "description": null,
           "fields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
             {
               "name": "customer",
               "description": "The customer object which was reset.",
@@ -9473,32 +8885,8 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "id",
-              "description": "Specifies the customer to reset.",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
               "name": "resetToken",
-              "description": "The reset token required to reset the customer's password",
+              "description": "The reset token required to reset the customer’s password.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,

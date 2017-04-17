@@ -1,8 +1,6 @@
 # React App Using js-buy-sdk
 
-An example using [js-buy-sdk](https://github.com/Shopify/js-buy-sdk) built with [React](https://facebook.github.io/react/).
-
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+An example using [js-buy-sdk](https://github.com/Shopify/js-buy-sdk) built with [React](https://facebook.github.io/react/). This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Prerequisites
 

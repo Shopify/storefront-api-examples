@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './css/App.css';
 import Product from './components/Product';
 import Cart from './components/Cart';
+import CustomerAuth from './components/CustomerAuth';
 import { graphql, gql, compose } from 'react-apollo'
 
 class App extends Component {
@@ -10,12 +11,15 @@ class App extends Component {
 
     this.state = {
       isCartOpen: false,
+      isCustomerAuthOpen: false,
       products: [],
       checkout: { lineItems: { edges: [] } }
     };
 
     this.handleCartClose = this.handleCartClose.bind(this);
     this.handleCartOpen = this.handleCartOpen.bind(this);
+    this.openCustomerAuth = this.openCustomerAuth.bind(this);
+    this.closeCustomerAuth = this.closeCustomerAuth.bind(this);
     this.addVariantToCart = this.addVariantToCart.bind(this);
     this.removeVariantFromCart = this.removeVariantFromCart.bind(this);
   }
@@ -98,6 +102,10 @@ class App extends Component {
 
     return (
       <div className="App">
+        <CustomerAuth
+          isCustomerAuthOpen={this.state.isCustomerAuthOpen}
+          closeCustomerAuth={this.closeCustomerAuth}
+        />
         <header className="App__header">
           <h1>Site Name</h1>
           <h2>Subtitle for your site goes here</h2>

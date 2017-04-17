@@ -10,21 +10,15 @@ class App extends Component {
     super();
 
     this.state = {
-      isCartOpen: true,
+      isCartOpen: false,
       products: [],
       checkout: { lineItems: [] }
     };
 
-    client.createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}})
-      .then((res) => {
-        this.setState({
-          checkout: res,
-        });
-      });
-
     this.handleCartClose = this.handleCartClose.bind(this);
     this.addVariantToCart = this.addVariantToCart.bind(this);
     this.removeVariantFromCart = this.removeVariantFromCart.bind(this);
+    this.updateQuantityInCart = this.updateQuantityInCart.bind(this);
   }
 
   handleCartClose() {
@@ -40,15 +34,24 @@ class App extends Component {
           products: res,
         });
       });
+
+    client.createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}})
+      .then((res) => {
+        this.setState({
+          checkout: res,
+        });
+      });
   }
 
   addVariantToCart(variantId, quantity){
-    const input = {
-      checkoutId: this.state.checkout.id,
-      lineItems: [{variantId, quantity: parseInt(quantity, 10)}]
-    }
+    this.setState({
+      isCartOpen: true,
+    });
 
-    return client.addLineItems(input).then(res => {
+    const checkoutId = this.state.checkout.id
+    const lineItemsToAdd = [{variantId, quantity: parseInt(quantity, 10)}]
+
+    return client.addLineItems(checkoutId, lineItemsToAdd).then(res => {
       this.setState({
         checkout: res,
       });
@@ -56,12 +59,21 @@ class App extends Component {
   }
 
   removeVariantFromCart(lineItemId){
-    const input = {
-      checkoutId: this.state.checkout.id,
-      lineItemIds: [lineItemId]
-    }
+    const checkoutId = this.state.checkout.id
+    const lineItemIdsToRemove = [lineItemId]
 
-    return client.removeLineItems(input).then(res => {
+    return client.removeLineItems(checkoutId, lineItemIdsToRemove).then(res => {
+      this.setState({
+        checkout: res,
+      });
+    });
+  }
+
+  updateQuantityInCart(lineItemId, quantity) {
+    const checkoutId = this.state.checkout.id
+    const lineItemsToUpdate = [{id: lineItemId, quantity: parseInt(quantity, 10)}]
+
+    return client.updateLineItems(checkoutId, lineItemsToUpdate).then(res => {
       this.setState({
         checkout: res,
       });
@@ -78,13 +90,21 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App__header">
-          <h1>Site Name</h1>
-          <h2>Subtitle for your site goes here</h2>
+          <div className="App__title">
+            <h1>Site Name</h1>
+            <h2>Subtitle for your site goes here</h2>
+          </div>
         </header>
         <div className="Product-wrapper">
           {products}
         </div>
-        <Cart removeVariantFromCart={this.removeVariantFromCart} checkout={this.state.checkout} isCartOpen={this.state.isCartOpen} handleCartClose={this.handleCartClose} />
+        <Cart
+          updateQuantityInCart={this.updateQuantityInCart}
+          removeVariantFromCart={this.removeVariantFromCart}
+          checkout={this.state.checkout}
+          isCartOpen={this.state.isCartOpen}
+          handleCartClose={this.handleCartClose}
+        />
       </div>
     );
   }

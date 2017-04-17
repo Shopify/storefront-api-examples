@@ -2,8 +2,22 @@
   background-color: #222;
   background-image: url('https://unsplash.it/1000/300?image=823');
   background-size: cover;
-  padding: 80px 20px;
   color: white;
+  padding: 10px 10px;
+}
+
+.App__nav{
+  width: 100%;
+  list-style: none;
+}
+
+.App__customer-actions {
+  float: left;
+  padding: 10px;
+}
+
+.App__title {
+  padding: 80px 20px;
   text-align: center;
 }
 
@@ -27,4 +41,14 @@
 .button:hover,
 .button:focus {
   background-color: #222222;
+}
+
+.log-in {
+  font-size: 1.2rem;
+  color: #b8b8b8;
+  cursor: pointer;
+}
+
+.log-in:hover {
+  color: white;
 }

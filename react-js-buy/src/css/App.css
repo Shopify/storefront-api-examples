@@ -2,8 +2,12 @@
   background-color: #222;
   background-image: url('https://unsplash.it/1000/300?image=823');
   background-size: cover;
-  padding: 80px 20px;
   color: white;
+  padding: 10px 10px;
+}
+
+.App__title {
+  padding: 80px 20px;
   text-align: center;
 }
 

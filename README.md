@@ -9,6 +9,6 @@ See the `README.md` in each example directory for more details and how to get st
 
 ## License
 
-MIT, see [LICENSE.md](https://github.com/Shopify/storefront-api-examples/blob/master/LICENSE.txt) for details.
+MIT, see [LICENSE](https://github.com/Shopify/storefront-api-examples/blob/master/LICENSE.txt) for details.
 
 <img src="https://cdn.shopify.com/shopify-marketing_assets/builds/19.0.0/shopify-full-color-black.svg" width="200" />

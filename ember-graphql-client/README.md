@@ -1,6 +1,6 @@
 # ember-graphql-client
 
-An example using [graphql-js-client](https://github.com/Shopify/graphql-js-client) built with Ember.
+An example using [graphql-js-client](https://github.com/Shopify/graphql-js-client) built with [Ember](https://www.emberjs.com/).
 
 ## Prerequisites
 
@@ -9,13 +9,12 @@ You will need the following things properly installed on your computer.
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with NPM)
 * [Yarn](https://yarnpkg.com/en/)
-* [Ember CLI](https://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
 
 ## Installation
 
 * `git clone git@github.com:Shopify/storefront-api-examples.git` this repository
 * `cd ember-graphql-client`
+* `yarn global add ember-cli`
 * `yarn install`
 
 ## Configuring

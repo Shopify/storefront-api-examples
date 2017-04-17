@@ -7,8 +7,8 @@
     {{#each cart.lineItems as |item|}}
       <li>
         <div class="view">
+          <input class="quantity" min="1" type="number" value={{item.quantity}} onchange={{action "updateItem" item.id}}>
           <label>
-            {{item.quantity}} -
             {{item.title}}
             {{#if item.variant.title}}
             : {{item.variant.title}}

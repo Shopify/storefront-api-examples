@@ -25,7 +25,7 @@ html(lang='en', data-framework='javascript')
                             =value
                     label Quantity
                     input(min='1', type='number', name='quantity', value='1')
-                    input(type="hidden" name="checkoutId" value=cart.id)
+                    input(type='hidden' name='checkoutId' value=cart.id)
                     .buy-button-wrapper
                       button.buy-button.button#add-to-cart-button(type='submit')
                         | Add to cart
@@ -40,9 +40,12 @@ html(lang='en', data-framework='javascript')
             each item in cart.lineItems
               li
                 .view
-                  label=`${item.quantity} - ${item.title}: ${item.variant.title}`
+                  form(method='post' action='/update_line_item' + item.id.substring(item.id.lastIndexOf('/')))
+                    input(type='hidden' name='checkoutId' value=cart.id)
+                    input.quantity#quantity(min='1' type='number' name='quantity' value=item.quantity)
+                  label=`${item.title}: ${item.variant.title}`
                   form(method='post' action='/remove_line_item' + item.id.substring(item.id.lastIndexOf('/')))
-                    input(type="hidden" name="checkoutId" value=cart.id)
+                    input(type='hidden' name='checkoutId' value=cart.id)
                     button.destroy(type='submit')
             li
               .view
@@ -73,6 +76,12 @@ html(lang='en', data-framework='javascript')
         if (!isCartOpen()) {
           document.getElementById('cart').className += ' cart--open';
         }
+      }
+
+      if (document.getElementById('quantity')) {
+        document.getElementById('quantity').onchange = function() {
+          this.form.submit();
+        };
       }
 
       document.getElementById('checkout-button').onclick = function () {

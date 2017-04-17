@@ -55,12 +55,7 @@ app.post('/add_line_item/:id', (req, res) => {
     const selectedVariant = client.Product.Helpers.variantForOptions(targetProduct, options);
 
     // Add the variant to our cart
-    const input = {
-      checkoutId,
-      lineItems: [{variantId: selectedVariant.id, quantity}]
-    };
-
-    return client.addLineItems(input).then((checkout) => {
+    return client.addLineItems(checkoutId, [{variantId: selectedVariant.id, quantity}]).then((checkout) => {
       res.redirect(`/?cart=true&checkoutId=${checkout.id.substring(checkout.id.lastIndexOf('/') + 1)}`);
     });
   });
@@ -68,12 +63,17 @@ app.post('/add_line_item/:id', (req, res) => {
 
 app.post('/remove_line_item/:id', (req, res) => {
   const checkoutId = req.body.checkoutId;
-  const input = {
-    checkoutId,
-    lineItemIds: [`gid://shopify/CheckoutLineItem/${req.params.id}`]
-  };
 
-  return client.removeLineItems(input).then((checkout) => {
+  return client.removeLineItems(checkoutId, [`gid://shopify/CheckoutLineItem/${req.params.id}`]).then((checkout) => {
+    res.redirect(`/?cart=true&checkoutId=${checkout.id.substring(checkout.id.lastIndexOf('/') + 1)}`);
+  });
+});
+
+app.post('/update_line_item/:id', (req, res) => {
+  const checkoutId = req.body.checkoutId;
+  const quantity = parseInt(req.body.quantity, 10);
+
+  return client.updateLineItems(checkoutId, [{id: `gid://shopify/CheckoutLineItem/${req.params.id}`, quantity}]).then((checkout) => {
     res.redirect(`/?cart=true&checkoutId=${checkout.id.substring(checkout.id.lastIndexOf('/') + 1)}`);
   });
 });

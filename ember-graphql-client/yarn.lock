@@ -521,9 +521,9 @@ babel-plugin-filter-imports@^0.2.0:
   dependencies:
     json-stable-stringify "^1.0.1"
 
-babel-plugin-graphql-js-client-transform@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-graphql-js-client-transform/-/babel-plugin-graphql-js-client-transform-1.0.2.tgz#c2d7eb26d87a1e8e0f156261202487fec4b92ad3"
+babel-plugin-graphql-js-client-transform@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-graphql-js-client-transform/-/babel-plugin-graphql-js-client-transform-1.0.3.tgz#38ba4de6079761b869f2bc490d6366bddfd70b9f"
   dependencies:
     babel-types "6.23.0"
     graphql "0.9.1"

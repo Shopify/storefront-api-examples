@@ -5554,7 +5554,7 @@
             },
             {
               "name": "checkoutCustomerAssociate",
-              "description": null,
+              "description": "Associates a customer to the checkout.",
               "args": [
                 {
                   "name": "input",
@@ -5581,7 +5581,7 @@
             },
             {
               "name": "checkoutCustomerDisassociate",
-              "description": null,
+              "description": "Disassociates the current checkout customer from the checkout.",
               "args": [
                 {
                   "name": "input",
@@ -5608,7 +5608,7 @@
             },
             {
               "name": "checkoutEmailUpdate",
-              "description": null,
+              "description": "Updates the email on an existing checkout.",
               "args": [
                 {
                   "name": "input",
@@ -5635,7 +5635,7 @@
             },
             {
               "name": "checkoutGiftCardApply",
-              "description": null,
+              "description": "Applies a gift card to an existing checkout using a gift card code.",
               "args": [
                 {
                   "name": "input",
@@ -5709,6 +5709,55 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "CheckoutLineItemsRemovePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "checkoutLineItemsUpdate",
+              "description": "Update line items on a checkout",
+              "args": [
+                {
+                  "name": "checkoutId",
+                  "description": "the checkout on which to update line items",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "lineItems",
+                  "description": "line items to update",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "LIST",
+                      "name": null,
+                      "ofType": {
+                        "kind": "NON_NULL",
+                        "name": null,
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "CheckoutLineItemUpdateInput",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "CheckoutLineItemsUpdatePayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -6198,7 +6247,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutAttributesUpdateInput",
-          "description": null,
+          "description": "Specifies the fields required to update a checkout's attributes.\n",
           "fields": null,
           "inputFields": [
             {
@@ -6369,7 +6418,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutCompleteFree",
-          "description": null,
+          "description": "Specifies the fields required to complete a free checkout.\n",
           "fields": null,
           "inputFields": [
             {
@@ -6894,7 +6943,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutCompleteWithCreditCardInput",
-          "description": null,
+          "description": "Specifies the fields required to complete a checkout with\na Shopify vaulted credit card ID.\n",
           "fields": null,
           "inputFields": [
             {
@@ -7181,7 +7230,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutCompleteWithTokenizedPaymentInput",
-          "description": null,
+          "description": "Specifies the fields required to complete a checkout with\na tokenized payment.\n",
           "fields": null,
           "inputFields": [
             {
@@ -7321,18 +7370,6 @@
               "deprecationReason": null
             },
             {
-              "name": "clientMutationId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": true,
-              "deprecationReason": "Relay is moving away from requiring this field"
-            },
-            {
               "name": "userErrors",
               "description": null,
               "args": [],
@@ -7365,19 +7402,9 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutCreateInput",
-          "description": null,
+          "description": "Specifies the fields required to create a checkout.\n",
           "fields": null,
           "inputFields": [
-            {
-              "name": "clientMutationId",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
             {
               "name": "email",
               "description": "The email with which the customer wants to checkout.",
@@ -7523,7 +7550,7 @@
           "fields": [
             {
               "name": "checkout",
-              "description": null,
+              "description": "The updated checkout object.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -7582,7 +7609,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutCustomerAssociateInput",
-          "description": null,
+          "description": "Specifies the fields required to associate a customer to a checkout.\n",
           "fields": null,
           "inputFields": [
             {
@@ -7597,7 +7624,7 @@
             },
             {
               "name": "checkoutId",
-              "description": null,
+              "description": "The ID of the checkout.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -7611,7 +7638,7 @@
             },
             {
               "name": "customerAccessToken",
-              "description": null,
+              "description": "The customer access token of the customer to associate.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -7635,7 +7662,7 @@
           "fields": [
             {
               "name": "checkout",
-              "description": null,
+              "description": "The updated checkout object.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -7694,7 +7721,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutCustomerDisassociateInput",
-          "description": null,
+          "description": "Specifies the fields required to disassociate the customer from a checkout.\n",
           "fields": null,
           "inputFields": [
             {
@@ -7709,7 +7736,7 @@
             },
             {
               "name": "checkoutId",
-              "description": null,
+              "description": "The ID of the checkout.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -7733,7 +7760,7 @@
           "fields": [
             {
               "name": "checkout",
-              "description": null,
+              "description": "The checkout object with the updated email.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -7792,7 +7819,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutEmailUpdateInput",
-          "description": null,
+          "description": "Specifies the fields required to update the email of a checkout.\n",
           "fields": null,
           "inputFields": [
             {
@@ -7807,7 +7834,7 @@
             },
             {
               "name": "checkoutId",
-              "description": null,
+              "description": "The ID of the checkout.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -7821,7 +7848,7 @@
             },
             {
               "name": "email",
-              "description": null,
+              "description": "The email to update the checkout with.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -7845,7 +7872,7 @@
           "fields": [
             {
               "name": "checkout",
-              "description": null,
+              "description": "The updated checkout object.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -7904,7 +7931,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutGiftCardApplyInput",
-          "description": null,
+          "description": "Specifies the fields required to apply a gift card to a checkout.\n",
           "fields": null,
           "inputFields": [
             {
@@ -7919,7 +7946,7 @@
             },
             {
               "name": "giftCardCode",
-              "description": null,
+              "description": "The code of the gift card to apply on the checkout.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -7933,7 +7960,7 @@
             },
             {
               "name": "checkoutId",
-              "description": null,
+              "description": "The ID of the checkout.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -8012,7 +8039,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutLineItemsAddInput",
-          "description": null,
+          "description": "Specifies the fields required to add line items to a checkout.\n",
           "fields": null,
           "inputFields": [
             {
@@ -8180,12 +8207,118 @@
         },
         {
           "kind": "OBJECT",
-          "name": "CheckoutShippingAddressUpdatePayload",
+          "name": "CheckoutLineItemsUpdatePayload",
           "description": null,
           "fields": [
             {
               "name": "checkout",
               "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Checkout",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userErrors",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "UserError",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "CheckoutLineItemUpdateInput",
+          "description": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "id",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "variantId",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "quantity",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "customAttributes",
+              "description": null,
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "AttributeInput",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "CheckoutShippingAddressUpdatePayload",
+          "description": null,
+          "fields": [
+            {
+              "name": "checkout",
+              "description": "The updated checkout object.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -8244,7 +8377,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutShippingAddressUpdateInput",
-          "description": null,
+          "description": "Specifies the input fields required to update the shipping address for a checkout.\n",
           "fields": null,
           "inputFields": [
             {
@@ -8259,7 +8392,7 @@
             },
             {
               "name": "shippingAddress",
-              "description": null,
+              "description": "The shipping address to where the line items will be shipped.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -8273,7 +8406,7 @@
             },
             {
               "name": "checkoutId",
-              "description": null,
+              "description": "The ID of the checkout.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -8297,7 +8430,7 @@
           "fields": [
             {
               "name": "checkout",
-              "description": null,
+              "description": "The updated checkout object.",
               "args": [],
               "type": {
                 "kind": "OBJECT",
@@ -8352,7 +8485,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "CheckoutShippingLineUpdateInput",
-          "description": null,
+          "description": "Specifies the fields required to update a Checkout’s shipping line.\n",
           "fields": null,
           "inputFields": [
             {
@@ -8367,7 +8500,7 @@
             },
             {
               "name": "checkoutId",
-              "description": null,
+              "description": "The ID of the checkout.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -8381,7 +8514,7 @@
             },
             {
               "name": "shippingRateHandle",
-              "description": null,
+              "description": "A concatenation of a Checkout’s shipping provider, price, and title, enabling the customer to select the availableShippingRates.",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,

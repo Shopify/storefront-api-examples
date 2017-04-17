@@ -198,12 +198,12 @@ button:focus {
 }
 
 .cart-list li label {
-  padding: 15px 60px 15px 15px;
+  padding: 15px;
   display: block;
   line-height: 1.2;
   transition: color 0.4s;
   font-size: 16px;
-  white-space: normal;
+  white-space: nowrap;
   word-break: normal;
 
 }
@@ -275,3 +275,17 @@ button:focus {
 .view-cart:hover {
   color: #af5b5e;
 }
+
+.view {
+  display: flex;
+  max-height: 50px;
+}
+
+input.quantity {
+  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 8px;
+  max-width: 50px;
+  margin: 8px 0px 8px 15px;
+  color: #4d4d4d;
+}
+

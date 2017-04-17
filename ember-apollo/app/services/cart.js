@@ -53,15 +53,10 @@ export default Service.extend({
   },
 
   addVariants({variantId, quantity}) {
-    const input = {
-      checkoutId: this.get('checkout.id'),
-      lineItems: [{variantId, quantity}]
-    };
-
     return this.get('apollo').mutate({
       mutation: gql`
-        mutation ($input: CheckoutLineItemsAddInput!) {
-          checkoutLineItemsAdd(input: $input) {
+        mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]) {
+          checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
             userErrors {
               message
               field
@@ -73,40 +68,17 @@ export default Service.extend({
         }
         ${CheckoutFragment}
       `,
-      variables: {input}
+      variables: {checkoutId: this.get('checkout.id'), lineItems: [{variantId, quantity}]}
     }).then((result) => {
       this.set('checkout', result.checkoutLineItemsAdd.checkout);
     });
   },
-/*
+
   updateLineItem(lineItemId, quantity) {
-    const lineItem = this.get('lineItems').findBy('id', lineItemId);
-
-    let result;
-
-    if (lineItem) {
-      lineItem.quantity = quantity;
-      result = this.update();
-    } else {
-      result = new RSVP.Promise((resolve, reject) => {
-        reject(new Error(`Line Item id: ${lineItemId} does not exist`));
-      });
-    }
-
-    return result;
-  },
-*/
-
-  removeLineItem(lineItemId) {
-    const input = {
-      checkoutId: this.get('checkout.id'),
-      lineItemIds: [lineItemId]
-    }
-
     return this.get('apollo').mutate({
       mutation: gql`
-        mutation ($input: CheckoutLineItemsRemoveInput!) {
-          checkoutLineItemsRemove(input: $input) {
+        mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
+          checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
             userErrors {
               message
               field
@@ -118,7 +90,29 @@ export default Service.extend({
         }
         ${CheckoutFragment}
       `,
-      variables: {input}
+      variables: {checkoutId: this.get('checkout.id'), lineItems: [{id: lineItemId, quantity}]}
+    }).then((result) => {
+      this.set('checkout', result.checkoutLineItemsUpdate.checkout);
+    });
+  },
+
+  removeLineItem(lineItemId) {
+    return this.get('apollo').mutate({
+      mutation: gql`
+        mutation ($checkoutId: ID!, $lineItemIds: [ID!]!) {
+          checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
+            userErrors {
+              message
+              field
+            }
+            checkout {
+              ...CheckoutFragment
+            }
+          }
+        }
+        ${CheckoutFragment}
+      `,
+      variables: {checkoutId: this.get('checkout.id'), lineItemIds: [lineItemId]}
     }).then((result) => {
       this.set('checkout', result.checkoutLineItemsRemove.checkout);
     });

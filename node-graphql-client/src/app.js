@@ -164,8 +164,8 @@ app.post('/add_line_item/:id', (req, res) => {
     };
 
     return client.send(gql(client)`
-      mutation ($input: CheckoutLineItemsAddInput!) {
-        checkoutLineItemsAdd(input: $input) {
+      mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]) {
+        checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
           userErrors {
             message
             field
@@ -175,7 +175,7 @@ app.post('/add_line_item/:id', (req, res) => {
           }
         }
       }
-    `, {input}).then((result) => {
+    `, input).then((result) => {
       res.redirect(`/?cart=true&checkoutId=${result.model.checkoutLineItemsAdd.checkout.id}`);
     });
   });
@@ -189,8 +189,8 @@ app.post('/remove_line_item/:id', (req, res) => {
   };
 
   return client.send(gql(client)`
-    mutation ($input: CheckoutLineItemsRemoveInput!) {
-      checkoutLineItemsRemove(input: $input) {
+     mutation ($checkoutId: ID!, $lineItemIds: [ID!]!) {
+        checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
         userErrors {
           message
           field
@@ -200,11 +200,35 @@ app.post('/remove_line_item/:id', (req, res) => {
         }
       }
     }
-  `, {input}).then((result) => {
+  `, input).then((result) => {
     res.redirect(`/?cart=true&checkoutId=${result.model.checkoutLineItemsRemove.checkout.id}`);
   });
 });
 
+app.post('/update_line_item/:id', (req, res) => {
+  const checkoutId = req.body.checkoutId;
+  const quantity = parseInt(req.body.quantity, 10);
+  const input = {
+    checkoutId,
+    lineItems: [{id: `gid://shopify/CheckoutLineItem/${req.params.id}`, quantity}]
+  };
+
+  return client.send(gql(client)`
+    mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
+      checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
+        userErrors {
+          message
+          field
+        }
+        checkout {
+          id
+        }
+      }
+    }
+  `, input).then((result) => {
+    res.redirect(`/?cart=true&checkoutId=${result.model.checkoutLineItemsUpdate.checkout.id}`);
+  });
+});
 
 app.listen(4200, () => {
   console.log('Example app listening on port 4200!'); // eslint-disable-line no-console

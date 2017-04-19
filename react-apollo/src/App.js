@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './css/App.css';
 import Product from './components/Product';
 import Cart from './components/Cart';
-import CustomerAuth from './components/CustomerAuth';
+import CustomerAuthWithMutation from './components/CustomerAuth';
 import { graphql, gql, compose } from 'react-apollo'
 
 class App extends Component {
@@ -12,6 +12,7 @@ class App extends Component {
     this.state = {
       isCartOpen: false,
       isCustomerAuthOpen: false,
+      isNewCustomer: false,
       products: [],
       checkout: { lineItems: { edges: [] } }
     };
@@ -21,7 +22,9 @@ class App extends Component {
     this.openCustomerAuth = this.openCustomerAuth.bind(this);
     this.closeCustomerAuth = this.closeCustomerAuth.bind(this);
     this.addVariantToCart = this.addVariantToCart.bind(this);
-    this.removeVariantFromCart = this.removeVariantFromCart.bind(this);
+    this.removeLineItemFromCart = this.removeLineItemFromCart.bind(this);
+    this.updateLineItemInCart = this.updateLineItemInCart.bind(this);
+    this.setCustomerAccessToken = this.setCustomerAccessToken.bind(this);
   }
 
   componentWillMount() {
@@ -46,6 +49,8 @@ class App extends Component {
     createCheckout: React.PropTypes.func.isRequired,
     checkoutLineItemsAdd: React.PropTypes.func.isRequired,
     checkoutLineItemsRemove: React.PropTypes.func.isRequired,
+    checkoutLineItemsUpdate: React.PropTypes.func.isRequired,
+    customerAccessTokenCreate: React.PropTypes.func.isRequired
   }
 
   handleCartOpen() {
@@ -60,14 +65,29 @@ class App extends Component {
     });
   }
 
-  addVariantToCart(variantId, quantity){
-    const input = {
-      checkoutId: this.state.checkout.id,
-      lineItems: [{variantId, quantity: parseInt(quantity, 10)}]
+  openCustomerAuth(event) {
+    if (event.target.getAttribute('data-customer-type') === "new-customer") {
+      this.setState({
+        isNewCustomer: true,
+        isCustomerAuthOpen: true
+      });
+    } else {
+      this.setState({
+        isCustomerAuthOpen: true,
+        isNewCustomer: false
+      });
     }
+  }
 
+  closeCustomerAuth() {
+    this.setState({
+      isCustomerAuthOpen: false,
+    });
+  }
+
+  addVariantToCart(variantId, quantity){
     this.props.checkoutLineItemsAdd(
-      { variables: { input }
+      { variables: { checkoutId: this.state.checkout.id, lineItems:  [{variantId, quantity: parseInt(quantity, 10)}] }
       }).then((res) => {
       this.setState({
         checkout: res.data.checkoutLineItemsAdd.checkout
@@ -77,18 +97,30 @@ class App extends Component {
     this.handleCartOpen();
   }
 
-  removeVariantFromCart(lineItemId){
-    const input = {
-      checkoutId: this.state.checkout.id,
-      lineItemIds: [lineItemId]
-    }
-
+  removeLineItemFromCart(lineItemId){
     this.props.checkoutLineItemsRemove(
-      { variables: { input }
+      { variables: { checkoutId: this.state.checkout.id, lineItemIds: [lineItemId] }
       }).then((res) => {
       this.setState({
         checkout: res.data.checkoutLineItemsRemove.checkout
       });
+    });
+  }
+
+  updateLineItemInCart(lineItemId, quantity){
+    this.props.checkoutLineItemsUpdate(
+      { variables: { checkoutId: this.state.checkout.id, lineItems: [{id: lineItemId, quantity: parseInt(quantity, 10)}] }
+      }).then((res) => {
+      this.setState({
+        checkout: res.data.checkoutLineItemsUpdate.checkout
+      });
+    });
+  }
+
+  setCustomerAccessToken(customerAccessToken){
+    this.setState({
+      customerAccessToken: customerAccessToken,
+      isCustomerAuthOpen: false
     });
   }
 
@@ -102,20 +134,35 @@ class App extends Component {
 
     return (
       <div className="App">
-        <CustomerAuth
-          isCustomerAuthOpen={this.state.isCustomerAuthOpen}
+        <CustomerAuthWithMutation
           closeCustomerAuth={this.closeCustomerAuth}
+          isCustomerAuthOpen={this.state.isCustomerAuthOpen}
+          newCustomer={this.state.isNewCustomer}
+          setCustomerAccessToken={this.setCustomerAccessToken}
         />
         <header className="App__header">
-          <h1>Site Name</h1>
-          <h2>Subtitle for your site goes here</h2>
+          <ul className="App__nav">
+            <li className="button App__customer-actions" onClick={this.openCustomerAuth} data-customer-type="new-customer">Create an Account</li>
+            <li className="login App__customer-actions" onClick={this.openCustomerAuth}>Log in</li>
+          </ul>
+          <div className="App__title">
+            <h1>Site Name</h1>
+            <h2>Subtitle for your site goes here</h2>
+          </div>
         </header>
         <div className="Product-wrapper">
           { this.props.data.shop.products.edges.map(product =>
             <Product addVariantToCart={this.addVariantToCart} checkout={this.state.checkout} key={product.node.id.toString()} product={product.node} />
           )}
         </div>
-        <Cart removeVariantFromCart={this.removeVariantFromCart} checkout={this.state.checkout} isCartOpen={this.state.isCartOpen} handleCartClose={this.handleCartClose} />
+        <Cart
+          removeLineItemFromCart={this.removeLineItemFromCart}
+          updateLineItemInCart={this.updateLineItemInCart}
+          checkout={this.state.checkout}
+          isCartOpen={this.state.isCartOpen}
+          handleCartClose={this.handleCartClose}
+          customerAccessToken={this.state.customerAccessToken}
+        />
       </div>
     );
   }
@@ -194,6 +241,7 @@ const CheckoutFragment = gql`
             image {
               src
             }
+            price
           }
           quantity
         }
@@ -218,8 +266,8 @@ const createCheckout = gql`
 `;
 
 const checkoutLineItemsAdd = gql`
-  mutation ($input: CheckoutLineItemsAddInput!) {
-    checkoutLineItemsAdd(input: $input) {
+  mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]) {
+    checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
       userErrors {
         message
         field
@@ -233,8 +281,8 @@ const checkoutLineItemsAdd = gql`
 `;
 
 const checkoutLineItemsRemove = gql`
-  mutation ($input: CheckoutLineItemsRemoveInput!) {
-    checkoutLineItemsRemove(input: $input) {
+  mutation ($checkoutId: ID!, $lineItemIds: [ID!]!) {
+    checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
       userErrors {
         message
         field
@@ -247,11 +295,43 @@ const checkoutLineItemsRemove = gql`
   ${CheckoutFragment}
 `;
 
+const checkoutLineItemsUpdate = gql`
+  mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
+    checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
+      userErrors {
+        message
+        field
+      }
+      checkout {
+        ...CheckoutFragment
+      }
+    }
+  }
+  ${CheckoutFragment}
+`;
+
+const customerAccessTokenCreate = gql`
+  mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+    customerAccessTokenCreate(input: $input) {
+      userErrors {
+        field
+        message
+      }
+      customerAccessToken {
+        accessToken
+        expiresAt
+      }
+    }
+  }
+`;
+
 const AppWithDataAndMutation = compose(
   graphql(shopQuery),
   graphql(createCheckout, {name: "createCheckout"}),
   graphql(checkoutLineItemsAdd, {name: "checkoutLineItemsAdd"}),
-  graphql(checkoutLineItemsRemove, {name: "checkoutLineItemsRemove"})
+  graphql(checkoutLineItemsRemove, {name: "checkoutLineItemsRemove"}),
+  graphql(checkoutLineItemsUpdate, {name: "checkoutLineItemsUpdate"}),
+  graphql(customerAccessTokenCreate, {name: "customerAccessTokenCreate"})
 )(App);
 
 export default AppWithDataAndMutation;

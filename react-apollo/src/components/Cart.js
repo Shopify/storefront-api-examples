@@ -3,11 +3,26 @@ import LineItem from './LineItem';
 import '../css/Cart.css';
 
 class Cart extends Component {
+  constructor(props) {
+  super(props);
+
+    this.openCheckout = this.openCheckout.bind(this);
+  }
+
+  openCheckout() {
+    const webCheckoutUrl = this.props.checkout.webUrl + "&customer_access_token=" + this.props.customerAccessToken
+    window.open(webCheckoutUrl);
+  }
 
   render() {
     let line_items = this.props.checkout.lineItems.edges.map((line_item) => {
       return (
-        <LineItem removeVariantFromCart={this.props.removeVariantFromCart} key={line_item.node.id.toString()} line_item={line_item.node} />
+        <LineItem
+          removeLineItemFromCart={this.props.removeLineItemFromCart}
+          updateLineItemInCart={this.props.updateLineItemInCart}
+          key={line_item.node.id.toString()}
+          line_item={line_item.node}
+        />
       );
     });
 
@@ -23,23 +38,27 @@ class Cart extends Component {
         </header>
         <ul className="Cart__line-items">
           {line_items}
-          <li className="Line-item">
-            <strong>Subtotal: </strong>
-            $ {this.props.checkout.subtotalPrice}
-          </li>
-          <li className="Line-item">
-            <label>
-              <strong>Taxes: </strong>
-              $ {this.props.checkout.totalTax}
-            </label>
-          </li>
-          <li className="Line-item">
-            <strong>Total: </strong>
-            $ {this.props.checkout.totalPrice}
-          </li>
         </ul>
         <footer className="Cart__footer">
-          <button className="Cart__checkout button">Checkout</button>
+          <div className="Cart-info clearfix">
+            <div className="Cart-info__total Cart-info__small">Subtotal</div>
+            <div className="Cart-info__pricing">
+              <span className="pricing">$ {this.props.checkout.subtotalPrice}</span>
+            </div>
+          </div>
+          <div className="Cart-info clearfix">
+            <div className="Cart-info__total Cart-info__small">Taxes</div>
+            <div className="Cart-info__pricing">
+              <span className="pricing">$ {this.props.checkout.totalTax}</span>
+            </div>
+          </div>
+          <div className="Cart-info clearfix">
+            <div className="Cart-info__total Cart-info__small">Total</div>
+            <div className="Cart-info__pricing">
+              <span className="pricing">$ {this.props.checkout.totalPrice}</span>
+            </div>
+          </div>
+          <button className="Cart__checkout button" onClick={this.openCheckout}>Checkout</button>
         </footer>
       </div>
     )

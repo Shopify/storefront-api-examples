@@ -43,12 +43,12 @@
   background-color: #222222;
 }
 
-.log-in {
+.login {
   font-size: 1.2rem;
   color: #b8b8b8;
   cursor: pointer;
 }
 
-.log-in:hover {
+.login:hover {
   color: white;
 }

@@ -1,7 +1,7 @@
 import Client, {Config} from 'shopify-buy';
 
 const config = new Config({
-  storefrontAccessToken: 'e911149b96b4eb849a3c5c3551dec717',
+  storefrontAccessToken: 'dd4d4dc146542ba7763305d71d1b3d38',
   domain: 'graphql.myshopify.com',
 });
 

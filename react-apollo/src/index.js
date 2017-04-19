@@ -12,7 +12,7 @@ networkInterface.use([{
     if (!req.options.headers) {
       req.options.headers = {};
     }
-    req.options.headers['X-Shopify-Storefront-Access-Token'] = 'e911149b96b4eb849a3c5c3551dec717'
+    req.options.headers['X-Shopify-Storefront-Access-Token'] = 'dd4d4dc146542ba7763305d71d1b3d38'
     next();
   }
 }]);

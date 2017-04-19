@@ -17,7 +17,6 @@ class Cart extends Component {
     let line_items = this.props.checkout.lineItems.map((line_item) => {
       return (
         <LineItem
-          removeVariantFromCart={this.props.removeVariantFromCart}
           updateQuantityInCart={this.props.updateQuantityInCart}
           key={line_item.id.toString()}
           line_item={line_item}

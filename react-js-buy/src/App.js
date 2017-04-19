@@ -3,7 +3,7 @@ import './css/App.css';
 import Product from './components/Product';
 import Cart from './components/Cart';
 import {client} from './config';
-import {addVariantToCart, removeVariantFromCart, updateQuantityInCart} from './cart'
+import {addVariantToCart, updateQuantityInCart} from './cart'
 
 
 class App extends Component {
@@ -18,7 +18,6 @@ class App extends Component {
 
     this.handleCartClose = this.handleCartClose.bind(this);
     this.addVariantToCart = addVariantToCart.bind(this);
-    this.removeVariantFromCart = removeVariantFromCart.bind(this);
     this.updateQuantityInCart = updateQuantityInCart.bind(this);
   }
 
@@ -71,7 +70,6 @@ class App extends Component {
         </div>
         <Cart
           updateQuantityInCart={this.updateQuantityInCart}
-          removeVariantFromCart={this.removeVariantFromCart}
           checkout={this.state.checkout}
           isCartOpen={this.state.isCartOpen}
           handleCartClose={this.handleCartClose}

@@ -15,17 +15,6 @@ export function addVariantToCart(variantId, quantity){
   });
 };
 
-export function removeVariantFromCart(lineItemId){
-  const checkoutId = this.state.checkout.id
-  const lineItemIdsToRemove = [lineItemId]
-
-  return client.removeLineItems(checkoutId, lineItemIdsToRemove).then(res => {
-    this.setState({
-      checkout: res,
-    });
-  });
-};
-
 export function updateQuantityInCart(lineItemId, quantity) {
   const checkoutId = this.state.checkout.id
   const lineItemsToUpdate = [{id: lineItemId, quantity: parseInt(quantity, 10)}]

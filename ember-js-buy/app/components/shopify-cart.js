@@ -3,6 +3,8 @@ import Ember from 'ember';
 const { Component, inject, computed } = Ember;
 
 export default Component.extend({
+  tagName: '',
+
   cartService: inject.service('cart'),
 
   cart: computed.alias('cartService.checkout'),
@@ -17,10 +19,13 @@ export default Component.extend({
     removeItem(lineItemId) {
       this.get('cartService').removeLineItem(lineItemId);
     },
-    updateItem(lineItemId, event) {
-      const quantity = parseInt(event.target.value, 10);
+    decrementQuantity(lineItemId, currentQuantity) {
 
-      this.get('cartService').updateLineItem(lineItemId, quantity);
+      this.get('cartService').updateLineItem(lineItemId, currentQuantity - 1);
+    },
+    incrementQuantity(lineItemId, currentQuantity) {
+
+      this.get('cartService').updateLineItem(lineItemId, currentQuantity + 1);
     },
     openCheckout() {
       window.open(this.get('cart.webUrl'));

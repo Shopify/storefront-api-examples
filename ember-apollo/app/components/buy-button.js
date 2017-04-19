@@ -8,6 +8,8 @@ function unwrapNode(nodeObject) {
 }
 
 export default Component.extend({
+  classNames: ['Product'],
+
   cart: inject.service(),
 
   product: null,

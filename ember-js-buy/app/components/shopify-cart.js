@@ -20,11 +20,9 @@ export default Component.extend({
       this.get('cartService').removeLineItem(lineItemId);
     },
     decrementQuantity(lineItemId, currentQuantity) {
-
       this.get('cartService').updateLineItem(lineItemId, currentQuantity - 1);
     },
     incrementQuantity(lineItemId, currentQuantity) {
-
       this.get('cartService').updateLineItem(lineItemId, currentQuantity + 1);
     },
     openCheckout() {

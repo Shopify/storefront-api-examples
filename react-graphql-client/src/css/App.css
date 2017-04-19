@@ -1,0 +1,54 @@
+.App__header {
+  background-color: #222;
+  background-image: url('https://unsplash.it/1000/300?image=823');
+  background-size: cover;
+  color: white;
+  padding: 10px 10px;
+}
+
+.App__nav{
+  width: 100%;
+  list-style: none;
+}
+
+.App__customer-actions {
+  float: left;
+  padding: 10px;
+}
+
+.App__title {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.Product-wrapper {
+  max-width: 900px;
+  margin: 40px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button {
+  background-color: #2752ff;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  padding: 10px 17px;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+  background-color: #222222;
+}
+
+.login {
+  font-size: 1.2rem;
+  color: #b8b8b8;
+  cursor: pointer;
+}
+
+.login:hover {
+  color: white;
+}

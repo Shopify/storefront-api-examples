@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { graphql, gql, compose } from 'react-apollo'
+import PropTypes from 'prop-types';
 import '../css/CustomerAuth.css';
 
 class CustomerAuth extends Component {
@@ -15,11 +16,13 @@ class CustomerAuth extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.createCustomerAccount = this.createCustomerAccount.bind(this);
+    this.resetErrorMessages = this.resetErrorMessages.bind(this);
+    this.resetInputFields = this.resetInputFields.bind(this);
   }
 
   static propTypes = {
-    customerCreate: React.PropTypes.func.isRequired,
-    customerAccessTokenCreate: React.PropTypes.func.isRequired,
+    customerCreate: PropTypes.func.isRequired,
+    customerAccessTokenCreate: PropTypes.func.isRequired,
   }
 
   handleInputChange(event) {
@@ -30,13 +33,23 @@ class CustomerAuth extends Component {
     this.setState({[name]: value});
   }
 
-  handleSubmit(email, password){
+  resetErrorMessages(){
     this.setState({
       nonFieldErrorMessage: null,
       emailErrorMessage: null,
       passwordErrorMessage: null
     });
+  }
 
+  resetInputFields(){
+    this.setState({
+      email: '',
+      password: ''
+    });
+  }
+
+  handleSubmit(email, password){
+    this.resetErrorMessages();
     if (this.props.newCustomer) {
       this.createCustomerAccount(email, password)
     } else {
@@ -97,7 +110,7 @@ class CustomerAuth extends Component {
     return (
       <div className={`CustomerAuth ${this.props.isCustomerAuthOpen ? 'CustomerAuth--open' : ''}`}>
         <button
-          onClick={this.props.closeCustomerAuth}
+          onClick={() => { this.props.closeCustomerAuth(); this.resetErrorMessages(); this.resetInputFields();}}
           className="CustomerAuth__close">
           x
         </button>

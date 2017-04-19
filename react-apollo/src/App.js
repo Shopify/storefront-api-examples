@@ -3,6 +3,7 @@ import './css/App.css';
 import Product from './components/Product';
 import Cart from './components/Cart';
 import CustomerAuthWithMutation from './components/CustomerAuth';
+import PropTypes from 'prop-types';
 import { graphql, gql, compose } from 'react-apollo'
 
 class App extends Component {
@@ -41,16 +42,16 @@ class App extends Component {
   }
 
   static propTypes = {
-    data: React.PropTypes.shape({
-      loading: React.PropTypes.bool,
-      error: React.PropTypes.object,
-      shop: React.PropTypes.object,
+    data: PropTypes.shape({
+      loading: PropTypes.bool,
+      error: PropTypes.object,
+      shop: PropTypes.object,
     }).isRequired,
-    createCheckout: React.PropTypes.func.isRequired,
-    checkoutLineItemsAdd: React.PropTypes.func.isRequired,
-    checkoutLineItemsRemove: React.PropTypes.func.isRequired,
-    checkoutLineItemsUpdate: React.PropTypes.func.isRequired,
-    customerAccessTokenCreate: React.PropTypes.func.isRequired
+    createCheckout: PropTypes.func.isRequired,
+    checkoutLineItemsAdd: PropTypes.func.isRequired,
+    checkoutLineItemsRemove: PropTypes.func.isRequired,
+    checkoutLineItemsUpdate: PropTypes.func.isRequired,
+    customerAccessTokenCreate: PropTypes.func.isRequired
   }
 
   handleCartOpen() {

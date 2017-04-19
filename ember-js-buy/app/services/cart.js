@@ -3,12 +3,27 @@ import Ember from 'ember';
 const { Service, inject } = Ember;
 
 export default Service.extend({
+  store: Ember.inject.service('store'),
   client: inject.service('js-buy-sdk-client'),
   checkout: null,
 
   init() {
-    return this.get('client').createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}).then(checkout => {
-      this.set('checkout', checkout);
+    return this.get('store').findAll('cart').then((result) => {
+      const cartRecord = result.get('lastObject');
+
+      if (cartRecord) {
+        const checkoutId = cartRecord.data.checkoutId;
+
+        return this.get('client').fetchCheckout(checkoutId.substring(checkoutId.lastIndexOf('/') + 1)).then(checkout => {
+          this.set('checkout', checkout);
+        });
+      } else {
+        return this.get('client').createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}).then(checkout => {
+          this.set('checkout', checkout);
+          const post = this.get('store').createRecord('cart', {checkoutId: checkout.id});
+          post.save();
+        });
+      }
     });
   },
 

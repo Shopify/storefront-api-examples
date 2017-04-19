@@ -2512,6 +2512,13 @@ ember-load-initializers@^0.6.0:
   dependencies:
     ember-cli-babel "^5.1.6"
 
+ember-localstorage-adapter@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-localstorage-adapter/-/ember-localstorage-adapter-1.0.0.tgz#985daadce0c149d0afd904a17ef67ae59a0b7e3d"
+  dependencies:
+    ember-cli-babel "^5.1.6"
+    ember-runtime-enumerable-includes-polyfill "^1.0.1"
+
 ember-qunit@^2.0.0-beta.1:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-2.1.0.tgz#42caad88f477455f99e7cba1cde568967fa74046"
@@ -2531,7 +2538,7 @@ ember-router-generator@^1.0.0:
   dependencies:
     recast "^0.11.3"
 
-ember-runtime-enumerable-includes-polyfill@^1.0.0:
+ember-runtime-enumerable-includes-polyfill@^1.0.0, ember-runtime-enumerable-includes-polyfill@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/ember-runtime-enumerable-includes-polyfill/-/ember-runtime-enumerable-includes-polyfill-1.0.4.tgz#16a7612e347a2edf07da8b2f2f09dbfee70deba0"
   dependencies:
@@ -5407,7 +5414,7 @@ shellwords@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.0.tgz#66afd47b6a12932d9071cbfd98a52e785cd0ba14"
 
-shopify-buy@alpha:
+shopify-buy@1.0.0-alpha.5:
   version "1.0.0-alpha.5"
   resolved "https://registry.yarnpkg.com/shopify-buy/-/shopify-buy-1.0.0-alpha.5.tgz#a80f18312ea86f528504db5bcf7f6077e3cf7fc6"
 

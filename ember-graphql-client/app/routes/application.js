@@ -12,6 +12,7 @@ export default Ember.Route.extend({
       query {
         shop {
           name
+          description
           products(first:20) {
             pageInfo {
               hasNextPage
@@ -65,7 +66,7 @@ export default Ember.Route.extend({
     return client.send(query).then((result) => {
       return {
         products: result.model.shop.products,
-        shopName: result.model.shop.name,
+        shop: result.model.shop,
         isCartOpen: false
       };
     });

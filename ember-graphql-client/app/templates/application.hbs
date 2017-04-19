@@ -1,23 +1,24 @@
-<section class="products">
-  <header class="header">
-    <h1>{{model.shopName}}: Ember Example</h1>
+<div class="App">
+  <header class="App__header">
+    <div class="App__title">
+    <h1 class>{{model.shop.name}}: Ember Example</h1>
+    <h2 class>{{model.shop.description}}</h2>
+    </div>
   </header>
 
-  <ul class="product-list">
+  <div class="Product-wrapper">
     {{#each model.products as |product|}}
       {{buy-button product=product.attrs open="openCart"}}
     {{/each}}
-  </ul>
+  </div>
 
-</section>
+  <div class="Cart {{if model.isCartOpen "Cart--open"}}">
+    {{shopify-cart close="closeCart"}}
+  </div>
 
-<section class="cart {{if model.isCartOpen "cart--open"}}">
-  {{shopify-cart close="closeCart"}}
-</section>
-
-{{#unless model.isCartOpen}}
-  <section class="view-cart-wrapper">
-    <button class="view-cart" {{action "openCart"}}>Cart</button>
-  </section>
-{{/unless}}
-
+  {{#unless model.isCartOpen}}
+    <div class="view-cart-wrapper">
+      <button class="view-cart" {{action "openCart"}}>Cart</button>
+    </div>
+  {{/unless}}
+</div>

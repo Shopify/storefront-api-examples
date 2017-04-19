@@ -4,49 +4,95 @@ const { Service, inject } = Ember;
 let gql;
 
 export default Service.extend({
+  store: Ember.inject.service('store'),
   client: inject.service('graphql-js-client'),
   checkout: null,
 
   init() {
     const client = this.get('client');
 
-    const mutation = gql(client)`
-      mutation {
-        checkoutCreate(input: {allowPartialAddresses: true, shippingAddress: {city: "Toronto", province: "ON", country: "Canada"}}) {
-          userErrors {
-            message
-            field
-          }
-          checkout {
-            id
-            webUrl
-            subtotalPrice
-            totalTax
-            totalPrice
-            lineItems (first:250) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-              }
-              edges {
-                node {
-                  title
-                  variant {
-                    title
+    return this.get('store').findAll('cart').then((result) => {
+      const cartRecord = result.get('lastObject');
+
+      if (cartRecord) {
+        const checkoutId = cartRecord.data.checkoutId;
+
+        const query = gql(client)`
+          query($id: ID!) {
+            node(id: $id) {
+              ... on Checkout {
+                id
+                webUrl
+                subtotalPrice
+                totalTax
+                totalPrice
+                lineItems (first:250) {
+                  pageInfo {
+                    hasNextPage
+                    hasPreviousPage
                   }
-                  quantity
+                  edges {
+                    node {
+                      title
+                      variant {
+                        title
+                      }
+                      quantity
+                    }
+                  }
                 }
               }
             }
           }
-        }
-      }
-    `;
+        `;
 
-    return client.send(mutation).then((result) => {
-      this.set('checkout', result.model.checkoutCreate.checkout);
+        return client.send(query, {id: checkoutId}).then((checkoutResult) => {
+          this.set('checkout', checkoutResult.model.node);
+        });
+      } else {
+        const mutation = gql(client)`
+          mutation {
+            checkoutCreate(input: {allowPartialAddresses: true, shippingAddress: {city: "Toronto", province: "ON", country: "Canada"}}) {
+              userErrors {
+                message
+                field
+              }
+              checkout {
+                id
+                webUrl
+                subtotalPrice
+                totalTax
+                totalPrice
+                lineItems (first:250) {
+                  pageInfo {
+                    hasNextPage
+                    hasPreviousPage
+                  }
+                  edges {
+                    node {
+                      title
+                      variant {
+                        title
+                      }
+                      quantity
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `;
+
+        return client.send(mutation).then((checkoutResult) => {
+          this.set('checkout', checkoutResult.model.checkoutCreate.checkout);
+          const post = this.get('store').createRecord('cart', {checkoutId: checkoutResult.model.checkoutCreate.checkout.id});
+
+          post.save();
+        });
+      }
     });
-  },
+
+   },
 
   addVariants({variantId, quantity}) {
     const client = this.get('client');

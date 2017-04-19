@@ -3,6 +3,7 @@ import './css/App.css';
 import Product from './components/Product';
 import Cart from './components/Cart';
 import {client} from './config';
+import {addVariantToCart, removeVariantFromCart, updateQuantityInCart} from './cart'
 
 
 class App extends Component {
@@ -16,15 +17,9 @@ class App extends Component {
     };
 
     this.handleCartClose = this.handleCartClose.bind(this);
-    this.addVariantToCart = this.addVariantToCart.bind(this);
-    this.removeVariantFromCart = this.removeVariantFromCart.bind(this);
-    this.updateQuantityInCart = this.updateQuantityInCart.bind(this);
-  }
-
-  handleCartClose() {
-    this.setState({
-      isCartOpen: false,
-    });
+    this.addVariantToCart = addVariantToCart.bind(this);
+    this.removeVariantFromCart = removeVariantFromCart.bind(this);
+    this.updateQuantityInCart = updateQuantityInCart.bind(this);
   }
 
   componentWillMount() {
@@ -35,55 +30,31 @@ class App extends Component {
         });
       });
 
-    client.createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}})
-      .then((res) => {
+    client.createCheckout({
+      allowPartialAddresses: true,
+      shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}
+      }).then((res) => {
         this.setState({
           checkout: res,
         });
       });
   }
 
-  addVariantToCart(variantId, quantity){
+  handleCartClose() {
     this.setState({
-      isCartOpen: true,
-    });
-
-    const checkoutId = this.state.checkout.id
-    const lineItemsToAdd = [{variantId, quantity: parseInt(quantity, 10)}]
-
-    return client.addLineItems(checkoutId, lineItemsToAdd).then(res => {
-      this.setState({
-        checkout: res,
-      });
-    });
-  }
-
-  removeVariantFromCart(lineItemId){
-    const checkoutId = this.state.checkout.id
-    const lineItemIdsToRemove = [lineItemId]
-
-    return client.removeLineItems(checkoutId, lineItemIdsToRemove).then(res => {
-      this.setState({
-        checkout: res,
-      });
-    });
-  }
-
-  updateQuantityInCart(lineItemId, quantity) {
-    const checkoutId = this.state.checkout.id
-    const lineItemsToUpdate = [{id: lineItemId, quantity: parseInt(quantity, 10)}]
-
-    return client.updateLineItems(checkoutId, lineItemsToUpdate).then(res => {
-      this.setState({
-        checkout: res,
-      });
+      isCartOpen: false,
     });
   }
 
   render() {
     let products = this.state.products.map((product) => {
       return (
-        <Product addVariantToCart={this.addVariantToCart} checkout={this.state.checkout} key={product.id.toString()} product={product} />
+        <Product
+          addVariantToCart={this.addVariantToCart}
+          checkout={this.state.checkout}
+          key={product.id.toString()}
+          product={product}
+        />
       );
     });
 

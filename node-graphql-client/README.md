@@ -1,5 +1,6 @@
 # node-graphql-client
 An example using [graphql-js-client](https://github.com/Shopify/graphql-js-client) built with Node, Express and Pug.
+This example uses [babel-plugin-graphql-js-client-transform](https://github.com/Shopify/babel-plugin-graphql-js-client-transform) in conjunction with [graphql-js-client](https://github.com/Shopify/graphql-js-client) to build queries.
 
 ## Prerequisites
 

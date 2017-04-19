@@ -5,76 +5,89 @@ html(lang='en', data-framework='javascript')
     title NodeJsBuy
     link(rel='stylesheet', href='app.css')
   body
-    .container
-      section.products
-        header.header
-          h1=`${shopName}: Node Example`
-        ul.product-list
-          each product in products
-            div
-              li.product
-                img(src=product.images[0].src)
-                .product-info
-                  h2=product.title
-                  form(method='post' action='/add_line_item' + product.id.substring(product.id.lastIndexOf('/')))
-                    each option in product.options
-                      label=option.name
-                      select(name=option.name)
-                        each value in option.values
-                          option(value=value.valueOf())
-                            =value
-                    label Quantity
-                    input(min='1', type='number', name='quantity', value='1')
-                    input(type='hidden' name='checkoutId' value=cart.id)
-                    .buy-button-wrapper
-                      button.buy-button.button#add-to-cart-button(type='submit')
-                        | Add to cart
-                    .product-pricing
-      section.view-cart-wrapper
+    .App
+      header.App__header
+        .App__title
+          h1=`${shop.name}: Node Example`
+          h2=shop.description
+
+      .Product-wrapper
+        each product in products
+          .Product
+            img(src=product.images[0].src)
+            h5.Product__title=product.title
+            span.Product__price=`$ ${product.variants[0].price}`
+            form(method='post' action='/add_line_item' + product.id.substring(product.id.lastIndexOf('/')))
+              each option in product.options
+                label=option.name
+                select.Product__option(name=option.name)
+                  each value in option.values
+                    option(value=value.valueOf())
+                      =value
+              label Quantity
+              input.Product__quantity(min='1', type='number', name='quantity', value='1')
+              input(type='hidden' name='checkoutId' value=cart.id)
+              button.Product__buy.button#add-to-cart-button(type='submit')
+                  | Add to cart
+
+      .view-cart-wrapper
         button.view-cart#view-cart-button Cart
-      section.cart#cart(class={'cart--open': isCartOpen})
-        section.main
-          button.cart-close#close-cart-button ×
+
+      .Cart#cart(class={'Cart--open': isCartOpen})
+        header.Cart__header
           h2 Cart
-          ul.cart-list
-            each item in cart.lineItems
-              li
-                .view
-                  form(method='post' action='/update_line_item' + item.id.substring(item.id.lastIndexOf('/')))
-                    input(type='hidden' name='checkoutId' value=cart.id)
-                    input.quantity#quantity(min='1' type='number' name='quantity' value=item.quantity)
-                  label=`${item.title}: ${item.variant.title}`
+          button.Cart__close#close-cart-button ×
+        ul.Cart__line-items
+          each item in cart.lineItems
+            li.Line-item
+              .Line-item__img
+                img(src=item.variant.image.src)
+              .Line-item__content
+                .Line-item__content-row
+                  .Line-item__variant-title=item.variant.title
+                  span.Line-item__title=item.title
+                .Line-item__content-row
+                  .Line-item__quantity-container
+                    form.Line-item__quantity-update-form(method='post' action='/decrement_line_item' + item.id.substring(item.id.lastIndexOf('/')))
+                      input(type='hidden' name='checkoutId' value=cart.id)
+                      input(type='hidden' name='currentQuantity' value=item.quantity)
+                      button.Line-item__quantity-update(type='submit') -
+                    span.Line-item__quantity=item.quantity
+                    form.Line-item__quantity-update-form(method='post' action='/increment_line_item' + item.id.substring(item.id.lastIndexOf('/')))
+                      input(type='hidden' name='checkoutId' value=cart.id)
+                      input(type='hidden' name='currentQuantity' value=item.quantity)
+                      button.Line-item__quantity-update(type='submit') +
+                  span.Line-item__price=`$ ${(item.variant.price * item.quantity).toFixed(2)}`
+                .Line-item__content-row
                   form(method='post' action='/remove_line_item' + item.id.substring(item.id.lastIndexOf('/')))
                     input(type='hidden' name='checkoutId' value=cart.id)
-                    button.destroy(type='submit')
-            li
-              .view
-                label
-                  strong Subtotal:
-                  =` $${cart.subtotalPrice}`
-            li
-              .view
-                label
-                  strong Taxes:
-                  =` $${cart.totalTax}`
-            li
-              .view
-                label
-                  strong Total:
-                  =` $${cart.totalPrice}`
-        footer.cart-footer
-          button.button#checkout-button(type='submit', disabled=!cart.lineItems.length) Checkout
+                    button.Line-teim__remove(type='submit') Remove Item
+        footer.Cart__footer
+          .Cart-info.clearfix
+            .Cart-info__total.Cart-info__small Subtotal
+            .Cart-info__pricing
+              span.pricing=`$ ${cart.subtotalPrice}`
+          .Cart-info.clearfix
+            .Cart-info__total.Cart-info__small Taxes
+            .Cart-info__pricing
+              span.pricing=`$ ${cart.totalTax}`
+          .Cart-info.clearfix
+            .Cart-info__total.Cart-info__small Total
+            .Cart-info__pricing
+              span.pricing=`$ ${cart.totalPrice}`
+          button.Cart__checkout.button#checkout-button(type='submit', disabled=!cart.lineItems.length) Checkout
+
     script.
       function isCartOpen() {
-        return document.getElementById('cart').className.match(/(?:^|\s)cart--open(?!\S)/);
+        return document.getElementById('cart').className.match(/(?:^|\s)Cart--open(?!\S)/);
       }
       function closeCart() {
-        document.getElementById('cart').className = document.getElementById('cart').className.replace(/(?:^|\s)cart--open(?!\S)/g, '');
+        document.getElementById('cart').className = document.getElementById('cart').className.replace(/(?:^|\s)Cart--open(?!\S)/g, '');
       }
 
       function openCart() {
         if (!isCartOpen()) {
-          document.getElementById('cart').className += ' cart--open';
+          document.getElementById('cart').className += ' Cart--open';
         }
       }
 
@@ -93,4 +106,3 @@ html(lang='en', data-framework='javascript')
       document.getElementById('view-cart-button').onclick = openCart;
 
       document.getElementById('close-cart-button').onclick = closeCart;
-

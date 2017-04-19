@@ -6,6 +6,8 @@ const Client = ShopifyBuy.default;
 const { Component, computed, guidFor, inject } = Ember;
 
 export default Component.extend({
+  classNames: ['Product'],
+
   client: inject.service('js-buy-sdk-client'),
 
   cart: inject.service(),

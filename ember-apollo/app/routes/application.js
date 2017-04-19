@@ -12,6 +12,7 @@ export default Ember.Route.extend({
         query {
           shop {
             name
+            description
             products (first: 20) {
               edges {
                 node {
@@ -53,7 +54,7 @@ export default Ember.Route.extend({
     }).then((result) => {
       return {
         products: result.shop.products.edges,
-        shopName: result.shop.name,
+        shop: result.shop,
         isCartOpen: false
       };
     });

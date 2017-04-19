@@ -3,6 +3,8 @@ import Ember from 'ember';
 const { Component, computed, guidFor, inject } = Ember;
 
 export default Component.extend({
+  classNames: ['Product'],
+
   cart: inject.service(),
 
   product: null,

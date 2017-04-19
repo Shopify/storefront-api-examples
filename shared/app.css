@@ -247,6 +247,10 @@ h2 {
   text-align: center;
 }
 
+.Line-item__quantity-update-form {
+  display: inline;
+}
+
 .Line-item__quantity {
   color: black;
   width: 38px;

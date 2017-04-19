@@ -1,4 +1,7 @@
 import Ember from 'ember';
+import ShopifyBuy from 'npm:shopify-buy';
+
+const Client = ShopifyBuy.default;
 
 const { Component, computed, guidFor, inject } = Ember;
 
@@ -56,7 +59,7 @@ export default Component.extend({
         selectedOptions[group.name] = group.selected;
       });
 
-      return this.get('client').Product.Helpers.variantForOptions(this.get('product'), selectedOptions);
+      return Client.Product.Helpers.variantForOptions(this.get('product'), selectedOptions);
     }
   }),
 

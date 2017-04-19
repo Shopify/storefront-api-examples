@@ -37,6 +37,7 @@
     "ember-data": "^2.12.0",
     "ember-export-application-global": "^1.0.5",
     "ember-load-initializers": "^0.6.0",
+    "ember-localstorage-adapter": "^1.0.0",
     "ember-resolver": "^2.0.3",
     "ember-source": "~2.12.0",
     "ember-welcome-page": "^2.0.2",

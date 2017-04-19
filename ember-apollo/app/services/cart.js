@@ -27,28 +27,53 @@ const CheckoutFragment = gql`
 `;
 
 export default Service.extend({
+  store: Ember.inject.service('store'),
   apollo: inject.service(),
 
   checkout: null,
 
   init() {
-    return this.get('apollo').mutate({
-      mutation: gql`
-        mutation ($input: CheckoutCreateInput!) {
-          checkoutCreate(input: $input) {
-            userErrors {
-              message
-              field
+    return this.get('store').findAll('cart').then((result) => {
+      const cartRecord = result.get('lastObject');
+
+      if (cartRecord) {
+        const checkoutId = cartRecord.data.checkoutId;
+
+        return this.get('apollo').queryOnce({
+          query: gql`
+            query($id: ID!) {
+              node(id: $id) {
+                ...CheckoutFragment
+              }
             }
-            checkout {
-              ...CheckoutFragment
+            ${CheckoutFragment}
+          `, variables: {id: checkoutId}
+        }).then((checkoutResult) => {
+          this.set('checkout', checkoutResult.node);
+        });
+      } else {
+        return this.get('apollo').mutate({
+          mutation: gql`
+            mutation ($input: CheckoutCreateInput!) {
+              checkoutCreate(input: $input) {
+                userErrors {
+                  message
+                  field
+                }
+                checkout {
+                  ...CheckoutFragment
+                }
+              }
             }
-          }
-        }
-        ${CheckoutFragment}
-      `, variables: {input: {allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}}
-    }).then((result) => {
-      this.set('checkout', result.checkoutCreate.checkout);
+            ${CheckoutFragment}
+          `, variables: {input: {allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}}
+        }).then((checkoutResult) => {
+          this.set('checkout', checkoutResult.checkoutCreate.checkout);
+
+          const post = this.get('store').createRecord('cart', {checkoutId: result.checkoutCreate.checkout.id});
+          post.save();
+        });
+      }
     });
   },
 

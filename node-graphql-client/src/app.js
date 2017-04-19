@@ -13,6 +13,7 @@ const shopNameAndProductsPromise = client.send(gql(client)`
     query {
       shop {
         name
+        description
         products(first:20) {
           pageInfo {
             hasNextPage
@@ -112,6 +113,10 @@ app.get('/', (req, res) => {
                 title
                 variant {
                   title
+                  image {
+                    src
+                  }
+                  price
                 }
                 quantity
               }
@@ -129,7 +134,7 @@ app.get('/', (req, res) => {
     res.render('index', {
       products: shop.products,
       cart,
-      shopName: shop.name,
+      shop,
       isCartOpen: req.query.cart
     });
   });
@@ -205,12 +210,10 @@ app.post('/remove_line_item/:id', (req, res) => {
   });
 });
 
-app.post('/update_line_item/:id', (req, res) => {
-  const checkoutId = req.body.checkoutId;
-  const quantity = parseInt(req.body.quantity, 10);
+function updateLineItem(checkoutId, quantity, id) {
   const input = {
     checkoutId,
-    lineItems: [{id: `gid://shopify/CheckoutLineItem/${req.params.id}`, quantity}]
+    lineItems: [{id, quantity}]
   };
 
   return client.send(gql(client)`
@@ -225,10 +228,21 @@ app.post('/update_line_item/:id', (req, res) => {
         }
       }
     }
-  `, input).then((result) => {
+  `, input);
+}
+
+app.post('/decrement_line_item/:id', (req, res) => {
+  return updateLineItem(req.body.checkoutId, parseInt(req.body.currentQuantity, 10) - 1, `gid://shopify/CheckoutLineItem/${req.params.id}`).then((result) => {
     res.redirect(`/?cart=true&checkoutId=${result.model.checkoutLineItemsUpdate.checkout.id}`);
   });
 });
+
+app.post('/increment_line_item/:id', (req, res) => {
+  return updateLineItem(req.body.checkoutId, parseInt(req.body.currentQuantity, 10) + 1, `gid://shopify/CheckoutLineItem/${req.params.id}`).then((result) => {
+    res.redirect(`/?cart=true&checkoutId=${result.model.checkoutLineItemsUpdate.checkout.id}`);
+  });
+});
+
 
 app.listen(4200, () => {
   console.log('Example app listening on port 4200!'); // eslint-disable-line no-console

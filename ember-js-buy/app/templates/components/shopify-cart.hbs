@@ -1,52 +1,63 @@
-<section class="main">
-  <button class="cart-close" {{action "close"}}>
+<header class="Cart__header">
+  <h2>Cart</h2>
+  <button class="Cart__close" {{action "close"}}>
     ×
   </button>
-  <h2>Cart</h2>
-  <ul class="cart-list">
-    {{#each cart.lineItems as |item|}}
-      <li>
-        <div class="view">
-          <input class="quantity" min="1" type="number" value={{item.quantity}} onchange={{action "updateItem" item.id}}>
-          <label>
-            {{item.title}}
-            {{#if item.variant.title}}
-            : {{item.variant.title}}
-            {{/if}}
-          </label>
-          <button class="destroy" {{action "removeItem" item.id}}></button>
-        </div>
-      </li>
-    {{/each}}
-    <li>
-      <div class="view">
-        <label>
-          <strong>Subtotal:</strong>
-          $ {{cart.subtotalPrice}}
-        </label>
-      </div>
-    </li>
-    <li>
-      <div class="view">
-        <label>
-          <strong>Taxes:</strong>
-          $ {{cart.totalTax}}
-        </label>
-      </div>
-    </li>
-    <li>
-      <div class="view">
-        <label>
-          <strong>Total:</strong>
-          $ {{cart.totalPrice}}
-        </label>
-      </div>
-    </li>
-  </ul>
-</section>
+</header>
 
-<footer class="cart-footer">
-  <button class="button" disabled={{checkoutDisabled}} {{action "openCheckout"}}>
+<ul class="Cart__line-items">
+  {{#each cart.lineItems as |item|}}
+    <li class="Line-item">
+      <div class="Line-item__img">
+        <img src={{item.variant.image.src}}>
+      </div>
+      <div class="Line-item__content">
+        <div class="Line-item__content-row">
+          <div class="Line-item__variant-title">
+            {{item.variant.title}}
+          </div>
+          <span class="Line-item__title">
+            {{item.title}}
+          </span>
+        </div>
+        <div class="Line-item__content-row">
+          <div class="Line-item__quantity-container">
+            <button class="Line-item__quantity-update" {{action "decrementQuantity" item.id item.quantity}}>-</button>
+            <span class="Line-item__quantity">{{item.quantity}}</span>
+            <button class="Line-item__quantity-update" {{action "incrementQuantity" item.id item.quantity}}>+</button>
+          </div>
+          <span class="Line-item__price">
+            $ {{total-price item.variant.price item.quantity}}
+          </span>
+        </div>
+        <div class="Line-item__content-row">
+          <button class="Line-item__remove" {{action "removeItem" item.id}}>Remove Item</button>
+        </div>
+      </div>
+    </li>
+  {{/each}}
+</ul>
+
+<footer class="Cart__footer">
+  <div class="Cart-info clearfix">
+    <div class="Cart-info__total Cart-info__small">Subtotal</div>
+    <div class="Cart-info__pricing">
+      <span class="pricing">$ {{cart.subtotalPrice}}</span>
+    </div>
+  </div>
+  <div class="Cart-info clearfix">
+    <div class="Cart-info__total Cart-info__small">Taxes</div>
+    <div class="Cart-info__pricing">
+      <span class="pricing">$ {{cart.totalTax}}</span>
+    </div>
+  </div>
+  <div class="Cart-info clearfix">
+    <div class="Cart-info__total Cart-info__small">Total</div>
+    <div class="Cart-info__pricing">
+      <span class="pricing">$ {{cart.totalPrice}}</span>
+    </div>
+  </div>
+  <button class="Cart__checkout button" disabled={{checkoutDisabled}} {{action "openCheckout"}}>
     Checkout
   </button>
 </footer>

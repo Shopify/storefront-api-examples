@@ -18,6 +18,10 @@ const CheckoutFragment = gql`
           variant {
             id
             title
+            image {
+              src
+            }
+            price
           }
           quantity
         }

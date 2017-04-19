@@ -36,6 +36,10 @@ export default Service.extend({
                       title
                       variant {
                         title
+                        image {
+                          src
+                        }
+                        price
                       }
                       quantity
                     }
@@ -73,6 +77,10 @@ export default Service.extend({
                       title
                       variant {
                         title
+                        image {
+                          src
+                        }
+                        price
                       }
                       quantity
                     }
@@ -123,6 +131,10 @@ export default Service.extend({
                   title
                   variant {
                     title
+                    image {
+                      src
+                    }
+                    price
                   }
                   quantity
                 }
@@ -163,6 +175,10 @@ export default Service.extend({
                   title
                   variant {
                     title
+                    image {
+                      src
+                    }
+                    price
                   }
                   quantity
                 }
@@ -207,6 +223,10 @@ export default Service.extend({
                   title
                   variant {
                     title
+                    image {
+                      src
+                    }
+                    price
                   }
                   quantity
                 }

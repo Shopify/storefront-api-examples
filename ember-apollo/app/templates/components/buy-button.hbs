@@ -1,36 +1,22 @@
-<li class="product">
-  <img src="{{imageSrc}}">
-  <div class="product-info">
-    <h2>{{product.title}}</h2>
-    {{#each variantGroups as |variantGroup|}}
-      {{#unless variantGroup.noChoices}}
-        <div>
-          <label>{{variantGroup.name}}</label>
-          <select {{action 'updateSelected' variantGroup on='change'}} id="{{variantGroup.selectId}}">
-            {{#each variantGroup.values as |value|}}
-              <option value={{value}} selected={{is-equal variantGroup.selected value}}>
-                {{value}}
-              </option>
-            {{/each}}
-          </select>
-        </div>
-      {{/unless}}
-    {{/each}}
-    <label>Quantity</label>
-    {{input min="1" type="number" value=quantity}}
-    <div class="buy-button-wrapper">
-      {{#if currentVariant}}
-        <button class="buy-button button" {{action "open"}} {{action "addVariantToCart"}}>
-          Add to cart
-        </button>
-        <div class="product-pricing">
-          $ {{price}}
-        </div>
-      {{else}}
-        <button class="buy-button button" disabled>
-          Unavailable
-        </button>
-      {{/if}}
+<img src="{{imageSrc}}">
+<h5 class="Product__title">{{product.title}}</h5>
+<span class="Product__price">$ {{price}}</span>
+{{#each variantGroups as |variantGroup|}}
+  {{#unless variantGroup.noChoices}}
+    <div>
+      <label>{{variantGroup.name}}</label>
+      <select class="Product__option" {{action 'updateSelected' variantGroup on='change'}} id="{{variantGroup.selectId}}">
+        {{#each variantGroup.values as |value|}}
+          <option value={{value}} selected={{is-equal variantGroup.selected value}}>
+            {{value}}
+          </option>
+        {{/each}}
+      </select>
     </div>
-  </div>
-</li>
+  {{/unless}}
+{{/each}}
+<label>Quantity</label>
+{{input class="Product__quantity" min="1" type="number" value=quantity}}
+<button class="Product__buy button" {{action "open"}} {{action "addVariantToCart"}}>
+  Add to cart
+</button>

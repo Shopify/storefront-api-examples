@@ -22,7 +22,7 @@
     "node-fetch": "^1.6.3",
     "nodemon": "^1.11.0",
     "pug": "^2.0.0-beta11",
-    "shopify-buy": "alpha"
+    "shopify-buy": "1.0.0-alpha.6"
   },
   "scripts": {
     "prestart": "yarn build",

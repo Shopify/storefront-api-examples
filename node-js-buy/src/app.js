@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
+import Client from 'shopify-buy';
 import client from './js-buy-sdk';
 
 const app = express();
@@ -52,7 +53,7 @@ app.post('/add_line_item/:id', (req, res) => {
     });
 
     // Find the corresponding variant
-    const selectedVariant = client.Product.Helpers.variantForOptions(targetProduct, options);
+    const selectedVariant = Client.Product.Helpers.variantForOptions(targetProduct, options);
 
     // Add the variant to our cart
     return client.addLineItems(checkoutId, [{variantId: selectedVariant.id, quantity}]).then((checkout) => {

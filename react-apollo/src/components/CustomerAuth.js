@@ -65,18 +65,22 @@ class CustomerAuth extends Component {
     this.props.customerCreate(
       { variables: { input }
       }).then((res) => {
-        console.log(res.data.customerCreate.userErrors);
-        res.data.customerCreate.userErrors.forEach(function (error) {
-          if (error.field != null) {
-            this.setState({
-              [error.field + "ErrorMessage"]: error.message
-            });
-          } else {
-            this.setState({
-              nonFieldErrorMessage: error.message
-            });
-          }
-        }.bind(this));
+        if (res.data.customerCreate.customer){
+           this.props.closeCustomerAuth();
+           this.props.showAccountVerificationMessage();
+        } else {
+          res.data.customerCreate.userErrors.forEach(function (error) {
+            if (error.field) {
+              this.setState({
+                [error.field + "ErrorMessage"]: error.message
+              });
+            } else {
+              this.setState({
+                nonFieldErrorMessage: error.message
+              });
+            }
+          }.bind(this));
+        }
     });
   }
 
@@ -88,8 +92,8 @@ class CustomerAuth extends Component {
     this.props.customerAccessTokenCreate(
       { variables: { input }
       }).then((res) => {
-      if (res.data.customerAccessTokenCreate.customerAccessToken != null) {
-        this.props.setCustomerAccessToken(res.data.customerAccessTokenCreate.customerAccessToken.accessToken);
+      if (res.data.customerAccessTokenCreate.customerAccessToken) {
+        this.props.associateCustomerCheckout(res.data.customerAccessTokenCreate.customerAccessToken.accessToken);
       } else {
         res.data.customerAccessTokenCreate.userErrors.forEach(function (error) {
           if (error.field != null) {

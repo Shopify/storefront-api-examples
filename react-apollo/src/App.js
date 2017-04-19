@@ -5,6 +5,15 @@ import Cart from './components/Cart';
 import CustomerAuthWithMutation from './components/CustomerAuth';
 import PropTypes from 'prop-types';
 import { graphql, gql, compose } from 'react-apollo'
+import {
+  createCheckout,
+  checkoutLineItemsAdd,
+  checkoutLineItemsUpdate,
+  checkoutCustomerAssociate,
+  addVariantToCart,
+  updateLineItemInCart,
+  associateCustomerCheckout
+} from './cart'
 
 class App extends Component {
   constructor() {
@@ -22,10 +31,11 @@ class App extends Component {
     this.handleCartOpen = this.handleCartOpen.bind(this);
     this.openCustomerAuth = this.openCustomerAuth.bind(this);
     this.closeCustomerAuth = this.closeCustomerAuth.bind(this);
-    this.addVariantToCart = this.addVariantToCart.bind(this);
-    this.removeLineItemFromCart = this.removeLineItemFromCart.bind(this);
-    this.updateLineItemInCart = this.updateLineItemInCart.bind(this);
+    this.addVariantToCart = addVariantToCart.bind(this);
+    this.updateLineItemInCart = updateLineItemInCart.bind(this);
+    this.showAccountVerificationMessage = this.showAccountVerificationMessage.bind(this);
     this.setCustomerAccessToken = this.setCustomerAccessToken.bind(this);
+    this.associateCustomerCheckout = associateCustomerCheckout.bind(this);
   }
 
   componentWillMount() {
@@ -49,7 +59,6 @@ class App extends Component {
     }).isRequired,
     createCheckout: PropTypes.func.isRequired,
     checkoutLineItemsAdd: PropTypes.func.isRequired,
-    checkoutLineItemsRemove: PropTypes.func.isRequired,
     checkoutLineItemsUpdate: PropTypes.func.isRequired,
     customerAccessTokenCreate: PropTypes.func.isRequired
   }
@@ -74,47 +83,24 @@ class App extends Component {
       });
     } else {
       this.setState({
-        isCustomerAuthOpen: true,
-        isNewCustomer: false
+        isNewCustomer: false,
+        isCustomerAuthOpen: true
       });
     }
+  }
+
+  showAccountVerificationMessage(){
+    this.setState({ accountVerificationMessage: true });
+    setTimeout(() => {
+     this.setState({
+       accountVerificationMessage: false
+     })
+   }, 5000);
   }
 
   closeCustomerAuth() {
     this.setState({
       isCustomerAuthOpen: false,
-    });
-  }
-
-  addVariantToCart(variantId, quantity){
-    this.props.checkoutLineItemsAdd(
-      { variables: { checkoutId: this.state.checkout.id, lineItems:  [{variantId, quantity: parseInt(quantity, 10)}] }
-      }).then((res) => {
-      this.setState({
-        checkout: res.data.checkoutLineItemsAdd.checkout
-      });
-    });
-
-    this.handleCartOpen();
-  }
-
-  removeLineItemFromCart(lineItemId){
-    this.props.checkoutLineItemsRemove(
-      { variables: { checkoutId: this.state.checkout.id, lineItemIds: [lineItemId] }
-      }).then((res) => {
-      this.setState({
-        checkout: res.data.checkoutLineItemsRemove.checkout
-      });
-    });
-  }
-
-  updateLineItemInCart(lineItemId, quantity){
-    this.props.checkoutLineItemsUpdate(
-      { variables: { checkoutId: this.state.checkout.id, lineItems: [{id: lineItemId, quantity: parseInt(quantity, 10)}] }
-      }).then((res) => {
-      this.setState({
-        checkout: res.data.checkoutLineItemsUpdate.checkout
-      });
     });
   }
 
@@ -135,11 +121,15 @@ class App extends Component {
 
     return (
       <div className="App">
+        <div className="Flash__message-wrapper">
+          <p className={`Flash__message ${this.state.accountVerificationMessage ? 'Flash__message--open' : ''}`}>We have sent you an email, please click the link included to verify your email address</p>
+        </div>
         <CustomerAuthWithMutation
           closeCustomerAuth={this.closeCustomerAuth}
           isCustomerAuthOpen={this.state.isCustomerAuthOpen}
           newCustomer={this.state.isNewCustomer}
-          setCustomerAccessToken={this.setCustomerAccessToken}
+          associateCustomerCheckout={this.associateCustomerCheckout}
+          showAccountVerificationMessage={this.showAccountVerificationMessage}
         />
         <header className="App__header">
           <ul className="App__nav">
@@ -169,8 +159,8 @@ class App extends Component {
   }
 }
 
-const shopQuery = gql`
-  query shopQuery {
+const query = gql`
+  query query {
     shop {
       name
       products(first:20) {
@@ -183,6 +173,7 @@ const shopQuery = gql`
             id
             title
             options {
+              id
               name
               values
             }
@@ -224,93 +215,6 @@ const shopQuery = gql`
   }
 `;
 
-const CheckoutFragment = gql`
-  fragment CheckoutFragment on Checkout {
-    id
-    webUrl
-    totalTax
-    subtotalPrice
-    totalPrice
-    lineItems (first: 250) {
-      edges {
-        node {
-          id
-          title
-          variant {
-            id
-            title
-            image {
-              src
-            }
-            price
-          }
-          quantity
-        }
-      }
-    }
-  }
-`;
-
-const createCheckout = gql`
-  mutation ($input: CheckoutCreateInput!){
-    checkoutCreate(input: $input) {
-      userErrors {
-        message
-        field
-      }
-      checkout {
-        ...CheckoutFragment
-      }
-    }
-  }
-  ${CheckoutFragment}
-`;
-
-const checkoutLineItemsAdd = gql`
-  mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]) {
-    checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
-      userErrors {
-        message
-        field
-      }
-      checkout {
-        ...CheckoutFragment
-      }
-    }
-  }
-  ${CheckoutFragment}
-`;
-
-const checkoutLineItemsRemove = gql`
-  mutation ($checkoutId: ID!, $lineItemIds: [ID!]!) {
-    checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
-      userErrors {
-        message
-        field
-      }
-      checkout {
-        ...CheckoutFragment
-      }
-    }
-  }
-  ${CheckoutFragment}
-`;
-
-const checkoutLineItemsUpdate = gql`
-  mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
-    checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
-      userErrors {
-        message
-        field
-      }
-      checkout {
-        ...CheckoutFragment
-      }
-    }
-  }
-  ${CheckoutFragment}
-`;
-
 const customerAccessTokenCreate = gql`
   mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
     customerAccessTokenCreate(input: $input) {
@@ -327,12 +231,12 @@ const customerAccessTokenCreate = gql`
 `;
 
 const AppWithDataAndMutation = compose(
-  graphql(shopQuery),
+  graphql(query),
   graphql(createCheckout, {name: "createCheckout"}),
   graphql(checkoutLineItemsAdd, {name: "checkoutLineItemsAdd"}),
-  graphql(checkoutLineItemsRemove, {name: "checkoutLineItemsRemove"}),
   graphql(checkoutLineItemsUpdate, {name: "checkoutLineItemsUpdate"}),
-  graphql(customerAccessTokenCreate, {name: "customerAccessTokenCreate"})
+  graphql(customerAccessTokenCreate, {name: "customerAccessTokenCreate"}),
+  graphql(checkoutCustomerAssociate, {name: "checkoutCustomerAssociate"})
 )(App);
 
 export default AppWithDataAndMutation;

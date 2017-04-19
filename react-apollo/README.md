@@ -1,4 +1,4 @@
-# react-js-buy-sdk
+# react-apollo
 
 An example using [Apollo Client](http://dev.apollodata.com/) built with [React](https://facebook.github.io/react/). This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 

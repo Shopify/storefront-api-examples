@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
     res.render('index', {
       products,
       cart,
-      shopName: shop.name,
+      shop,
       isCartOpen: req.query.cart
     });
   });
@@ -70,14 +70,24 @@ app.post('/remove_line_item/:id', (req, res) => {
   });
 });
 
-app.post('/update_line_item/:id', (req, res) => {
+app.post('/decrement_line_item/:id', (req, res) => {
   const checkoutId = req.body.checkoutId;
-  const quantity = parseInt(req.body.quantity, 10);
+  let quantity = parseInt(req.body.currentQuantity, 10) - 1;
 
   return client.updateLineItems(checkoutId, [{id: `gid://shopify/CheckoutLineItem/${req.params.id}`, quantity}]).then((checkout) => {
     res.redirect(`/?cart=true&checkoutId=${checkout.id.substring(checkout.id.lastIndexOf('/') + 1)}`);
   });
 });
+
+app.post('/increment_line_item/:id', (req, res) => {
+  const checkoutId = req.body.checkoutId;
+  let quantity = parseInt(req.body.currentQuantity, 10) + 1;
+
+  return client.updateLineItems(checkoutId, [{id: `gid://shopify/CheckoutLineItem/${req.params.id}`, quantity}]).then((checkout) => {
+    res.redirect(`/?cart=true&checkoutId=${checkout.id.substring(checkout.id.lastIndexOf('/') + 1)}`);
+  });
+});
+
 
 app.listen(4200, () => {
   console.log('Example app listening on port 4200!'); // eslint-disable-line no-console

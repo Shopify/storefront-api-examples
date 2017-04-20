@@ -17,7 +17,7 @@ html(lang='en', data-framework='javascript')
             img(src=product.images[0].src)
             h5.Product__title=product.title
             span.Product__price=`$ ${product.variants[0].price}`
-            form(method='post' action='/add_line_item' + product.id.substring(product.id.lastIndexOf('/')))
+            form(method='post' action='/add_line_item/' + product.id)
               each option in product.options
                 label=option.name
                 select.Product__option(name=option.name)
@@ -48,18 +48,18 @@ html(lang='en', data-framework='javascript')
                   span.Line-item__title=item.title
                 .Line-item__content-row
                   .Line-item__quantity-container
-                    form.Line-item__quantity-update-form(method='post' action='/decrement_line_item' + item.id.substring(item.id.lastIndexOf('/')))
+                    form.Line-item__quantity-update-form(method='post' action='/decrement_line_item/' + item.id)
                       input(type='hidden' name='checkoutId' value=cart.id)
                       input(type='hidden' name='currentQuantity' value=item.quantity)
                       button.Line-item__quantity-update(type='submit') -
                     span.Line-item__quantity=item.quantity
-                    form.Line-item__quantity-update-form(method='post' action='/increment_line_item' + item.id.substring(item.id.lastIndexOf('/')))
+                    form.Line-item__quantity-update-form(method='post' action='/increment_line_item/' + item.id)
                       input(type='hidden' name='checkoutId' value=cart.id)
                       input(type='hidden' name='currentQuantity' value=item.quantity)
                       button.Line-item__quantity-update(type='submit') +
                   span.Line-item__price=`$ ${(item.variant.price * item.quantity).toFixed(2)}`
                 .Line-item__content-row
-                  form(method='post' action='/remove_line_item' + item.id.substring(item.id.lastIndexOf('/')))
+                  form(method='post' action='/remove_line_item/' + item.id)
                     input(type='hidden' name='checkoutId' value=cart.id)
                     button.Line-teim__remove(type='submit') Remove Item
         footer.Cart__footer

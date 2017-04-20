@@ -7,6 +7,14 @@ The examples are built on both Shopify specific libraries and popular open sourc
 
 See the `README.md` in each example directory for more details and how to get started.
 
+## Contributing
+For help on setting up the repo locally, building, testing, and contributing
+please see [CONTRIBUTING.md](https://github.com/Shopify/storefront-api-examples/blob/master/CONTRIBUTING.md).
+
+## Code of Conduct
+All developers who wish to contribute through code or issues, take a look at the
+[CODE_OF_CONDUCT.md](https://github.com/Shopify/storefront-api-examples/blob/master/CODE_OF_CONDUCT.md).
+
 ## License
 
 MIT, see [LICENSE](https://github.com/Shopify/storefront-api-examples/blob/master/LICENSE.txt) for details.

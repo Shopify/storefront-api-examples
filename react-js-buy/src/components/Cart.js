@@ -5,12 +5,10 @@ import '../css/Cart.css';
 class Cart extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
-
+    
     this.openCheckout = this.openCheckout.bind(this);
   }
-  
+
   openCheckout() {
     window.open(this.props.checkout.webUrl);
   }

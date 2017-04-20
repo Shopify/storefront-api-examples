@@ -10,7 +10,8 @@ class App extends Component {
 
     this.state = {
       isCartOpen: false,
-      checkout: { lineItems: [] }
+      checkout: { lineItems: [] },
+      products: []
     };
 
     this.handleCartClose = this.handleCartClose.bind(this);
@@ -25,6 +26,13 @@ class App extends Component {
       }).then((res) => {
         this.setState({
           checkout: res,
+        });
+      });
+
+    this.props.client.fetchAllProducts()
+      .then((res) => {
+        this.setState({
+          products: res,
         });
       });
   }
@@ -71,7 +79,7 @@ class App extends Component {
           </div>
         </header>
         <Products
-          client={this.props.client}
+          products={this.state.products}
           addVariantToCart={this.addVariantToCart}
         />
         <Cart

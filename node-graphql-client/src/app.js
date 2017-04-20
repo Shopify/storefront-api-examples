@@ -152,7 +152,7 @@ app.post('/add_line_item/:id', (req, res) => {
   return shopNameAndProductsPromise.then((shop) => {
     // Find the product that is selected
     const targetProduct = shop.products.find((product) => {
-      return product.id.substring(product.id.lastIndexOf('/')) === `/${productId}`;
+      return product.id === productId;
     });
 
     // Find the corresponding variant
@@ -190,7 +190,7 @@ app.post('/remove_line_item/:id', (req, res) => {
   const checkoutId = req.body.checkoutId;
   const input = {
     checkoutId,
-    lineItemIds: [`gid://shopify/CheckoutLineItem/${req.params.id}`]
+    lineItemIds: [req.params.id]
   };
 
   return client.send(gql(client)`
@@ -232,13 +232,13 @@ function updateLineItem(checkoutId, quantity, id) {
 }
 
 app.post('/decrement_line_item/:id', (req, res) => {
-  return updateLineItem(req.body.checkoutId, parseInt(req.body.currentQuantity, 10) - 1, `gid://shopify/CheckoutLineItem/${req.params.id}`).then((result) => {
+  return updateLineItem(req.body.checkoutId, parseInt(req.body.currentQuantity, 10) - 1, req.params.id).then((result) => {
     res.redirect(`/?cart=true&checkoutId=${result.model.checkoutLineItemsUpdate.checkout.id}`);
   });
 });
 
 app.post('/increment_line_item/:id', (req, res) => {
-  return updateLineItem(req.body.checkoutId, parseInt(req.body.currentQuantity, 10) + 1, `gid://shopify/CheckoutLineItem/${req.params.id}`).then((result) => {
+  return updateLineItem(req.body.checkoutId, parseInt(req.body.currentQuantity, 10) + 1, req.params.id).then((result) => {
     res.redirect(`/?cart=true&checkoutId=${result.model.checkoutLineItemsUpdate.checkout.id}`);
   });
 });

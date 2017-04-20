@@ -13,7 +13,7 @@ import {
   addVariantToCart,
   updateLineItemInCart,
   associateCustomerCheckout
-} from './cart'
+} from './checkout'
 
 class App extends Component {
   constructor() {
@@ -34,7 +34,6 @@ class App extends Component {
     this.addVariantToCart = addVariantToCart.bind(this);
     this.updateLineItemInCart = updateLineItemInCart.bind(this);
     this.showAccountVerificationMessage = this.showAccountVerificationMessage.bind(this);
-    this.setCustomerAccessToken = this.setCustomerAccessToken.bind(this);
     this.associateCustomerCheckout = associateCustomerCheckout.bind(this);
   }
 
@@ -59,8 +58,7 @@ class App extends Component {
     }).isRequired,
     createCheckout: PropTypes.func.isRequired,
     checkoutLineItemsAdd: PropTypes.func.isRequired,
-    checkoutLineItemsUpdate: PropTypes.func.isRequired,
-    customerAccessTokenCreate: PropTypes.func.isRequired
+    checkoutLineItemsUpdate: PropTypes.func.isRequired
   }
 
   handleCartOpen() {
@@ -101,13 +99,6 @@ class App extends Component {
   closeCustomerAuth() {
     this.setState({
       isCustomerAuthOpen: false,
-    });
-  }
-
-  setCustomerAccessToken(customerAccessToken){
-    this.setState({
-      customerAccessToken: customerAccessToken,
-      isCustomerAuthOpen: false
     });
   }
 
@@ -215,27 +206,11 @@ const query = gql`
   }
 `;
 
-const customerAccessTokenCreate = gql`
-  mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
-    customerAccessTokenCreate(input: $input) {
-      userErrors {
-        field
-        message
-      }
-      customerAccessToken {
-        accessToken
-        expiresAt
-      }
-    }
-  }
-`;
-
 const AppWithDataAndMutation = compose(
   graphql(query),
   graphql(createCheckout, {name: "createCheckout"}),
   graphql(checkoutLineItemsAdd, {name: "checkoutLineItemsAdd"}),
   graphql(checkoutLineItemsUpdate, {name: "checkoutLineItemsUpdate"}),
-  graphql(customerAccessTokenCreate, {name: "customerAccessTokenCreate"}),
   graphql(checkoutCustomerAssociate, {name: "checkoutCustomerAssociate"})
 )(App);
 

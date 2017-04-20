@@ -3,9 +3,9 @@ import LineItem from './LineItem';
 import '../css/Cart.css';
 
 class Cart extends Component {
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
+    
     this.openCheckout = this.openCheckout.bind(this);
   }
 

@@ -10,8 +10,7 @@ class Cart extends Component {
   }
 
   openCheckout() {
-    const webCheckoutUrl = this.props.checkout.webUrl + "&customer_access_token=" + this.props.customerAccessToken
-    window.open(webCheckoutUrl);
+    window.open(this.props.checkout.webUrl);
   }
 
   render() {

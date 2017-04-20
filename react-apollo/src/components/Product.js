@@ -6,8 +6,7 @@ class Product extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
+    this.state = {};
 
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);

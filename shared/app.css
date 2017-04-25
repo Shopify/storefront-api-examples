@@ -1,4 +1,4 @@
-/* INITIALIZERS + DEFAULT STYLES
+/* INITIALIZERS + DEFAULTS
  * ============================== */
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 
@@ -35,7 +35,7 @@ h2 {
   font-size: 2rem;
 }
 
-/* APP STYLES
+/* BASE APP
  * ============================== */
 .App__header {
   background-color: #222;
@@ -43,6 +43,16 @@ h2 {
   background-size: cover;
   color: white;
   padding: 10px 10px;
+}
+
+.App__nav{
+  width: 100%;
+  list-style: none;
+}
+
+.App__customer-actions {
+  float: left;
+  padding: 10px;
 }
 
 .App__title {
@@ -77,7 +87,7 @@ h2 {
   cursor: not-allowed;
 }
 
-/* CART STYLES
+/* CART
  * ============================== */
 .Cart {
   position: fixed;
@@ -86,13 +96,15 @@ h2 {
   height: 100%;
   width: 350px;
   background-color: white;
-  display: none;
+  display: flex;
   flex-direction: column;
   border-left: 1px solid #e5e5e5;
+  transform: translateX(100%);
+  transition: transform 0.15s ease-in-out;
 }
 
 .Cart--open {
-  display: flex;
+  transform: translateX(0);
 }
 
 .Cart__close {
@@ -169,7 +181,7 @@ h2 {
   color: white;
 }
 
-/* LINE ITEM STYLES
+/* LINE ITEMS
  * ============================== */
 .Line-item {
   margin-bottom: 20px;
@@ -269,7 +281,7 @@ h2 {
   border-radius: 0;
 }
 
-/* PRODUCT STYLES
+/* PRODUCTS
  * ============================== */
 .Product {
   flex: 0 1 31%;
@@ -302,4 +314,85 @@ h2 {
   display: block;
   width: 15%;
   margin-bottom: 10px;
+}
+
+/* CUSTOMER AUTH
+ * ============================== */
+.CustomerAuth {
+  background: #2a2c2e;
+  display: none;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  padding: 0 0 65px;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  transition: opacity 150ms;
+  opacity: 1;
+  visibility: visible;
+  z-index: 1000;
+  position: fixed;
+}
+
+.CustomerAuth--open {
+  display: block;
+}
+
+.CustomerAuth__close {
+  position: absolute;
+  right: 9px;
+  top: 8px;
+  font-size: 35px;
+  color: #999;
+  border: none;
+  background: transparent;
+  transition: transform 100ms ease;
+  cursor: pointer;
+}
+
+.CustomerAuth__body {
+  padding: 130px 30px;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  position: relative;
+}
+
+.CustomerAuth__heading {
+  font-size: 24px;
+  font-weight: 500;
+  padding-bottom: 15px;
+}
+
+.CustomerAuth__credential {
+  display: block;
+  position: relative;
+  margin-bottom: 15px;
+  border-radius: 3px;
+}
+
+.CustomerAuth__input {
+  height: 60px;
+  padding: 24px 10px 20px;
+  border: 0px;
+  font-size: 18px;
+  background: #fff;
+  width: 100%;
+}
+
+.CustomerAuth__submit {
+  float: right;
+}
+
+.error {
+  display: block;
+  font-size: 15px;
+  padding: 10px;
+  position: relative;
+  min-height: 2.64286em;
+  background: #fbefee;
+  color: #c23628;
 }

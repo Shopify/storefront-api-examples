@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import './css/App.css';
 import Products from './components/Products';
 import Cart from './components/Cart';
-
 
 class App extends Component {
   constructor() {

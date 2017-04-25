@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import VariantSelector from './VariantSelector';
-import '../css/Product.css';
 import Client from 'shopify-buy';
 
 class Product extends Component {

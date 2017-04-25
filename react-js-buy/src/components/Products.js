@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Product from './Product';
-import './../css/Products.css';
-
 
 class Products extends Component {
   render() {

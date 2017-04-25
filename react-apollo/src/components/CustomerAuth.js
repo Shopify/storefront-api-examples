@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { graphql, gql, compose } from 'react-apollo'
 import PropTypes from 'prop-types';
-// import '../css/CustomerAuth.css';
 
 class CustomerAuth extends Component {
   constructor(props) {

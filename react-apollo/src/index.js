@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import './css/index.css';
-import ApolloClient, { createNetworkInterface } from 'apollo-client'
-import { ApolloProvider } from 'react-apollo'
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloProvider } from 'react-apollo';
+import '../../shared/app.css';
 
 const networkInterface = createNetworkInterface({ uri: 'https://graphql.myshopify.com/api/graphql' });
 

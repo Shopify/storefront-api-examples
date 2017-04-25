@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { graphql, gql, compose } from 'react-apollo'
 import PropTypes from 'prop-types';
-import '../css/CustomerAuth.css';
+// import '../css/CustomerAuth.css';
 
 class CustomerAuth extends Component {
   constructor(props) {
@@ -116,7 +116,7 @@ class CustomerAuth extends Component {
         <button
           onClick={() => { this.props.closeCustomerAuth(); this.resetErrorMessages(); this.resetInputFields();}}
           className="CustomerAuth__close">
-          x
+          ×
         </button>
         <div className="CustomerAuth__body">
           <h2 className="CustomerAuth__heading">{this.props.newCustomer ? 'Create your Account' : 'Log in to your account'}</h2>

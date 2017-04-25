@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import LineItem from './LineItem';
-import '../css/Cart.css';
 
 class Cart extends Component {
   constructor(props) {
@@ -32,7 +31,7 @@ class Cart extends Component {
           <button
             onClick={this.props.handleCartClose}
             className="Cart__close">
-            x
+            ×
           </button>
         </header>
         <ul className="Cart__line-items">

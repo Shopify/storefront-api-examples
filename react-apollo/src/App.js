@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './css/App.css';
 import Product from './components/Product';
 import Cart from './components/Cart';
 import CustomerAuthWithMutation from './components/CustomerAuth';

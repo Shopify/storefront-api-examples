@@ -91,7 +91,7 @@ class Product extends Component {
 
     this.setState({
       selectedVariant: selectedVariant,
-      selectedVariantImage: selectedVariant.image.src
+      selectedVariantImage: selectedVariant.image
     });
   }
 
@@ -102,12 +102,12 @@ class Product extends Component {
   }
 
   render() {
-    let variantImage = this.state.selectedVariantImage || this.props.product.images.edges[0].node.src
+    let variantImage = this.state.selectedVariantImage || this.props.product.images.edges[0].node
     let variant = this.state.selectedVariant || this.props.product.variants.edges[0].node
     let variantQuantity = this.state.selectedVariantQuantity || 1
     return (
       <div className="Product">
-        {this.props.product.images.edges.length ? <img src={variantImage} alt={`${this.props.product.title} product shot`}/> : null}
+        {this.props.product.images.edges.length ? <img src={variantImage.src} alt={`${this.props.product.title} product shot`}/> : null}
         <h5 className="Product__title">{this.props.product.title}</h5>
         <span className="Product__price">${variant.price}</span>
         <div ref="variantSelectors">

@@ -40,7 +40,7 @@ class Product extends Component {
 
     this.setState({
       selectedVariant: selectedVariant,
-      selectedVariantImage: selectedVariant.attrs.image.src
+      selectedVariantImage: selectedVariant.attrs.image
     });
   }
 
@@ -51,7 +51,7 @@ class Product extends Component {
   }
 
   render() {
-    let variantImage = this.state.selectedVariantImage || this.props.product.images[0].src
+    let variantImage = this.state.selectedVariantImage || this.props.product.images[0]
     let variant = this.state.selectedVariant || this.props.product.variants[0]
     let variantQuantity = this.state.selectedVariantQuantity || 1
     let variantSelectors = this.props.product.options.map((option) => {
@@ -65,7 +65,7 @@ class Product extends Component {
     });
     return (
       <div className="Product">
-        {this.props.product.images.length ? <img src={variantImage} alt={`${this.props.product.title} product shot`}/> : null}
+        {this.props.product.images.length ? <img src={variantImage.src} alt={`${this.props.product.title} product shot`}/> : null}
         <h5 className="Product__title">{this.props.product.title}</h5>
         <span className="Product__price">${variant.price}</span>
         {variantSelectors}

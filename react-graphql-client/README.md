@@ -1,6 +1,6 @@
-# react-js-buy-sdk
+# react-graphql-client
 
-An example using [js-buy-sdk](https://github.com/Shopify/js-buy-sdk) built with [React](https://facebook.github.io/react/). This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+An example using [graphql-js-client](https://github.com/Shopify/graphql-js-client) built with [React](https://facebook.github.io/react/). This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Prerequisites
 
@@ -44,7 +44,7 @@ yarn start
 ## Further Reading / Useful Links
 
 * [React](https://facebook.github.io/react/)
-* [JS Buy SDK](https://github.com/Shopify/js-buy-sdk)
+* [GraphQL JS Client](https://github.com/Shopify/graphql-js-client)
 
 ## Contributing
 For help on setting up the repo locally, building, testing, and contributing

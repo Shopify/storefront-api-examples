@@ -17,6 +17,7 @@ class Cart extends Component {
       return (
         <LineItem
           updateQuantityInCart={this.props.updateQuantityInCart}
+          removeLineItemInCart={this.props.removeLineItemInCart}
           key={line_item.id.toString()}
           line_item={line_item}
         />

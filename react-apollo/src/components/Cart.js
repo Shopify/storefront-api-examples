@@ -16,7 +16,7 @@ class Cart extends Component {
     let line_items = this.props.checkout.lineItems.edges.map((line_item) => {
       return (
         <LineItem
-          removeLineItemFromCart={this.props.removeLineItemFromCart}
+          removeLineItemInCart={this.props.removeLineItemInCart}
           updateLineItemInCart={this.props.updateLineItemInCart}
           key={line_item.node.id.toString()}
           line_item={line_item.node}

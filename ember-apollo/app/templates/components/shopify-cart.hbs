@@ -29,9 +29,7 @@
           <span class="Line-item__price">
             $ {{total-price item.node.variant.price item.node.quantity}}
           </span>
-        </div>
-        <div class="Line-item__content-row">
-          <button class="Line-item__remove" {{action "removeItem" item.node.id}}>Remove Item</button>
+          <button class="Line-item__remove" {{action "removeItem" item.node.id}}>×</button>
         </div>
       </div>
     </li>

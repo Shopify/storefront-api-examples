@@ -211,6 +211,7 @@ h2 {
   display: inline-block;
   width: 100%;
   margin-bottom: 5px;
+  position: relative;
 }
 
 .Line-item__variant-title {
@@ -232,6 +233,7 @@ h2 {
   float: right;
   font-weight: bold;
   font-size: 15px;
+  margin-right: 40px;
 }
 
 .Line-item__quantity-container {
@@ -277,6 +279,22 @@ h2 {
   float: left;
   padding: 0;
   border-radius: 0;
+}
+
+.Line-item__remove {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 0;
+  background: 0;
+  font-size: 20px;
+  top: -4px;
+  opacity: 0.5;
+}
+
+.Line-item__remove:hover {
+  opacity: 1;
+  cursor: pointer;
 }
 
 /* PRODUCTS

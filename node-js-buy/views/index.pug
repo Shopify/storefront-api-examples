@@ -57,10 +57,9 @@ html(lang='en', data-framework='javascript')
                       input(type='hidden' name='currentQuantity' value=item.quantity)
                       button.Line-item__quantity-update(type='submit') +
                   span.Line-item__price=`$ ${(item.variant.price * item.quantity).toFixed(2)}`
-                .Line-item__content-row
                   form(method='post' action='/remove_line_item/' + item.id)
                     input(type='hidden' name='checkoutId' value=cart.id)
-                    button.Line-teim__remove(type='submit') Remove Item
+                    button.Line-item__remove(type='submit') ×
         footer.Cart__footer
           .Cart-info.clearfix
             .Cart-info__total.Cart-info__small Subtotal

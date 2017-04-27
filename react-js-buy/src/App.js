@@ -15,6 +15,7 @@ class App extends Component {
     this.handleCartClose = this.handleCartClose.bind(this);
     this.addVariantToCart = this.addVariantToCart.bind(this);
     this.updateQuantityInCart = this.updateQuantityInCart.bind(this);
+    this.removeLineItemInCart = this.removeLineItemInCart.bind(this);
   }
 
   componentWillMount() {
@@ -60,6 +61,16 @@ class App extends Component {
     });
   }
 
+  removeLineItemInCart(lineItemId) {
+    const checkoutId = this.state.checkout.id
+
+    return this.props.client.removeLineItems(checkoutId, [lineItemId]).then(res => {
+      this.setState({
+        checkout: res,
+      });
+    });
+  }
+
   handleCartClose() {
     this.setState({
       isCartOpen: false,
@@ -89,6 +100,7 @@ class App extends Component {
           isCartOpen={this.state.isCartOpen}
           handleCartClose={this.handleCartClose}
           updateQuantityInCart={this.updateQuantityInCart}
+          removeLineItemInCart={this.removeLineItemInCart}
         />
       </div>
     );

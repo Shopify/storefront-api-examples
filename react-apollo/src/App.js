@@ -8,9 +8,11 @@ import {
   createCheckout,
   checkoutLineItemsAdd,
   checkoutLineItemsUpdate,
+  checkoutLineItemsRemove,
   checkoutCustomerAssociate,
   addVariantToCart,
   updateLineItemInCart,
+  removeLineItemInCart,
   associateCustomerCheckout
 } from './checkout'
 
@@ -32,6 +34,7 @@ class App extends Component {
     this.closeCustomerAuth = this.closeCustomerAuth.bind(this);
     this.addVariantToCart = addVariantToCart.bind(this);
     this.updateLineItemInCart = updateLineItemInCart.bind(this);
+    this.removeLineItemInCart = removeLineItemInCart.bind(this);
     this.showAccountVerificationMessage = this.showAccountVerificationMessage.bind(this);
     this.associateCustomerCheckout = associateCustomerCheckout.bind(this);
   }
@@ -142,7 +145,7 @@ class App extends Component {
           )}
         </div>
         <Cart
-          removeLineItemFromCart={this.removeLineItemFromCart}
+          removeLineItemInCart={this.removeLineItemInCart}
           updateLineItemInCart={this.updateLineItemInCart}
           checkout={this.state.checkout}
           isCartOpen={this.state.isCartOpen}
@@ -216,6 +219,7 @@ const AppWithDataAndMutation = compose(
   graphql(createCheckout, {name: "createCheckout"}),
   graphql(checkoutLineItemsAdd, {name: "checkoutLineItemsAdd"}),
   graphql(checkoutLineItemsUpdate, {name: "checkoutLineItemsUpdate"}),
+  graphql(checkoutLineItemsRemove, {name: "checkoutLineItemsRemove"}),
   graphql(checkoutCustomerAssociate, {name: "checkoutCustomerAssociate"})
 )(App);
 

@@ -30,8 +30,7 @@ class LineItem extends Component {
               {this.props.line_item.variant.title}
             </div>
             <span className="Line-item__title">
-            {this.props.line_item.quantity} -
-            {this.props.line_item.title}
+              {this.props.line_item.title}
             </span>
           </div>
           <div className="Line-item__content-row">
@@ -43,6 +42,7 @@ class LineItem extends Component {
             <span className="Line-item__price">
               $ { (this.props.line_item.quantity * this.props.line_item.variant.price).toFixed(2) }
             </span>
+            <button className="Line-item__remove" onClick={()=> this.props.removeLineItemInCart(this.props.line_item.id)}>×</button>
           </div>
         </div>
       </li>

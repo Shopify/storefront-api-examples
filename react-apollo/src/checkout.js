@@ -72,6 +72,21 @@ export const checkoutLineItemsUpdate = gql`
   ${CheckoutFragment}
 `;
 
+export const checkoutLineItemsRemove = gql`
+  mutation ($checkoutId: ID!, $lineItemIds: [ID!]!) {
+    checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
+      userErrors {
+        message
+        field
+      }
+      checkout {
+        ...CheckoutFragment
+      }
+    }
+  }
+  ${CheckoutFragment}
+`;
+
 export const checkoutCustomerAssociate = gql`
   mutation checkoutCustomerAssociate($checkoutId: ID!, $customerAccessToken: String!) {
     checkoutCustomerAssociate(checkoutId: $checkoutId, customerAccessToken: $customerAccessToken) {
@@ -105,6 +120,16 @@ export function updateLineItemInCart(lineItemId, quantity){
     }).then((res) => {
     this.setState({
       checkout: res.data.checkoutLineItemsUpdate.checkout
+    });
+  });
+}
+
+export function removeLineItemInCart(lineItemId){
+  this.props.checkoutLineItemsRemove(
+    { variables: { checkoutId: this.state.checkout.id, lineItemIds: [lineItemId] }
+    }).then((res) => {
+    this.setState({
+      checkout: res.data.checkoutLineItemsRemove.checkout
     });
   });
 }

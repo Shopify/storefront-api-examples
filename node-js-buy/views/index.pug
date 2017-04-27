@@ -7,6 +7,8 @@ html(lang='en', data-framework='javascript')
   body
     .App
       header.App__header
+        .App__view-cart-wrapper
+          button.App__view-cart#view-cart-button Cart
         .App__title
           h1=`${shop.name}: Node Example`
           h2=shop.description
@@ -29,9 +31,6 @@ html(lang='en', data-framework='javascript')
               input(type='hidden' name='checkoutId' value=cart.id)
               button.Product__buy.button#add-to-cart-button(type='submit')
                   | Add to cart
-
-      .view-cart-wrapper
-        button.view-cart#view-cart-button Cart
 
       .Cart#cart(class={'Cart--open': isCartOpen})
         header.Cart__header

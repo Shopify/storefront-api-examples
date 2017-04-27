@@ -126,6 +126,11 @@ class App extends Component {
             <li className="button App__customer-actions" onClick={this.openCustomerAuth} data-customer-type="new-customer">Create an Account</li>
             <li className="login App__customer-actions" onClick={this.openCustomerAuth}>Log in</li>
           </ul>
+          {!this.state.isCartOpen &&
+            <div className="App__view-cart-wrapper">
+              <button className="App__view-cart" onClick={()=> this.setState({isCartOpen: true})}>Cart</button>
+            </div>
+          }
           <div className="App__title">
             <h1>Site Name</h1>
             <h2>Subtitle for your site goes here</h2>
@@ -153,6 +158,7 @@ const query = gql`
   query query {
     shop {
       name
+      description
       products(first:20) {
         pageInfo {
           hasNextPage

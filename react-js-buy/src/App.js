@@ -21,18 +21,17 @@ class App extends Component {
     this.props.client.createCheckout({
       allowPartialAddresses: true,
       shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}
-      }).then((res) => {
-        this.setState({
-          checkout: res,
-        });
+    }).then((res) => {
+      this.setState({
+        checkout: res,
       });
+    });
 
-    this.props.client.fetchAllProducts()
-      .then((res) => {
-        this.setState({
-          products: res,
-        });
+    this.props.client.fetchAllProducts().then((res) => {
+      this.setState({
+        products: res,
       });
+    });
   }
 
   addVariantToCart(variantId, quantity){
@@ -71,6 +70,11 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App__header">
+          {!this.state.isCartOpen &&
+            <div className="App__view-cart-wrapper">
+              <button className="App__view-cart" onClick={()=> this.setState({isCartOpen: true})}>Cart</button>
+            </div>
+          }
           <div className="App__title">
             <h1>Site Name</h1>
             <h2>Subtitle for your site goes here</h2>

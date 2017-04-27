@@ -1,8 +1,13 @@
 <div class="App">
   <header class="App__header">
+    {{#unless model.isCartOpen}}
+      <div class="App__view-cart-wrapper">
+        <button class="App__view-cart" {{action "openCart"}}>Cart</button>
+      </div>
+    {{/unless}}
     <div class="App__title">
-    <h1>{{model.shop.name}}: Ember Example</h1>
-    <h2>{{model.shop.description}}</h2>
+      <h1>{{model.shop.name}}: Ember Example</h1>
+      <h2>{{model.shop.description}}</h2>
     </div>
   </header>
 
@@ -15,10 +20,4 @@
   <div class="Cart {{if model.isCartOpen "Cart--open"}}">
     {{shopify-cart close="closeCart"}}
   </div>
-
-  {{#unless model.isCartOpen}}
-    <div class="view-cart-wrapper">
-      <button class="view-cart" {{action "openCart"}}>Cart</button>
-    </div>
-  {{/unless}}
 </div>

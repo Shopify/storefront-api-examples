@@ -68,6 +68,18 @@ h2 {
   justify-content: center;
 }
 
+.App__view-cart-wrapper {
+  float: right;
+}
+
+.App__view-cart {
+  font-size: 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: white;
+}
+
 .button {
   background-color: #2752ff;
   color: white;
@@ -165,20 +177,6 @@ h2 {
   margin-left: 5px;
   font-size: 16px;
   color: black;
-}
-
-.view-cart-wrapper {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-}
-
-.view-cart {
-  font-size: 15px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: white;
 }
 
 /* LINE ITEMS

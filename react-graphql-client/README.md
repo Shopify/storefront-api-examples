@@ -1,6 +1,9 @@
 # react-graphql-client
 
-An example using [graphql-js-client](https://github.com/Shopify/graphql-js-client) built with [React](https://facebook.github.io/react/). This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+An example using [graphql-js-client](https://github.com/Shopify/graphql-js-client) built with [React](https://facebook.github.io/react/).
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+This example uses [babel-plugin-graphql-js-client-transform](https://github.com/Shopify/babel-plugin-graphql-js-client-transform)
+in conjunction with [graphql-js-client](https://github.com/Shopify/graphql-js-client) to build queries.
 
 ## Prerequisites
 

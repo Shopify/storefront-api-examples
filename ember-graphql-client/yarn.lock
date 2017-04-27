@@ -521,9 +521,9 @@ babel-plugin-filter-imports@^0.2.0:
   dependencies:
     json-stable-stringify "^1.0.1"
 
-babel-plugin-graphql-js-client-transform@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/babel-plugin-graphql-js-client-transform/-/babel-plugin-graphql-js-client-transform-1.0.3.tgz#38ba4de6079761b869f2bc490d6366bddfd70b9f"
+babel-plugin-graphql-js-client-transform@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-graphql-js-client-transform/-/babel-plugin-graphql-js-client-transform-1.1.0.tgz#445d99102be3d0ef1a028e5f465c3cda13903a93"
   dependencies:
     babel-types "6.23.0"
     graphql "0.9.1"
@@ -888,7 +888,7 @@ babel-traverse@^6.16.0, babel-traverse@^6.24.1:
     invariant "^2.2.0"
     lodash "^4.2.0"
 
-babel-types@6.16.0:
+babel-types@6.16.0, babel-types@^6.16.0:
   version "6.16.0"
   resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.16.0.tgz#71cca1dbe5337766225c5c193071e8ebcbcffcfe"
   dependencies:
@@ -897,7 +897,7 @@ babel-types@6.16.0:
     lodash "^4.2.0"
     to-fast-properties "^1.0.1"
 
-babel-types@6.23.0, babel-types@^6.16.0:
+babel-types@6.23.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.23.0.tgz#bb17179d7538bad38cd0c9e115d340f77e7e9acf"
   dependencies:

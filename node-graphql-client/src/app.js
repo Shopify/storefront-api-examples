@@ -2,10 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import client from './graphql-js-client';
-
-function gql() {
-  // do nothing
-}
+import {gql} from 'babel-plugin-graphql-js-client-transform';
 
 const app = express();
 

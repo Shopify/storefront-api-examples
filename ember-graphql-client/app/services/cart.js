@@ -1,7 +1,7 @@
 import Ember from 'ember';
+import {gql} from 'npm:babel-plugin-graphql-js-client-transform';
 
 const { Service, inject } = Ember;
-let gql;
 
 export default Service.extend({
   store: Ember.inject.service('store'),

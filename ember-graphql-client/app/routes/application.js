@@ -1,6 +1,5 @@
 import Ember from 'ember';
-
-let gql;
+import {gql} from 'npm:babel-plugin-graphql-js-client-transform';
 
 export default Ember.Route.extend({
   cart: Ember.inject.service(),

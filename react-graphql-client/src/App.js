@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Products from './components/Products';
 import Cart from './components/Cart';
-
-let gql;
+import {gql} from 'babel-plugin-graphql-js-client-transform';
 
 class App extends Component {
   constructor() {

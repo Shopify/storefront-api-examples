@@ -18,7 +18,7 @@
     "schema:transform-to-types": "graphql-js-schema --schema-file schema.json --outdir ./app --schema-bundle-name 'Types' --bundle-only"
   },
   "devDependencies": {
-    "babel-plugin-graphql-js-client-transform": "^1.0.3",
+    "babel-plugin-graphql-js-client-transform": "^1.1.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^2.4.1",
     "ember-browserify": "^1.1.13",

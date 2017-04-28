@@ -13,7 +13,7 @@
     "babel-cli": "~6.11.4",
     "babel-core": "~6.13.2",
     "babel-plugin-add-shopify-header": "~1.0.5",
-    "babel-plugin-graphql-js-client-transform": "^1.0.3",
+    "babel-plugin-graphql-js-client-transform": "^1.1.0",
     "babel-preset-shopify": "~13.0.0",
     "babel-register": "~6.11.6",
     "body-parser": "^1.17.1",

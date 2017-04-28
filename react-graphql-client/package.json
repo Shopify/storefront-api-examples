@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "babel-plugin-graphql-js-client-transform": "^1.0.3",
+    "babel-plugin-graphql-js-client-transform": "^1.1.0",
     "graphql-js-client": "^0.5.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"

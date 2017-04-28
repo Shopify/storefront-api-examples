@@ -279,7 +279,7 @@ class App extends Component {
             </div>
           }
           <div className="App__title">
-            <h1>{this.state.shop.name}</h1>
+            <h1>{this.state.shop.name}: React Example</h1>
             <h2>{this.state.shop.description}</h2>
           </div>
         </header>

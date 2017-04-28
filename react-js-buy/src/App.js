@@ -9,7 +9,8 @@ class App extends Component {
     this.state = {
       isCartOpen: false,
       checkout: { lineItems: [] },
-      products: []
+      products: [],
+      shop: {}
     };
 
     this.handleCartClose = this.handleCartClose.bind(this);
@@ -31,6 +32,12 @@ class App extends Component {
     this.props.client.fetchAllProducts().then((res) => {
       this.setState({
         products: res,
+      });
+    });
+
+    this.props.client.fetchShopInfo().then((res) => {
+      this.setState({
+        shop: res,
       });
     });
   }
@@ -87,8 +94,8 @@ class App extends Component {
             </div>
           }
           <div className="App__title">
-            <h1>Site Name</h1>
-            <h2>Subtitle for your site goes here</h2>
+            <h1>{this.state.shop.name}: React Example</h1>
+            <h2>{this.state.shop.description}</h2>
           </div>
         </header>
         <Products

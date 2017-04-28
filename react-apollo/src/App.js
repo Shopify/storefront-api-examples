@@ -135,8 +135,8 @@ class App extends Component {
             </div>
           }
           <div className="App__title">
-            <h1>Site Name</h1>
-            <h2>Subtitle for your site goes here</h2>
+            <h1>{this.props.data.shop.name}: React Example</h1>
+            <h2>{this.props.data.shop.description}</h2>
           </div>
         </header>
         <div className="Product-wrapper">

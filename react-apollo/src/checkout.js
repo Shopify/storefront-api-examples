@@ -43,7 +43,7 @@ export const createCheckout = gql`
 `;
 
 export const checkoutLineItemsAdd = gql`
-  mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]) {
+  mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
     checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
       userErrors {
         message

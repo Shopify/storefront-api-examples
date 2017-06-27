@@ -134,7 +134,7 @@ class App extends Component {
     const checkoutId = this.state.checkout.id
 
     return this.props.client.send(gql(this.props.client)`
-      mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]) {
+      mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
         checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
           userErrors {
             message

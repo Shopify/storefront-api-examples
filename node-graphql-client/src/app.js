@@ -166,7 +166,7 @@ app.post('/add_line_item/:id', (req, res) => {
     };
 
     return client.send(gql(client)`
-      mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]) {
+      mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
         checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
           userErrors {
             message

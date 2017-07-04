@@ -28,7 +28,7 @@ const CheckoutFragment = gql`
 `;
 
 export const createCheckout = gql`
-  mutation ($input: CheckoutCreateInput!){
+  mutation checkoutCreate ($input: CheckoutCreateInput!){
     checkoutCreate(input: $input) {
       userErrors {
         message
@@ -43,7 +43,7 @@ export const createCheckout = gql`
 `;
 
 export const checkoutLineItemsAdd = gql`
-  mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
+  mutation checkoutLineItemsAdd ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
     checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
       userErrors {
         message
@@ -58,7 +58,7 @@ export const checkoutLineItemsAdd = gql`
 `;
 
 export const checkoutLineItemsUpdate = gql`
-  mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
+  mutation checkoutLineItemsUpdate ($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
     checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
       userErrors {
         message
@@ -73,7 +73,7 @@ export const checkoutLineItemsUpdate = gql`
 `;
 
 export const checkoutLineItemsRemove = gql`
-  mutation ($checkoutId: ID!, $lineItemIds: [ID!]!) {
+  mutation checkoutLineItemsRemove ($checkoutId: ID!, $lineItemIds: [ID!]!) {
     checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
       userErrors {
         message

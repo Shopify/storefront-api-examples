@@ -6,7 +6,7 @@
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-addons-create-fragment": "^15.5.3",
-    "react-apollo": "^1.0.1",
+    "react-apollo": "^1.4.2",
     "react-dom": "^15.5.4"
   },
   "devDependencies": {

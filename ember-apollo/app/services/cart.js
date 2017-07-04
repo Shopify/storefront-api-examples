@@ -84,7 +84,7 @@ export default Service.extend({
   addVariants({variantId, quantity}) {
     return this.get('apollo').mutate({
       mutation: gql`
-        mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]) {
+        mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
           checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
             userErrors {
               message

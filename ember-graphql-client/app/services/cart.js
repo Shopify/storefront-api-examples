@@ -110,7 +110,7 @@ export default Service.extend({
     }
 
     const mutation = gql(client)`
-      mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]) {
+      mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
         checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
           userErrors {
             message

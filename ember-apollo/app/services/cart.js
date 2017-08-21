@@ -70,7 +70,7 @@ export default Service.extend({
               }
             }
             ${CheckoutFragment}
-          `, variables: {input: {allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}}
+          `, variables: {input: {}}
         }).then((checkoutResult) => {
           this.set('checkout', checkoutResult.checkoutCreate.checkout);
 

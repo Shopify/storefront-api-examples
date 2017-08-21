@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 
   // Create a checkout if it doesn't exist yet
   if (!checkoutId) {
-    return client.createCheckout({allowPartialAddresses: true, shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}}).then((checkout) => {
+    return client.createCheckout({}).then((checkout) => {
       res.redirect(`/?checkoutId=${checkout.id}`);
     });
   }

@@ -76,7 +76,7 @@ app.get('/', (req, res) => {
   if (!checkoutId) {
     return client.send(gql(client)`
       mutation {
-        checkoutCreate(input: {allowPartialAddresses: true, shippingAddress: {city: "Toronto", province: "ON", country: "Canada"}}) {
+        checkoutCreate(input: {}) {
           userErrors {
             message
             field

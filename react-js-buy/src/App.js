@@ -20,10 +20,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.props.client.createCheckout({
-      allowPartialAddresses: true,
-      shippingAddress: {city: 'Toronto', province: 'ON', country: 'Canada'}
-    }).then((res) => {
+    this.props.client.createCheckout({}).then((res) => {
       this.setState({
         checkout: res,
       });

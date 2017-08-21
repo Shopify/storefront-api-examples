@@ -56,7 +56,7 @@ export default Service.extend({
       } else {
         const mutation = gql(client)`
           mutation {
-            checkoutCreate(input: {allowPartialAddresses: true, shippingAddress: {city: "Toronto", province: "ON", country: "Canada"}}) {
+            checkoutCreate(input: {}) {
               userErrors {
                 message
                 field

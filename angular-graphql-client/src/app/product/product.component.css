@@ -1,0 +1,17 @@
+img {
+    height: 200px;
+    float: right;
+}
+
+.productblock, .variant-block{
+    text-align: left;
+    float: left;
+}
+
+.variant-block{
+    margin-right: 1em;
+}
+
+span{
+    font-weight: bold;
+}

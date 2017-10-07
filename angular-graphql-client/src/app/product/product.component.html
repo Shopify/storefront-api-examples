@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6 productblock">
+      <span> Product name: </span> {{product.title}}
+      <div>
+        <small><span>product ID:</span> {{product.id}}</small>
+      </div>
+    </div>
+    <div class="col-6">
+      <img src={{product.images[0].src}}>
+    </div>
+  </div>
+  <div class="row">
+    <h1> Variants of {{product.title}}</h1>
+    <div class="list-group">
+      <div *ngFor="let variant of product.variants" class="list-group-item list-group-item-action align-items-start">
+        <div class="variant-block">
+          <h5 class="mb-1">{{variant.title}}</h5>
+          <small hidden='true'> <span>variant ID:</span>{{variant.id}}</small>
+          <p class="mb-1"><span> Price: </span>{{variant.price}}</p>
+          <button (click)="addToCart(variant)">Add to cart</button>
+        </div>
+        <div *ngIf="variant.image; else noImageBlock">
+          <img src={{variant.image.src}}>
+        </div>
+        <ng-template #noImageBlock><img src="./assets/images/empty-img.png"></ng-template>
+      </div>
+    </div>
+  </div>
+</div>

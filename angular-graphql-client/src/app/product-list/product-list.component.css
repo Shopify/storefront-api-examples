@@ -1,0 +1,49 @@
+span{
+  padding: 1em;
+}
+
+.items {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  /*width: 24em;*/
+}
+.items li {
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #EEE;
+  padding: 3em 0;
+  border-radius: 4px;
+ /* width: 100%;*/
+}
+.items li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+.items li.selected {
+  background-color: #CFD8DC;
+  color: white;
+}
+.items li.selected:hover {
+  background-color: #BBD8DC;
+}
+.items .text {
+  position: relative;
+  top: -3px;
+}
+
+img{
+    width: 100%;
+
+}
+.id{
+    font-size: small;
+
+}
+.button{
+  position: absolute;
+  bottom: 1em;
+  left: 1em; 
+}

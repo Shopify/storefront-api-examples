@@ -1,0 +1,149 @@
+<div class="container page">
+
+  <form [formGroup]="cartForm" novalidate>
+
+    <div class="row">
+
+      <div class="col-6">
+        <fieldset>
+          <div class="cart">
+            <div class="cart-header" role="tab" id="headingOne">
+              <h5 class="mb-0">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Main Info
+                </a>
+              </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+              <div class="cart-block">
+                <div class="form-group">
+                  <label for="inputID">ID</label>
+                  <input formControlName="id" type="text" class="form-control" id="inputID" readonly>
+                  <small id="idHelp" class="form-text text-muted"> This field fill automatically after checkout creation</small>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                  <input type="checkbox" formControlName="allowPartialAddresses" class="form-check-input">
+                 Allow partial addresses
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="col-6">
+        <fieldset formGroupName="shippingAddress" class="form-group">
+          <div class="cart">
+            <div class="cart-header" role="tab" id="headingTwo">
+              <h5 class="mb-0">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                  Mailing Address
+                </a>
+              </h5>
+            </div>
+
+            <div id="collapseTwo" class="collapse show" role="tabpanel" aria-labelledby="headingTwo">
+              <div class="cart-block">
+                <!--legend> Mailing Address </legend-->
+                <div class="form-group">
+                  <label for="address1">Address1</label>
+                  <input type="text" formControlName="address1" class="form-control" id="address1" placeholder="Address1">
+                </div>
+
+                <div class="form-group">
+                  <label for="address2">Address2</label>
+                  <input type="text" formControlName="address2" class="form-control" id="address2" placeholder="Address2">
+                </div>
+
+                <div class="form-group">
+                  <label for="city">City</label>
+                  <input type="text" formControlName="city" class="form-control" id="city" placeholder="City">
+                </div>
+
+                <div class="form-group">
+                  <label for="company">Company</label>
+                  <input type="text" formControlName="company" class="form-control" id="company" placeholder="Company">
+                </div>
+
+                <div class="form-group">
+                  <label for="country">Country</label>
+                  <input type="text" formControlName="country" class="form-control" id="country" placeholder="Country">
+                </div>
+
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input type="text" formControlName="firstName" class="form-control" id="firstName" placeholder="First Name">
+                </div>
+
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" formControlName="lastName" class="form-control" id="lastName" placeholder="Last Name">
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="text" formControlName="phone" class="form-control" id="phone" placeholder="Phone">
+                </div>
+
+                <div class="form-group">
+                  <label for="province">Province</label>
+                  <input type="text" formControlName="province" class="form-control" id="province" placeholder="Province">
+                </div>
+
+                <div class="form-group">
+                  <label for="zip">Zip</label>
+                  <input type="text" formControlName="zip" class="form-control" id="zip" placeholder="Zip">
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    <div class="row" formArrayName="lineItems">
+      <div *ngFor="let lineItem of lineItems.controls; let i=index" [formGroupName]="i" class="col lineItem">
+        <!-- The repeated address template -->
+        <h4>Item #{{i + 1}}</h4>
+        <div style="margin-left: 1em;">
+          <div class="form-group">
+            <label class="center-block">id:
+            <input class="form-control" formControlName="id" readonly>
+          </label>
+          </div>
+          <div class="form-group">
+            <label class="center-block">variant:
+            <input class="form-control" formControlName="title" readonly>
+          </label>
+          </div>
+          <div class="form-group">
+            <label class="center-block">quantity:
+            <input class="form-control" type="number" formControlName="quantity">
+          </label>
+          </div>
+          <button (click)="removeItem(i)" type="button" class="btn btn-primary">Remove product</button>
+        </div>
+      </div>
+      <!-- End of the repeated address template -->
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="createUpdateCheckout()">{{checkoutButtonTitle}}</button>
+
+    <button type="button" class="btn btn-primary" (click)="fetchCheckout()">Checkout from Shopify</button>
+
+    <div class="form-group">
+      <label for="checkoutFromSpotify">Checkout from Shopify</label>
+      <textarea class="form-control" id="checkoutFromSpotify" rows="10" readonly>{{checkoutFromShopify}}</textarea>
+    </div>
+
+  </form>
+
+
+</div>

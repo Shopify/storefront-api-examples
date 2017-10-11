@@ -1,7 +1,9 @@
 # SmallAwesomeShop
 
 Example of [graphql-js-client](https://github.com/Shopify/graphql-js-client) usage build with Angular 4.
+https://www.youtube.com/watch?v=aggRpY_5t1o - how it works.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.2.
+
 
 ## Prerequisites
 

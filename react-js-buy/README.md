@@ -13,6 +13,7 @@ You will need the following things properly installed on your computer.
 ## Installation
 
 * `git clone git@github.com:Shopify/storefront-api-examples.git` this repository
+* `cd storefront-api-examples`
 * `cd react-js-buy-sdk`
 * `yarn install`
 

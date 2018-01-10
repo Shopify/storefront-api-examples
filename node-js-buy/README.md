@@ -10,6 +10,7 @@ An example using [js-buy-sdk](https://github.com/Shopify/js-buy-sdk) built with 
 ## Installation
 
 * `git clone git@github.com:Shopify/storefront-api-examples.git` this repository
+* `cd storefront-api-examples`
 * `cd node-js-buy`
 * `yarn install`
 

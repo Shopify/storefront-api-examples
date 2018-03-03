@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cart, Variant, LineItem } from './../../shared';
+import { Cart, Variant, LineItem } from './../../shared/models';
 
 import { BehaviorSubject } from "rxjs";
 
@@ -15,20 +15,20 @@ export class GlobalService {
         this.cartObs.next(cart);
     }
 
-
-    get cart() {
+    get cart(): Cart {
         return this.cartObs.getValue();
     }
 
     set cart(cart) {
         this.cartObs.next(cart);
+
     }
 
     set lineItems(lineItems) {
         this.lineItemsObs.next(lineItems);
     }
 
-    get lineItems() {
+    get lineItems(): LineItem[] {
         return this.lineItemsObs.getValue();
     }
 

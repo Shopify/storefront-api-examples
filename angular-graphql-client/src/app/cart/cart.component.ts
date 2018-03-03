@@ -14,6 +14,8 @@ export class CartComponent implements OnInit {
   cartForm: FormGroup;
   checkoutButtonTitle: string = 'Create checkout';
   checkoutFromShopify: string;
+  requiredFields = ['email', 'shippingAddress.address1', 'shippingAddress.city',
+                      'shippingAddress.country', 'shippingAddress.lastName', 'shippingAddress.zip'];
 
   constructor(
     private fb: FormBuilder,
@@ -37,6 +39,11 @@ export class CartComponent implements OnInit {
     this.setAddress(glCart.shippingAddress);
     this.setLineItems(this.globalService.lineItems);
 
+    //set validators
+    this.requiredFields.forEach(element => {
+      this.setValidators(element);  
+    });
+
     if (glCart.status == CheckoutStatus.update){
       this.checkoutButtonTitle = "Update checkout"
     }
@@ -47,6 +54,13 @@ export class CartComponent implements OnInit {
     this.globalService.cart = this.cartForm.value;
     this.globalService.lineItems = this.lineItems.value;
   }
+
+  get email() { return this.cartForm.get('email'); } 
+  get address1() {return this.cartForm.get('shippingAddress').get('address1');}
+  get city() {return this.cartForm.get('shippingAddress').get('city');}
+  get country() {return this.cartForm.get('shippingAddress').get('country');}
+  get lastName() {return this.cartForm.get('shippingAddress').get('lastName');}
+  get zip() {return this.cartForm.get('shippingAddress').get('zip');}
 
   get cartId(): string {
     return this.cartForm.get('id').value;
@@ -69,7 +83,7 @@ export class CartComponent implements OnInit {
   createForm() {
     this.cartForm = this.fb.group({
       id: ['',],
-      email: ['',],
+      email: ['', Validators.required],
       shippingAddress: this.fb.group(
         new MailingAddress()
       ),
@@ -78,16 +92,37 @@ export class CartComponent implements OnInit {
       lineItemsGl: this.fb.array([]),
       status,
     });
+
+    //this.cartForm.controls['shippingAddress.address1'].setValidators(Validators.required);
+    //console.log(this.cartForm.get('shippingAddress').get('address1'));
+    
   }
 
+  setValidators(fieldName){
+    this.cartForm.get(fieldName).setValidators(Validators.required);
+  }
 
   setAddress(address: MailingAddress) {
+
     this.cartForm.setControl('shippingAddress', this.fb.group(address));
+    
   }
 
   createUpdateCheckout() {
 
-   const glCart = this.globalService.cart;
+    let errorOccur = false;
+    this.requiredFields.forEach(element => {
+      let control = this.cartForm.get(element);
+      if (control.invalid){
+        control.markAsTouched();
+        errorOccur = true;
+      }
+    });
+    
+    if (errorOccur){
+        return;
+    }
+    const glCart = this.globalService.cart;
 
     if (glCart.status == CheckoutStatus.update) {
       let ItemsForAdd = [], ItemsForUpdate = [];
@@ -197,3 +232,4 @@ export class CartComponent implements OnInit {
   }
 
 }
+

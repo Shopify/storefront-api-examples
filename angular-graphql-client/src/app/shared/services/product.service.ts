@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 
 export class ProductService {
 
-    getCorrectId(id: String) {
+    getCorrectId(id: String): String {
         if (id.substr(id.length - 1) != "=") {
             id = id + '=';
         };

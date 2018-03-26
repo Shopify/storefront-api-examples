@@ -20,19 +20,19 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.props.client.createCheckout({}).then((res) => {
+    this.props.client.checkout.create().then((res) => {
       this.setState({
         checkout: res,
       });
     });
 
-    this.props.client.fetchAllProducts().then((res) => {
+    this.props.client.product.fetchAll().then((res) => {
       this.setState({
         products: res,
       });
     });
 
-    this.props.client.fetchShopInfo().then((res) => {
+    this.props.client.shop.fetchInfo().then((res) => {
       this.setState({
         shop: res,
       });

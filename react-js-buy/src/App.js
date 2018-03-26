@@ -97,6 +97,7 @@ class App extends Component {
         </header>
         <Products
           products={this.state.products}
+          client={this.props.client}
           addVariantToCart={this.addVariantToCart}
         />
         <Cart

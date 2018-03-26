@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import VariantSelector from './VariantSelector';
-import Client from 'shopify-buy';
 
 class Product extends Component {
   constructor(props) {
@@ -36,7 +35,7 @@ class Product extends Component {
     let selectedOptions = this.state.selectedOptions;
     selectedOptions[target.name] = target.value;
 
-    const selectedVariant = Client.Product.Helpers.variantForOptions(this.props.product, selectedOptions)
+    const selectedVariant = this.props.client.product.helpers.variantForOptions(this.props.product, selectedOptions)
 
     this.setState({
       selectedVariant: selectedVariant,

@@ -20,19 +20,19 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.props.client.createCheckout({}).then((res) => {
+    this.props.client.checkout.create().then((res) => {
       this.setState({
         checkout: res,
       });
     });
 
-    this.props.client.fetchAllProducts().then((res) => {
+    this.props.client.product.fetchAll().then((res) => {
       this.setState({
         products: res,
       });
     });
 
-    this.props.client.fetchShopInfo().then((res) => {
+    this.props.client.shop.fetchInfo().then((res) => {
       this.setState({
         shop: res,
       });
@@ -47,7 +47,7 @@ class App extends Component {
     const lineItemsToAdd = [{variantId, quantity: parseInt(quantity, 10)}]
     const checkoutId = this.state.checkout.id
 
-    return this.props.client.addLineItems(checkoutId, lineItemsToAdd).then(res => {
+    return this.props.client.checkout.addLineItems(checkoutId, lineItemsToAdd).then(res => {
       this.setState({
         checkout: res,
       });
@@ -58,7 +58,7 @@ class App extends Component {
     const checkoutId = this.state.checkout.id
     const lineItemsToUpdate = [{id: lineItemId, quantity: parseInt(quantity, 10)}]
 
-    return this.props.client.updateLineItems(checkoutId, lineItemsToUpdate).then(res => {
+    return this.props.client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then(res => {
       this.setState({
         checkout: res,
       });
@@ -68,7 +68,7 @@ class App extends Component {
   removeLineItemInCart(lineItemId) {
     const checkoutId = this.state.checkout.id
 
-    return this.props.client.removeLineItems(checkoutId, [lineItemId]).then(res => {
+    return this.props.client.checkout.removeLineItems(checkoutId, [lineItemId]).then(res => {
       this.setState({
         checkout: res,
       });
@@ -97,6 +97,7 @@ class App extends Component {
         </header>
         <Products
           products={this.state.products}
+          client={this.props.client}
           addVariantToCart={this.addVariantToCart}
         />
         <Cart

@@ -13,10 +13,12 @@ class Product extends Component {
   }
 
   componentWillMount() {
+    let defaultOptionValues = {};
     this.props.product.options.forEach((selector) => {
-      this.setState({
-        selectedOptions: { [selector.name]: selector.values[0].value }
-      });
+      defaultOptionValues[selector.name] = selector.values[0].value;
+    });
+    this.setState({
+      selectedOptions: defaultOptionValues
     });
   }
 

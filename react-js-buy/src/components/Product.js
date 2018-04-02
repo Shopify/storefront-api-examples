@@ -5,19 +5,15 @@ class Product extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    let defaultOptionValues = {};
+    this.props.product.options.forEach((selector) => {
+      defaultOptionValues[selector.name] = selector.values[0].value;
+    });
+    this.state = { selectedOptions: defaultOptionValues };
 
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
     this.findImage = this.findImage.bind(this);
-  }
-
-  componentWillMount() {
-    this.props.product.options.forEach((selector) => {
-      this.setState({
-        selectedOptions: { [selector.name]: selector.values[0].value }
-      });
-    });
   }
 
   findImage(images, variantId) {

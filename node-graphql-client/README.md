@@ -11,7 +11,7 @@ This example uses [babel-plugin-graphql-js-client-transform](https://github.com/
 ## Installation
 
 ```bash
-git clone git@github.com:Shopify/storefront-api-examples.git
+git clone https://github.com/Shopify/storefront-api-examples.git
 cd node-js-buy
 yarn install
 ```

@@ -12,7 +12,7 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone git@github.com:Shopify/storefront-api-examples.git` this repository
+* `git clone https://github.com/Shopify/storefront-api-examples.git` this repository
 * `cd storefront-api-examples`
 * `cd ember-js-buy`
 * `yarn global add ember-cli`

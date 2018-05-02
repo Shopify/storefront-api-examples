@@ -1,14 +1,12 @@
-import Ember from 'ember';
-
-const { Service, inject } = Ember;
+import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
-  store: Ember.inject.service('store'),
-  client: inject.service('js-buy-sdk-client'),
+  store: service('store'),
+  client: service('js-buy-sdk-client'),
   checkout: null,
 
   init() {
-    return this.get('store').findAll('cart').then((result) => {
+    return this.get('store').findAll('cart').then(result => {
       const cartRecord = result.get('lastObject');
 
       if (cartRecord) {

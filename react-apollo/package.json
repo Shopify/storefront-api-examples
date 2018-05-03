@@ -3,14 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "prop-types": "^15.5.8",
-    "react": "^15.5.4",
-    "react-addons-create-fragment": "^15.5.3",
-    "react-apollo": "^1.4.2",
-    "react-dom": "^15.5.4"
+    "apollo-boost": "^0.1.4",
+    "apollo-link-context": "^1.0.8",
+    "apollo-link-http": "^1.5.4",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.1",
+    "prop-types": "^15.6.1",
+    "react": "16.3.2",
+    "react-addons-create-fragment": "^15.6.2",
+    "react-apollo": "^2.1.4",
+    "react-art": "^16.3.2",
+    "react-dom": "16.3.2"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -6,7 +6,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
-import '../../shared/app.css';
+import './app.css';
 
 const httpLink = createHttpLink({ uri: 'https://graphql.myshopify.com/api/graphql' })
 

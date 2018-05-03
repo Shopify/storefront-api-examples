@@ -102,7 +102,7 @@ export const checkoutCustomerAssociate = gql`
   ${CheckoutFragment}
 `;
 
-export const addVariantToCart = (variantId, quantity) => {
+export function addVariantToCart(variantId, quantity){
   this.props.checkoutLineItemsAdd(
     { variables: { checkoutId: this.state.checkout.id, lineItems:  [{variantId, quantity: parseInt(quantity, 10)}] }
     }).then((res) => {
@@ -114,7 +114,7 @@ export const addVariantToCart = (variantId, quantity) => {
   this.handleCartOpen();
 }
 
-export const updateLineItemInCart = (lineItemId, quantity) => {
+export function updateLineItemInCart(lineItemId, quantity){
   this.props.checkoutLineItemsUpdate(
     { variables: { checkoutId: this.state.checkout.id, lineItems: [{id: lineItemId, quantity: parseInt(quantity, 10)}] }
     }).then((res) => {
@@ -124,7 +124,7 @@ export const updateLineItemInCart = (lineItemId, quantity) => {
   });
 }
 
-export const removeLineItemInCart = (lineItemId) => {
+export function removeLineItemInCart(lineItemId){
   this.props.checkoutLineItemsRemove(
     { variables: { checkoutId: this.state.checkout.id, lineItemIds: [lineItemId] }
     }).then((res) => {
@@ -134,7 +134,7 @@ export const removeLineItemInCart = (lineItemId) => {
   });
 }
 
-export const associateCustomerCheckout = (customerAccessToken) => {
+export function associateCustomerCheckout(customerAccessToken){
   this.props.checkoutCustomerAssociate(
     { variables: { checkoutId: this.state.checkout.id, customerAccessToken: customerAccessToken }
     }).then((res) => {

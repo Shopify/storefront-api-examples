@@ -28,6 +28,16 @@ class App extends Component {
       products: [],
       checkout: { lineItems: { edges: [] } }
     };
+
+    this.handleCartClose = this.handleCartClose.bind(this);
+    this.handleCartOpen = this.handleCartOpen.bind(this);
+    this.openCustomerAuth = this.openCustomerAuth.bind(this);
+    this.closeCustomerAuth = this.closeCustomerAuth.bind(this);
+    this.addVariantToCart = addVariantToCart.bind(this);
+    this.updateLineItemInCart = updateLineItemInCart.bind(this);
+    this.removeLineItemInCart = removeLineItemInCart.bind(this);
+    this.showAccountVerificationMessage = this.showAccountVerificationMessage.bind(this);
+    this.associateCustomerCheckout = associateCustomerCheckout.bind(this);
   }
 
   componentWillMount() {
@@ -52,19 +62,19 @@ class App extends Component {
     checkoutLineItemsUpdate: PropTypes.func.isRequired
   }
 
-  handleCartOpen = () => {
+  handleCartOpen() {
     this.setState({
       isCartOpen: true,
     });
   }
 
-  handleCartClose = () => {
+  handleCartClose() {
     this.setState({
       isCartOpen: false,
     });
   }
 
-  openCustomerAuth = (event) => {
+  openCustomerAuth(event) {
     if (event.target.getAttribute('data-customer-type') === "new-customer") {
       this.setState({
         isNewCustomer: true,
@@ -78,7 +88,7 @@ class App extends Component {
     }
   }
 
-  showAccountVerificationMessage = () => {
+  showAccountVerificationMessage(){
     this.setState({ accountVerificationMessage: true });
     setTimeout(() => {
      this.setState({
@@ -87,7 +97,7 @@ class App extends Component {
    }, 5000);
   }
 
-  closeCustomerAuth = () => {
+  closeCustomerAuth() {
     this.setState({
       isCustomerAuthOpen: false,
     });

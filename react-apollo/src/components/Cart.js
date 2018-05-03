@@ -2,13 +2,7 @@ import React, {Component} from 'react';
 import LineItem from './LineItem';
 
 class Cart extends Component {
-  constructor(props) {
-  super(props);
-
-    this.openCheckout = this.openCheckout.bind(this);
-  }
-
-  openCheckout() {
+  openCheckout = () => {
     window.open(this.props.checkout.webUrl);
   }
 

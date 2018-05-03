@@ -1,18 +1,11 @@
 import React, {Component} from 'react';
 
 class LineItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.decrementQuantity = this.decrementQuantity.bind(this);
-    this.incrementQuantity = this.incrementQuantity.bind(this);
-  }
-
-  decrementQuantity(lineItemId) {
+  decrementQuantity = (lineItemId) => {
     this.props.updateLineItemInCart(lineItemId, this.props.line_item.quantity - 1)
   }
 
-  incrementQuantity(lineItemId) {
+  incrementQuantity = (lineItemId) => {
     this.props.updateLineItemInCart(lineItemId, this.props.line_item.quantity + 1)
   }
 

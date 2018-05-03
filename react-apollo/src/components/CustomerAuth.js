@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { graphql, compose } from 'react-apollo'
-import gql from 'graphql-tag'
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
 class CustomerAuth extends Component {
@@ -13,11 +13,6 @@ class CustomerAuth extends Component {
       emailErrorMessage: null,
       passwordErrorMessage: null
     };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.createCustomerAccount = this.createCustomerAccount.bind(this);
-    this.resetErrorMessages = this.resetErrorMessages.bind(this);
-    this.resetInputFields = this.resetInputFields.bind(this);
   }
 
   static propTypes = {
@@ -25,7 +20,7 @@ class CustomerAuth extends Component {
     customerAccessTokenCreate: PropTypes.func.isRequired,
   }
 
-  handleInputChange(event) {
+  handleInputChange = (event) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -33,7 +28,7 @@ class CustomerAuth extends Component {
     this.setState({[name]: value});
   }
 
-  resetErrorMessages(){
+  resetErrorMessages = () => {
     this.setState({
       nonFieldErrorMessage: null,
       emailErrorMessage: null,
@@ -41,14 +36,14 @@ class CustomerAuth extends Component {
     });
   }
 
-  resetInputFields(){
+  resetInputFields = () => {
     this.setState({
       email: '',
       password: ''
     });
   }
 
-  handleSubmit(email, password){
+  handleSubmit = (email, password) => {
     this.resetErrorMessages();
     if (this.props.newCustomer) {
       this.createCustomerAccount(email, password)
@@ -57,7 +52,7 @@ class CustomerAuth extends Component {
     }
   }
 
-  createCustomerAccount(email, password){
+  createCustomerAccount = (email, password) => {
     const input = {
       email: email,
       password: password
@@ -84,7 +79,7 @@ class CustomerAuth extends Component {
     });
   }
 
-  loginCustomerAccount(email, password){
+  loginCustomerAccount = (email, password) => {
     const input = {
       email: email,
       password: password

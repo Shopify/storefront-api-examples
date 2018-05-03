@@ -3,8 +3,8 @@ import Product from './components/Product';
 import Cart from './components/Cart';
 import CustomerAuthWithMutation from './components/CustomerAuth';
 import PropTypes from 'prop-types';
-import { graphql, compose } from 'react-apollo'
-import gql from 'graphql-tag'
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
 import {
   createCheckout,
   checkoutLineItemsAdd,
@@ -15,7 +15,7 @@ import {
   updateLineItemInCart,
   removeLineItemInCart,
   associateCustomerCheckout
-} from './checkout'
+} from './checkout';
 
 class App extends Component {
   constructor() {
@@ -28,16 +28,6 @@ class App extends Component {
       products: [],
       checkout: { lineItems: { edges: [] } }
     };
-
-    this.handleCartClose = this.handleCartClose.bind(this);
-    this.handleCartOpen = this.handleCartOpen.bind(this);
-    this.openCustomerAuth = this.openCustomerAuth.bind(this);
-    this.closeCustomerAuth = this.closeCustomerAuth.bind(this);
-    this.addVariantToCart = addVariantToCart.bind(this);
-    this.updateLineItemInCart = updateLineItemInCart.bind(this);
-    this.removeLineItemInCart = removeLineItemInCart.bind(this);
-    this.showAccountVerificationMessage = this.showAccountVerificationMessage.bind(this);
-    this.associateCustomerCheckout = associateCustomerCheckout.bind(this);
   }
 
   componentWillMount() {
@@ -62,19 +52,19 @@ class App extends Component {
     checkoutLineItemsUpdate: PropTypes.func.isRequired
   }
 
-  handleCartOpen() {
+  handleCartOpen = () => {
     this.setState({
       isCartOpen: true,
     });
   }
 
-  handleCartClose() {
+  handleCartClose = () => {
     this.setState({
       isCartOpen: false,
     });
   }
 
-  openCustomerAuth(event) {
+  openCustomerAuth = (event) => {
     if (event.target.getAttribute('data-customer-type') === "new-customer") {
       this.setState({
         isNewCustomer: true,
@@ -88,7 +78,7 @@ class App extends Component {
     }
   }
 
-  showAccountVerificationMessage(){
+  showAccountVerificationMessage = () => {
     this.setState({ accountVerificationMessage: true });
     setTimeout(() => {
      this.setState({
@@ -97,7 +87,7 @@ class App extends Component {
    }, 5000);
   }
 
-  closeCustomerAuth() {
+  closeCustomerAuth = () => {
     this.setState({
       isCustomerAuthOpen: false,
     });

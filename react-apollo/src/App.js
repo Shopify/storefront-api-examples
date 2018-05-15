@@ -3,7 +3,8 @@ import Product from './components/Product';
 import Cart from './components/Cart';
 import CustomerAuthWithMutation from './components/CustomerAuth';
 import PropTypes from 'prop-types';
-import { graphql, gql, compose } from 'react-apollo'
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
 import {
   createCheckout,
   checkoutLineItemsAdd,
@@ -14,7 +15,7 @@ import {
   updateLineItemInCart,
   removeLineItemInCart,
   associateCustomerCheckout
-} from './checkout'
+} from './checkout';
 
 class App extends Component {
   constructor() {

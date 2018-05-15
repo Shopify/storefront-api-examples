@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { graphql, gql, compose } from 'react-apollo'
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
 class CustomerAuth extends Component {

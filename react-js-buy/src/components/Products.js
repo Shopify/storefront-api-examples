@@ -8,7 +8,6 @@ class Products extends Component {
         <Product
           addVariantToCart={this.props.addVariantToCart}
           client={this.props.client}
-          checkout={this.props.checkout}
           key={product.id.toString()}
           product={product}
         />

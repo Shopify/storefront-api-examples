@@ -3421,9 +3421,9 @@ shelljs@^0.6.0:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.6.1.tgz#ec6211bed1920442088fe0f70b2837232ed2c8a8"
 
-shopify-buy@1.0.0-alpha.9:
-  version "1.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/shopify-buy/-/shopify-buy-1.0.0-alpha.9.tgz#f28b2b81871fce84eeb4e49f3b6e51e7178f9f85"
+shopify-buy@^1.2.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/shopify-buy/-/shopify-buy-1.4.0.tgz#e51a66c4c6340a79c1198609e1b3e82e501e53a6"
 
 signal-exit@^3.0.0:
   version "3.0.2"

@@ -4,6 +4,8 @@ import path from 'path';
 import client from './js-buy-sdk';
 
 const app = express();
+const shopPromise = client.shop.fetchInfo();
+const productsPromise = client.product.fetchAll();
 
 app.set('view engine', 'pug');
 
@@ -13,8 +15,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
   const checkoutId = req.query.checkoutId;
-  const productsPromise = client.collection.fetchAllWithProducts();
-  const shopPromise = client.shop.fetchInfo();
 
   // Create a checkout if it doesn't exist yet
   if (!checkoutId) {
@@ -41,7 +41,6 @@ app.post('/add_line_item/:id', (req, res) => {
   const productId = req.params.id;
   const checkoutId = options.checkoutId;
   const quantity = parseInt(options.quantity, 10);
-  const productsPromise = client.product.fetchAll();
 
   delete options.quantity;
   delete options.checkoutId;

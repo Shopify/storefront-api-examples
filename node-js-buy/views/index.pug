@@ -14,24 +14,23 @@ html(lang='en', data-framework='javascript')
           h2=shop.description
 
       .Product-wrapper
-        each collection in collections
-          each product in collection.products
-            .Product
-              img(src=product.images[0].src)
-              h5.Product__title=product.title
-              span.Product__price=`$ ${product.variants[0].price}`
-              form(method='post' action='/add_line_item/' + product.id)
-                each option in product.options
-                  label=option.name
-                  select.Product__option(name=option.name)
-                    each value in option.values
-                      option(value=value.valueOf())
-                        =value
-                label Quantity
-                input.Product__quantity(min='1', type='number', name='quantity', value='1')
-                input(type='hidden' name='checkoutId' value=cart.id)
-                button.Product__buy.button#add-to-cart-button(type='submit')
-                    | Add to cart
+        each product in products
+          .Product
+            img(src=product.images[0].src)
+            h5.Product__title=product.title
+            span.Product__price=`$ ${product.variants[0].price}`
+            form(method='post' action='/add_line_item/' + product.id)
+              each option in product.options
+                label=option.name
+                select.Product__option(name=option.name)
+                  each value in option.values
+                    option(value=value.valueOf())
+                      =value
+              label Quantity
+              input.Product__quantity(min='1', type='number', name='quantity', value='1')
+              input(type='hidden' name='checkoutId' value=cart.id)
+              button.Product__buy.button#add-to-cart-button(type='submit')
+                  | Add to cart
 
       .Cart#cart(class={'Cart--open': isCartOpen})
         header.Cart__header

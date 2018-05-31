@@ -1,12 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
-import Client from 'shopify-buy';
 import client from './js-buy-sdk';
 
 const app = express();
-const productsPromise = client.fetchAllProducts();
-const shopPromise = client.fetchShopInfo();
 
 app.set('view engine', 'pug');
 
@@ -16,16 +13,18 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
   const checkoutId = req.query.checkoutId;
+  const productsPromise = client.collection.fetchAllWithProducts();
+  const shopPromise = client.shop.fetchInfo();
 
   // Create a checkout if it doesn't exist yet
   if (!checkoutId) {
-    return client.createCheckout({}).then((checkout) => {
+    return client.checkout.create().then((checkout) => {
       res.redirect(`/?checkoutId=${checkout.id}`);
     });
   }
 
   // Fetch the checkout
-  const cartPromise = client.fetchCheckout(checkoutId);
+  const cartPromise = client.checkout.fetch(checkoutId);
 
   return Promise.all([productsPromise, cartPromise, shopPromise]).then(([products, cart, shop]) => {
     res.render('index', {
@@ -42,30 +41,31 @@ app.post('/add_line_item/:id', (req, res) => {
   const productId = req.params.id;
   const checkoutId = options.checkoutId;
   const quantity = parseInt(options.quantity, 10);
+  const productsPromise = client.product.fetchAll();
 
   delete options.quantity;
   delete options.checkoutId;
 
   return productsPromise.then((products) => {
-    // Find the product that is selected
     const targetProduct = products.find((product) => {
       return product.id === productId;
     });
 
     // Find the corresponding variant
-    const selectedVariant = Client.Product.Helpers.variantForOptions(targetProduct, options);
+    const selectedVariant = client.product.helpers.variantForOptions(targetProduct, options);
 
     // Add the variant to our cart
-    return client.addLineItems(checkoutId, [{variantId: selectedVariant.id, quantity}]).then((checkout) => {
+    client.checkout.addLineItems(checkoutId, [{variantId: selectedVariant.id, quantity}]).then((checkout) => {
       res.redirect(`/?cart=true&checkoutId=${checkout.id}`);
-    });
+    }).catch((err) => { return err; });
+
   });
 });
 
 app.post('/remove_line_item/:id', (req, res) => {
   const checkoutId = req.body.checkoutId;
 
-  return client.removeLineItems(checkoutId, [req.params.id]).then((checkout) => {
+  return client.checkout.removeLineItems(checkoutId, [req.params.id]).then((checkout) => {
     res.redirect(`/?cart=true&checkoutId=${checkout.id}`);
   });
 });
@@ -74,7 +74,7 @@ app.post('/decrement_line_item/:id', (req, res) => {
   const checkoutId = req.body.checkoutId;
   const quantity = parseInt(req.body.currentQuantity, 10) - 1;
 
-  return client.updateLineItems(checkoutId, [{id: req.params.id, quantity}]).then((checkout) => {
+  return client.checkout.updateLineItems(checkoutId, [{id: req.params.id, quantity}]).then((checkout) => {
     res.redirect(`/?cart=true&checkoutId=${checkout.id}`);
   });
 });
@@ -83,7 +83,7 @@ app.post('/increment_line_item/:id', (req, res) => {
   const checkoutId = req.body.checkoutId;
   const quantity = parseInt(req.body.currentQuantity, 10) + 1;
 
-  return client.updateLineItems(checkoutId, [{id: req.params.id, quantity}]).then((checkout) => {
+  return client.checkout.updateLineItems(checkoutId, [{id: req.params.id, quantity}]).then((checkout) => {
     res.redirect(`/?cart=true&checkoutId=${checkout.id}`);
   });
 });

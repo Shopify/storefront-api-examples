@@ -10,13 +10,9 @@ class Product extends Component {
       defaultOptionValues[selector.name] = selector.values[0].value;
     });
     this.state = { selectedOptions: defaultOptionValues };
-
-    this.handleOptionChange = this.handleOptionChange.bind(this);
-    this.handleQuantityChange = this.handleQuantityChange.bind(this);
-    this.findImage = this.findImage.bind(this);
   }
 
-  findImage(images, variantId) {
+  findImage = (images, variantId) => {
     const primary = images[0];
 
     const image = images.filter(function (image) {
@@ -26,7 +22,7 @@ class Product extends Component {
     return (image || primary).src;
   }
 
-  handleOptionChange(event) {
+  handleOptionChange = (event) => {
     const target = event.target
     let selectedOptions = this.state.selectedOptions;
     selectedOptions[target.name] = target.value;
@@ -39,7 +35,7 @@ class Product extends Component {
     });
   }
 
-  handleQuantityChange(event) {
+  handleQuantityChange = (event) => {
     this.setState({
       selectedVariantQuantity: event.target.value
     });

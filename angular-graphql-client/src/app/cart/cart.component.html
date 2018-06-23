@@ -1,180 +1,65 @@
-<div class="container page">
-  
-    <form [formGroup]="cartForm" novalidate>
-  
-      <div class="row">
-  
-        <div class="col-6">
-          <fieldset>
-            <div class="cart">
-              <div class="cart-header" role="tab" id="headingOne">
-                <h5 class="mb-0">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Main Info
-                  </a>
-                </h5>
-              </div>
-  
-              <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                <div class="cart-block">
-                  <div class="form-group">
-                    <label for="inputID">ID</label>
-                    <input formControlName="id" type="text" class="form-control" id="inputID" readonly>
-                    <small id="idHelp" class="form-text text-muted"> This field fill automatically after checkout creation</small>
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email address*</label>
-                    <input formControlName="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
-                      <div *ngIf="email.errors.required">
-                        Email is required.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                    <input type="checkbox" formControlName="allowPartialAddresses" class="form-check-input">
-                   Allow partial addresses
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-  
-        <div class="col-6">
-          <fieldset formGroupName="shippingAddress" class="form-group">
-            <div class="cart">
-              <div class="cart-header" role="tab" id="headingTwo">
-                <h5 class="mb-0">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    Mailing Address
-                  </a>
-                </h5>
-              </div>
-  
-              <div id="collapseTwo" class="collapse show" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="cart-block">
-                  <!--legend> Mailing Address </legend-->
-                  <div class="form-group">
-                    <label for="address1">Address1*</label>
-                    <input type="text" formControlName="address1" class="form-control" id="address1" placeholder="Address1">
-                    <div *ngIf="address1.invalid && (address1.dirty || address1.touched)" class="alert alert-danger">
-                      <div *ngIf="address1.errors.required">
-                        Address1 is required.
-                      </div>
-                    </div>
-  
-                  </div>
-  
-                  <div class="form-group">
-                    <label for="address2">Address2</label>
-                    <input type="text" formControlName="address2" class="form-control" id="address2" placeholder="Address2">
-                  </div>
-  
-                  <div class="form-group">
-                    <label for="city">City*</label>
-                    <input type="text" formControlName="city" class="form-control" id="city" placeholder="City">
-                    <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger">
-                      <div *ngIf="city.errors.required">
-                        City is required.
-                      </div>
-                    </div>
-                  </div>
-  
-                  <div class="form-group">
-                    <label for="company">Company</label>
-                    <input type="text" formControlName="company" class="form-control" id="company" placeholder="Company">
-                  </div>
-  
-                  <div class="form-group">
-                    <label for="country">Country*</label>
-                    <input type="text" formControlName="country" class="form-control" id="country" placeholder="Country">
-                    <div *ngIf="country.invalid && (country.dirty || country.touched)" class="alert alert-danger">
-                      <div *ngIf="country.errors.required">
-                        Country is required.
-                      </div>
-                    </div>
-                  </div>
-  
-                  <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" formControlName="firstName" class="form-control" id="firstName" placeholder="First Name">
-                  </div>
-  
-                  <div class="form-group">
-                    <label for="lastName">Last Name*</label>
-                    <input type="text" formControlName="lastName" class="form-control" id="lastName" placeholder="Last Name">
-                    <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
-                      <div *ngIf="lastName.errors.required">
-                        Last name is required.
-                      </div>
-                    </div>
-                  </div>
-  
-                  <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="text" formControlName="phone" class="form-control" id="phone" placeholder="Phone">
-                  </div>
-  
-                  <div class="form-group">
-                    <label for="province">Province</label>
-                    <input type="text" formControlName="province" class="form-control" id="province" placeholder="Province">
-                  </div>
-  
-                  <div class="form-group">
-                    <label for="zip">Zip*</label>
-                    <input type="text" formControlName="zip" class="form-control" id="zip" placeholder="Zip">
-                    <div *ngIf="zip.invalid && (zip.dirty || zip.touched)" class="alert alert-danger">
-                      <div *ngIf="zip.errors.required">
-                        ZIP is required.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-        </div>
+<app-product-list>
+</app-product-list>
+
+<div [ngClass]="{'Cart': true, 'Cart--open': cartOpen, 'Cart__close': !cartOpen}">
+  <header class="Cart__header">
+    <h2>Cart</h2>
+    <button class="Cart__close" (click)="closeCart()">
+      ×
+    </button>
+  </header>
+
+  <ul class="Cart__line-items">
+    <li *ngFor="let lineItem of lineItems" class="Line-item">
+      <div class="Line-item__img">
+        <img [src]="lineItem.variant.image.src">
       </div>
-      <div class="row" formArrayName="lineItems">
-        <div *ngFor="let lineItem of lineItems.controls; let i=index" [formGroupName]="i" class="col lineItem">
-          <!-- The repeated address template -->
-          <h4>Item #{{i + 1}}</h4>
-          <div style="margin-left: 1em;">
-            <div class="form-group">
-              <label class="center-block">id:
-              <input class="form-control" formControlName="id" readonly>
-            </label>
-            </div>
-            <div class="form-group">
-              <label class="center-block">variant:
-              <input class="form-control" formControlName="title" readonly>
-            </label>
-            </div>
-            <div class="form-group">
-              <label class="center-block">quantity:
-              <input class="form-control" type="number" formControlName="quantity">
-            </label>
-            </div>
-            <button (click)="removeItem(i)" type="button" class="btn btn-primary">Remove product</button>
+      <div class="Line-item__content">
+        <div class="Line-item__content-row">
+          <div class="Line-item__variant-title">
+              {{lineItem.variant.title}} 
           </div>
+          <span class="Line-item__title">
+            {{lineItem.variant.product.title}}
+          </span>
         </div>
-        <!-- End of the repeated address template -->
+        <div class="Line-item__content-row">
+          <div class="Line-item__quantity-container">
+            <button class="Line-item__quantity-update" (click)="decreaseQuantity(lineItem)">-</button>
+            <span class="Line-item__quantity">{{lineItem.quantity}}</span>
+            <button class="Line-item__quantity-update" (click)="increaseQuantity(lineItem)">+</button>
+          </div>
+          <span class="Line-item__price">
+            $ {{lineItem.variant.price}}
+          </span>
+          <button class="Line-item__remove" (click)="removeItem(lineItem)">×</button>
+        </div>
       </div>
-  
-      <button type="submit" class="btn btn-primary" (click)="createUpdateCheckout()">{{checkoutButtonTitle}}</button>
-  
-      <button type="button" class="btn btn-primary" (click)="fetchCheckout()">Checkout from Shopify</button>
-  
-      <div class="form-group">
-        <label for="checkoutFromSpotify">Checkout from Shopify</label>
-        <textarea class="form-control" id="checkoutFromSpotify" rows="10" readonly>{{checkoutFromShopify}}</textarea>
+    </li>
+  </ul>
+
+  <footer class="Cart__footer">
+    <div class="Cart-info clearfix">
+      <div class="Cart-info__total Cart-info__small">Subtotal</div>
+      <div class="Cart-info__pricing">
+        <span class="pricing">$ {{total}}</span>
       </div>
-  
-    </form>
-  
-  
-  </div>
+    </div>
+    <div class="Cart-info clearfix">
+      <div class="Cart-info__total Cart-info__small">Taxes</div>
+      <div class="Cart-info__pricing">
+        <span class="pricing">$ 0.00</span>
+      </div>
+    </div>
+    <div class="Cart-info clearfix">
+      <div class="Cart-info__total Cart-info__small">Total</div>
+      <div class="Cart-info__pricing">
+        <span class="pricing">$ {{total}}</span>
+      </div>
+    </div>
+    <button class="Cart__checkout button" (click)="createUpdateCheckout()">
+      Checkout
+    </button>
+  </footer>
+
+</div>

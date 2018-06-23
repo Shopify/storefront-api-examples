@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { GlobalService} from './shared';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +6,5 @@ import { GlobalService} from './shared';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(
-    globalService: GlobalService,
-  ){
-
-  }
   title = 'test Shopify Storefront app';
 }

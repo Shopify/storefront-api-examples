@@ -1,9 +1,7 @@
 import GraphQLJSClient from 'graphql-js-client';
 import typeBundle from './types';
 import { environment } from './../../../environments/environment';
-
 import { Injectable } from '@angular/core';
-
 import { Product } from './../../shared';
 
 @Injectable()
@@ -18,6 +16,16 @@ export class ShopifyService {
     }
   });
 
+  getCurrentShop(): Promise<any> {
+    let client = this.client;
+
+    let query = client.query((root) => {
+      root.add('shop', (shop) => {
+        shop.add('name')
+      })
+    });
+    return client.send(query);
+  }
 
   getProductById(_id): Promise<Product> {
 
@@ -46,9 +54,9 @@ export class ShopifyService {
             variants.add('title');
             variants.add('price');
             variants.add('image', (image) => {
-            image.add('src');
-            image.add('id');
-            image.add('altText');
+              image.add('src');
+              image.add('id');
+              image.add('altText');
             })
           })
         })
@@ -83,7 +91,9 @@ export class ShopifyService {
 
   }
 
-  createCheckout(_lineItems, _allowPartialAddresses, _shippingAddress): Promise<any> {
+  createCheckout(_lineItems): Promise<any> {
+
+    const _lineItemsForCheckout = _lineItems.map(item => { return { 'variantId': item.variantId, 'quantity': item.quantity } })
 
     const input = this.client.variable('input', 'CheckoutCreateInput!');
 
@@ -95,6 +105,7 @@ export class ShopifyService {
         })
         checkoutCreate.add('checkout', (checkout) => {
           checkout.add('id'),
+            checkout.add('webUrl'),
             checkout.addConnection('lineItems', { args: { first: 250 } }, (lineItems) => {
 
               lineItems.add('variant', (variant) => {
@@ -106,8 +117,7 @@ export class ShopifyService {
         })
       })
     })
-
-    return this.client.send(mutation, { 'input': { lineItems: _lineItems, allowPartialAddresses: _allowPartialAddresses, shippingAddress: _shippingAddress } }).then();
+    return this.client.send(mutation, { 'input': { lineItems: _lineItemsForCheckout } });
   }
 
   fetchCheckout(_checkoutid): Promise<any> {
@@ -134,14 +144,13 @@ export class ShopifyService {
       })
     });
 
-    return this.client.send(query, { checkoutId: _checkoutid }).then(({ model, data }) => {
-      return this.client.fetchAllPages(model.checkout, { pageSize: 1 })
-    })
+    return this.client.send(query, { checkoutId: _checkoutid })
   }
 
   addVariantsToCheckout(_checkoutid, _lineItems): Promise<any> {
 
     const checkoutId = this.client.variable('checkoutId', 'ID!');
+    const _lineItemsForCheckout = _lineItems.map(item => { return { 'id': item.id, 'variantId': item.variantId, 'quantity': item.quantity } })
     const lineItems = this.client.variable('lineItems', '[CheckoutLineItemInput!]!');
 
     const mutation = this.client.mutation('myMutation', [checkoutId, lineItems], (root) => {
@@ -169,7 +178,7 @@ export class ShopifyService {
       })
     });
 
-    return this.client.send(mutation, { checkoutId: _checkoutid, lineItems: _lineItems }).then();
+    return this.client.send(mutation, { checkoutId: _checkoutid, lineItems: _lineItemsForCheckout });
 
   }
 
@@ -203,11 +212,13 @@ export class ShopifyService {
       })
     });
 
-    return this.client.send(mutation, { checkoutId: _checkoutid, lineItemIds: [_lineItemId] }).then();
+    return this.client.send(mutation, { checkoutId: _checkoutid, lineItemIds: [_lineItemId] });
 
   }
 
-  updateCheckout(_checkoutid, _lineItems): Promise<any> {
+  updateLineItem(_checkoutid, _lineItems): Promise<any> {
+
+    const _lineItemsForCheckout = _lineItems.map(item => { return { 'id': item.id, 'variantId': item.variantId, 'quantity': item.quantity } })
 
     const checkoutId = this.client.variable('checkoutId', 'ID!');
     const lineItems = this.client.variable('lineItems', '[CheckoutLineItemUpdateInput!]!');
@@ -237,7 +248,7 @@ export class ShopifyService {
       })
     });
 
-    return this.client.send(mutation, { checkoutId: _checkoutid, lineItems: _lineItems }).then();
+    return this.client.send(mutation, { checkoutId: _checkoutid, lineItems: _lineItemsForCheckout });
   }
 
 }

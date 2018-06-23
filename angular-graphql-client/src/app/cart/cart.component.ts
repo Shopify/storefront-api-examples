@@ -1,7 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ShopifyService, GlobalService, LineItem, MailingAddress, Cart, CheckoutStatus } from './../shared';
-import { addressSample } from './cart-data-model';
+import { Component, OnInit } from '@angular/core';
+import { ShopifyService, LineItem, GlobalService } from './../shared';
 
 @Component({
   selector: 'app-cart',
@@ -11,224 +9,165 @@ import { addressSample } from './cart-data-model';
 
 export class CartComponent implements OnInit {
 
-  cartForm: FormGroup;
-  checkoutButtonTitle: string = 'Create checkout';
-  checkoutFromShopify: string;
-  requiredFields = ['email', 'shippingAddress.address1', 'shippingAddress.city',
-                      'shippingAddress.country', 'shippingAddress.lastName', 'shippingAddress.zip'];
+  lineItems: LineItem[];
+  cartId: string;
+  cartOpen: boolean;
+
 
   constructor(
-    private fb: FormBuilder,
     private shopifyService: ShopifyService,
     private globalService: GlobalService,
   ) {
-    this.createForm();
+
   }
 
   ngOnInit() {
-
-    const glCart = this.globalService.cart;
-
-    this.cartForm.reset({
-      id: glCart.id,
-      email: glCart.email,
-      allowPartialAddresses: glCart.allowPartialAddresses,
-      status: glCart.status
-    });
-
-    this.setAddress(glCart.shippingAddress);
-    this.setLineItems(this.globalService.lineItems);
-
-    //set validators
-    this.requiredFields.forEach(element => {
-      this.setValidators(element);  
-    });
-
-    if (glCart.status == CheckoutStatus.update){
-      this.checkoutButtonTitle = "Update checkout"
+    this.globalService.lineItemsObs.subscribe(lineItems => {
+      if (this.cartId) {
+        this.updateItemQuantity().then(
+          quantityUpdated => { if (quantityUpdated) { this.lineItems = lineItems } }, err => alert(err)
+        )
+      } else {
+        this.lineItems = lineItems;
+      }
     }
-
-  }
-
-  ngOnDestroy() {
-    this.globalService.cart = this.cartForm.value;
-    this.globalService.lineItems = this.lineItems.value;
-  }
-
-  get email() { return this.cartForm.get('email'); } 
-  get address1() {return this.cartForm.get('shippingAddress').get('address1');}
-  get city() {return this.cartForm.get('shippingAddress').get('city');}
-  get country() {return this.cartForm.get('shippingAddress').get('country');}
-  get lastName() {return this.cartForm.get('shippingAddress').get('lastName');}
-  get zip() {return this.cartForm.get('shippingAddress').get('zip');}
-
-  get cartId(): string {
-    return this.cartForm.get('id').value;
-  }
-
-  setLineItems(lineItems: LineItem[]) {
-
-    const lineItemFGs = lineItems.map(lineItem => this.fb.group(lineItem));
-
-    const lineItemFormArray = this.fb.array(lineItemFGs);
-
-    this.cartForm.setControl('lineItems', lineItemFormArray);
-
-  }
-
-  get lineItems(): FormArray {
-    return this.cartForm.get('lineItems') as FormArray;
-  };
-
-  createForm() {
-    this.cartForm = this.fb.group({
-      id: ['',],
-      email: ['', Validators.required],
-      shippingAddress: this.fb.group(
-        new MailingAddress()
-      ),
-      allowPartialAddresses: false,
-      lineItems: this.fb.array([]),
-      lineItemsGl: this.fb.array([]),
-      status,
-    });
-
-    //this.cartForm.controls['shippingAddress.address1'].setValidators(Validators.required);
-    //console.log(this.cartForm.get('shippingAddress').get('address1'));
-    
-  }
-
-  setValidators(fieldName){
-    this.cartForm.get(fieldName).setValidators(Validators.required);
-  }
-
-  setAddress(address: MailingAddress) {
-
-    this.cartForm.setControl('shippingAddress', this.fb.group(address));
-    
+    )
+    this.globalService.newlineItemObs.subscribe(lineItem => {
+      if (lineItem) {
+        this.addItem(lineItem);
+      }
+    }
+    )
+    this.globalService.cartOpenCloseObs.subscribe(cartOpenClose =>
+      this.cartOpen = cartOpenClose
+    )
   }
 
   createUpdateCheckout() {
-
-    let errorOccur = false;
-    this.requiredFields.forEach(element => {
-      let control = this.cartForm.get(element);
-      if (control.invalid){
-        control.markAsTouched();
-        errorOccur = true;
-      }
-    });
-    
-    if (errorOccur){
-        return;
-    }
-    const glCart = this.globalService.cart;
-
-    if (glCart.status == CheckoutStatus.update) {
-      let ItemsForAdd = [], ItemsForUpdate = [];
-      this.lineItems.value.forEach(element => {
-        if (!element.id) {
-          ItemsForAdd.push(element);
-        } else {
-          ItemsForUpdate.push(element);
-        }
-      });
-
-      if (ItemsForAdd.length) {
-        this.shopifyService.addVariantsToCheckout(this.cartId, ItemsForAdd.map(function (lineItem) {
-          return {
-            'variantId': lineItem.variant.id,
-            'quantity': +lineItem.quantity
+    if (!this.cartId) {
+      this.shopifyService.createCheckout(this.lineItems).then(
+        ({ model, data }) => {
+          if (!data.checkoutCreate.userErrors.length) {
+            this.cartId = data.checkoutCreate.checkout.id;
+            this.openCheckout(data.checkoutCreate.checkout);
+            let i = 0;
+            data.checkoutCreate.checkout.lineItems.edges.forEach(edge => {
+              this.lineItems[i].id = edge.node.id;
+              i++;
+            });
+          } else {
+            data.checkoutCreate.userErrors.forEach(error => {
+              alert(JSON.stringify(error));
+            });
           }
-        })).then(({ model, data }) => {
-
-          if (!data.checkoutLineItemsAdd.userErrors.length) {
-
-            let lineItems = this.globalService.lineItems;
-
-            for (let i = 0; i < this.lineItems.length; i++) {
-              let id = data.checkoutLineItemsAdd.checkout.lineItems.edges[i].node.id;
-              this.lineItems.at(i).get('id').setValue(id);
-              lineItems[i].id = id;
-            }
-          }
-
-          this.checkoutButtonTitle = "Update checkout";
-          this.cartForm.get('status').setValue(CheckoutStatus.update);
-        });
-      }
-      if (ItemsForUpdate.length) {
-        this.shopifyService.updateCheckout(this.cartId, ItemsForUpdate.map(function (lineItem) {
-          return {
-            'id': lineItem.id,
-            'quantity': +lineItem.quantity
-          }
-        }));
-      }
-
+        }, err => alert(err)
+      );
     } else {
-
-      this.createCheckout()
-
-    }
-  }
-
-  createCheckout() {
-
-    this.shopifyService.createCheckout(
-      this.lineItems.value.map(function (lineItem) {
-          return {
-            'variantId': lineItem.variant.id,
-            'quantity': +lineItem.quantity
-          }
-        }),
-      this.cartForm.get('allowPartialAddresses').value,
-      this.cartForm.get('shippingAddress').value).then(({ model, data }) => {
-        if (!data.checkoutCreate.userErrors.length) {
-
-          this.cartForm.get('id').setValue(
-            data.checkoutCreate.checkout.id
-          )
-
-          if (data.checkoutCreate.checkout.lineItems.length != 0) {
-
-            let lineItems = this.globalService.lineItems;
-
-            for (let i = 0; i < this.lineItems.length; i++) {
-              let id = data.checkoutCreate.checkout.lineItems.edges[i].node.id;
-              this.lineItems.at(i).get('id').setValue(id);
-              lineItems[i].id = id;
-            }
-          }
-          this.checkoutButtonTitle = "Update checkout";
-          this.cartForm.get('status').setValue(CheckoutStatus.update);
-        }
-      }
+      this.shopifyService.fetchCheckout(this.cartId).then(
+        ({ model, data }) => {
+          this.openCheckout(data.checkout);
+        }, err => alert(err)
       )
+    }
   }
 
-  fetchCheckout() {
-    this.shopifyService.fetchCheckout(this.cartId).then(
-      (checkout) => this.checkoutFromShopify = 'id: ' + checkout.id + ';' +
-        'lineItems: ' + checkout.lineItems.map(lineItem => lineItem.variant.title + ' ' + lineItem.quantity));
-  }
-
-  removeItem(i) {
-
-    const lineItemId = this.lineItems.at(i).get('id').value;
-
-    let errorsLength = 0;
-
+  addItem(lineItem: LineItem) {
     if (this.cartId) {
-      this.shopifyService.removeLineItem(this.cartId, lineItemId).then(({ model, data }) => {
-        errorsLength = data.checkoutLineItemsRemove.userErrors.length;
-      });
+      this.shopifyService.addVariantsToCheckout(this.cartId, [lineItem]).then(
+        ({ model, data }) => {
+          if (!data.checkoutLineItemsAdd.userErrors.length) {
+            this.lineItems.push(lineItem);
+            let i = 0;
+            data.checkoutLineItemsAdd.checkout.lineItems.edges.forEach(edge => {
+              if (edge.node.variant.id = lineItem.variantId) {
+                this.lineItems[i].id = edge.node.id;
+              }
+              i++;
+            });
+          } else {
+            data.checkoutLineItemsAdd.userErrors.forEach(error => {
+              alert(JSON.stringify(error));
+            });
+          }
+        }, err => alert(err)
+      )
+    } else {
+      this.lineItems.push(lineItem)
     }
+  }
 
-    if (!errorsLength) {
-      this.lineItems.removeAt(i);
-      this.globalService.removeItemFromCart(i);
+  removeItem(lineItem: LineItem) {
+    if (this.cartId) {
+      this.shopifyService.removeLineItem(this.cartId, lineItem.id).then(
+        ({ model, data }) => {
+          if (!data.checkoutLineItemsRemove.userErrors.length) {
+            this.globalService.removeItem(lineItem);
+          } else {
+            data.checkoutLineItemsRemove.userErrors.forEach(error => {
+              alert(JSON.stringify(error));
+            });
+          }
+        }, err => alert(err)
+      )
+    } else {
+      this.globalService.removeItem(lineItem);
     }
+  }
+
+  increaseQuantity(lineItem: LineItem) {
+    lineItem.quantity++;
+    if (this.cartId) {
+      this.updateItemQuantity().then(
+        quantityUpdated => {
+          if (!quantityUpdated) {
+            lineItem.quantity--;
+          }
+        }, err => alert(err)
+      )
+    }
+  }
+
+  decreaseQuantity(lineItem: LineItem) {
+    if (lineItem.quantity > 1)
+      lineItem.quantity--;
+    if (this.cartId) {
+      this.updateItemQuantity().then(
+        quantityUpdated => {
+          if (!quantityUpdated) {
+            lineItem.quantity++;
+          }
+        }, err => alert(err)
+      )
+    }
+  }
+
+  updateItemQuantity(): Promise<boolean> {
+    return this.shopifyService.updateLineItem(this.cartId, this.lineItems).then(
+      ({ model, data }) => {
+        if (!data.checkoutLineItemsUpdate.userErrors.length) {
+          return true;
+        } else {
+          data.checkoutLineItemsUpdate.userErrors.forEach(error => {
+            alert(JSON.stringify(error));
+          });
+          return false;
+        }
+      }, err => false
+    )
+  }
+
+  get total(): number {
+    if (this.lineItems.length) return this.lineItems.map(lineItem => lineItem.quantity * (+lineItem.variant.price)).reduce((prev, next) => prev + next);
+    else return 0;
+  }
+
+  openCheckout(checkout) {
+    window.open(checkout.webUrl);
+  }
+
+  closeCart() {
+    this.globalService.cartOpenClose = !this.globalService.cartOpenClose
+    this.cartOpen = this.globalService.cartOpenClose;
   }
 
 }

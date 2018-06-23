@@ -1,14 +1,5 @@
-<div class="container">
-  <div class="row items">
-    <li *ngFor="let product of products" (click)="onSelect(product)" class="col">
-      <div>
-        <span>{{product.title}}</span>
-        <span class="id" hidden>{{product.id}} </span>
-      </div>
-      <img src={{product.images[0].src}}>
-      <div class="button">
-      <button (click)="onSelect(product)">Go to the variants</button>
-      </div>
-    </li>
+<div class="Product-wrapper">
+  <div *ngFor="let product of products" class="Product">
+    <app-product [productInput]="product" (addToCartLineItem)="addLineItemToCart($event)"></app-product>
   </div>
 </div>

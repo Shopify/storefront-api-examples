@@ -12,7 +12,8 @@ import {
   ProductService,
   GlobalService
 } from './shared';
-import { ProductModule } from './product/product.module';
+
+import { ProductComponent } from './product/product.component';
 import { CartComponent } from './cart/cart.component';
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([
@@ -37,13 +38,14 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
     AppComponent,
     HomeComponent,
     ProductListComponent,
-    CartComponent
+    CartComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    ProductModule,
-    rootRouting
+    // ProductModule,
+    // rootRouting
     /*,
     SharedModule*/
   ],

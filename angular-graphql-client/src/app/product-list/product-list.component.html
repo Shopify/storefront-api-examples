@@ -1,0 +1,5 @@
+<div class="Product-wrapper">
+  <div *ngFor="let product of products" class="Product">
+    <app-product [productInput]="product" (addToCartLineItem)="addLineItemToCart($event)"></app-product>
+  </div>
+</div>

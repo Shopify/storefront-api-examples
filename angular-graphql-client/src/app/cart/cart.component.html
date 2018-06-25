@@ -1,0 +1,65 @@
+<app-product-list>
+</app-product-list>
+
+<div [ngClass]="{'Cart': true, 'Cart--open': cartOpen, 'Cart__close': !cartOpen}">
+  <header class="Cart__header">
+    <h2>Cart</h2>
+    <button class="Cart__close" (click)="closeCart()">
+      ×
+    </button>
+  </header>
+
+  <ul class="Cart__line-items">
+    <li *ngFor="let lineItem of lineItems" class="Line-item">
+      <div class="Line-item__img">
+        <img [src]="lineItem.variant.image.src">
+      </div>
+      <div class="Line-item__content">
+        <div class="Line-item__content-row">
+          <div class="Line-item__variant-title">
+              {{lineItem.variant.title}} 
+          </div>
+          <span class="Line-item__title">
+            {{lineItem.variant.product.title}}
+          </span>
+        </div>
+        <div class="Line-item__content-row">
+          <div class="Line-item__quantity-container">
+            <button class="Line-item__quantity-update" (click)="decreaseQuantity(lineItem)">-</button>
+            <span class="Line-item__quantity">{{lineItem.quantity}}</span>
+            <button class="Line-item__quantity-update" (click)="increaseQuantity(lineItem)">+</button>
+          </div>
+          <span class="Line-item__price">
+            $ {{lineItem.variant.price}}
+          </span>
+          <button class="Line-item__remove" (click)="removeItem(lineItem)">×</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <footer class="Cart__footer">
+    <div class="Cart-info clearfix">
+      <div class="Cart-info__total Cart-info__small">Subtotal</div>
+      <div class="Cart-info__pricing">
+        <span class="pricing">$ {{total}}</span>
+      </div>
+    </div>
+    <div class="Cart-info clearfix">
+      <div class="Cart-info__total Cart-info__small">Taxes</div>
+      <div class="Cart-info__pricing">
+        <span class="pricing">$ 0.00</span>
+      </div>
+    </div>
+    <div class="Cart-info clearfix">
+      <div class="Cart-info__total Cart-info__small">Total</div>
+      <div class="Cart-info__pricing">
+        <span class="pricing">$ {{total}}</span>
+      </div>
+    </div>
+    <button class="Cart__checkout button" (click)="createUpdateCheckout()">
+      Checkout
+    </button>
+  </footer>
+
+</div>

@@ -1,0 +1,26 @@
+
+<form [formGroup]="form">
+  <img *ngIf="form.get('variant').value.image; else productImageTemplate" [src]="form.get('variant').value.image.src">
+  <h5 class="Product__title">{{(product)?.title}}</h5>
+  <span class="Product__price">${{form.get("variant").value.price}}</span>
+  <div>
+    <label>Title</label>
+    <select formControlName="variant">
+        <option *ngFor="let variant of (product)?.variants" [ngValue]="variant">
+          {{ variant.title }}
+        </option>
+      </select>
+  </div>
+  <label>Quantity</label>
+  <input type="number" min="1" class="Product__quantity" formControlName="quantity">
+  <button class="Product__buy button" (click)="onSubmit()">
+    Add to cart
+  </button>
+</form>
+
+
+<ng-template #productImageTemplate>
+    <img *ngIf="(product)?.images[0]" [src]="(product)?.images[0].src">
+</ng-template>
+
+<!--p>Form value: {{ form.value | json }}</p-->

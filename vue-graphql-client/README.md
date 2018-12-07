@@ -45,7 +45,7 @@ googleAnalyticsId: 'UA-XXXXXXX-XX', // if unset, Google Analytics tracking will 
 
 #### `environments.js`
 
-Since this is a SAP (single page application) there are certain SEO/OpenGraph settings that need to be configured and compiled outside of the Vue.js application so web crawlers such as Facebook & Twitter can obtain the relevant data.
+Since this is a SPA (single page application) there are certain SEO/OpenGraph settings that need to be configured and compiled outside of the Vue.js application so web crawlers such as Facebook & Twitter can obtain the relevant data.
 
 This file is used when rendering index.pug during the pre-build.js script (which is run when serving and building).
 

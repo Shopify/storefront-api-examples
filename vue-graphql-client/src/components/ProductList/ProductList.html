@@ -1,0 +1,11 @@
+<div class="products" v-if="products.length" v-bind:class="[gridColumnsClass, gridColumnsClassMobile]">
+    <div class="product" v-for="product in products" v-on:click="showProductDetails(product, $event)">
+      
+        <div class="product-image" v-if="product.images.length">
+            <img v-bind:src="product.images[0]" />
+        </div>
+      
+        <h3 class="product-title" v-if="product.title">{{product.title}}</h3>
+        <div class="product-price" v-if="product.price">${{product.price}}</div>
+    </div>
+</div>

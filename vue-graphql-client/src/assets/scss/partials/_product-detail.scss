@@ -1,0 +1,47 @@
+.product-detail {
+    position: relative;
+
+    width: 100%;
+    padding: $pagePadding;
+
+    @include grid;
+    align-items: center;
+
+    .product-image {
+        display: block;
+        img{
+            width: 100%;
+        } 
+    }
+
+    .thumbnails {
+        list-style: none;
+        li {
+            position: relative;
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            margin-right: 8px;
+
+            &.selected {
+                border:1px solid #000;
+                cursor: default;
+            }
+
+        }
+    }
+
+    ul.product-variants {
+        list-style: none;
+        padding: 0;
+    }
+
+    .product-price {
+        font-size: 24px;
+        padding: 8px 0;
+    }
+}

@@ -22,7 +22,7 @@ You will need the following things properly installed on your computer.
 If you would like to connect your store to this example, open up `src/index.js` and update the `domain` and `storefrontAccessToken`:
 
 ```js
-const config = new Config({
+const client = Client.buildClient({
   storefrontAccessToken: 'your-storefront-access-token',
   domain: 'your-shop-name.myshopify.com',
 });

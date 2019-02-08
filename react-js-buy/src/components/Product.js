@@ -1,22 +1,22 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
+
 import VariantSelector from './VariantSelector';
 
-class Product extends Component {
-  constructor(props) {
-    super(props);
+function Product(props){
 
-    let defaultOptionValues = {};
-    this.props.product.options.forEach((selector) => {
-      defaultOptionValues[selector.name] = selector.values[0].value;
-    });
-    this.state = { selectedOptions: defaultOptionValues };
+  let defaultOptionValues = {};
 
-    this.handleOptionChange = this.handleOptionChange.bind(this);
-    this.handleQuantityChange = this.handleQuantityChange.bind(this);
-    this.findImage = this.findImage.bind(this);
-  }
+  props.product.options.forEach((selector) => {
+    defaultOptionValues[selector.name] = selector.values[0].value;
+  });
 
-  findImage(images, variantId) {
+  const [selectedOptions,setSelectedOptions] = useState(defaultOptionValues);
+
+  const [variantImage,setVariantImage] = useState(props.product.images[0]);
+  const [variant,setVariant] = useState(props.product.variants[0]);
+  const [variantQuantity,setVariantQuantity] = useState(1);
+
+  const findImage = (images, variantId) => {
     const primary = images[0];
 
     const image = images.filter(function (image) {
@@ -26,52 +26,43 @@ class Product extends Component {
     return (image || primary).src;
   }
 
-  handleOptionChange(event) {
+  const handleOptionChange = (event) => {
     const target = event.target
-    let selectedOptions = this.state.selectedOptions;
     selectedOptions[target.name] = target.value;
 
-    const selectedVariant = this.props.client.product.helpers.variantForOptions(this.props.product, selectedOptions)
+    const selectedVariant = props.client.product.helpers.variantForOptions(props.product, selectedOptions)
 
-    this.setState({
-      selectedVariant: selectedVariant,
-      selectedVariantImage: selectedVariant.attrs.image
-    });
+    setVariant(selectedVariant);
+    setVariantImage(selectedVariant.attrs.image);
   }
 
-  handleQuantityChange(event) {
-    this.setState({
-      selectedVariantQuantity: event.target.value
-    });
+  const handleQuantityChange = (event) => {
+    setVariantQuantity(event.target.value);
   }
 
-  render() {
-    let variantImage = this.state.selectedVariantImage || this.props.product.images[0]
-    let variant = this.state.selectedVariant || this.props.product.variants[0]
-    let variantQuantity = this.state.selectedVariantQuantity || 1
-    let variantSelectors = this.props.product.options.map((option) => {
-      return (
-        <VariantSelector
-          handleOptionChange={this.handleOptionChange}
-          key={option.id.toString()}
-          option={option}
-        />
-      );
-    });
+  let variantSelectors = props.product.options.map((option) => {
     return (
-      <div className="Product">
-        {this.props.product.images.length ? <img src={variantImage.src} alt={`${this.props.product.title} product shot`}/> : null}
-        <h5 className="Product__title">{this.props.product.title}</h5>
-        <span className="Product__price">${variant.price}</span>
-        {variantSelectors}
-        <label className="Product__option">
-          Quantity
-          <input min="1" type="number" defaultValue={variantQuantity} onChange={this.handleQuantityChange}></input>
-        </label>
-        <button className="Product__buy button" onClick={() => this.props.addVariantToCart(variant.id, variantQuantity)}>Add to Cart</button>
-      </div>
+      <VariantSelector
+        handleOptionChange={handleOptionChange}
+        key={option.id.toString()}
+        option={option}
+      />
     );
-  }
+  });
+
+  return (
+    <div className="Product">
+      {props.product.images.length ? <img src={variantImage.src} alt={`${props.product.title} product shot`}/> : null}
+      <h5 className="Product__title">{props.product.title}</h5>
+      <span className="Product__price">${variant.price}</span>
+      {variantSelectors}
+      <label className="Product__option">
+        Quantity
+        <input min="1" type="number" defaultValue={variantQuantity} onChange={handleQuantityChange}></input>
+      </label>
+      <button className="Product__buy button" onClick={() => props.addVariantToCart(variant.id, variantQuantity)}>Add to Cart</button>
+    </div>
+  );
 }
 
 export default Product;

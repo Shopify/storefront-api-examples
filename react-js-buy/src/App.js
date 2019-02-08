@@ -1,115 +1,96 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import Products from './components/Products';
 import Cart from './components/Cart';
 
-class App extends Component {
-  constructor() {
-    super();
+function App(props){
 
-    this.state = {
-      isCartOpen: false,
-      checkout: { lineItems: [] },
-      products: [],
-      shop: {}
-    };
+  const [products,setProducts] = useState([]);
+  const [isCartOpen,setCartOpen] = useState(false);
+  const [checkout,setCheckout] = useState({ lineItems: [] });
+  const [shop,setShop] = useState({});
 
-    this.handleCartClose = this.handleCartClose.bind(this);
-    this.addVariantToCart = this.addVariantToCart.bind(this);
-    this.updateQuantityInCart = this.updateQuantityInCart.bind(this);
-    this.removeLineItemInCart = this.removeLineItemInCart.bind(this);
-  }
+  const cartOpen = () => {
+    setCartOpen( true );
+  };
 
-  componentWillMount() {
-    this.props.client.checkout.create().then((res) => {
-      this.setState({
-        checkout: res,
-      });
+  useEffect(() => {
+    props.client.checkout.create().then((res) => {
+      setCheckout( res );
     });
 
-    this.props.client.product.fetchAll().then((res) => {
-      this.setState({
-        products: res,
-      });
+    props.client.product.fetchAll().then((res) => {
+      setProducts( res );
     });
 
-    this.props.client.shop.fetchInfo().then((res) => {
-      this.setState({
-        shop: res,
-      });
+    props.client.shop.fetchInfo().then((res) => {
+      setShop(res);
     });
-  }
 
-  addVariantToCart(variantId, quantity){
-    this.setState({
-      isCartOpen: true,
-    });
+  }, []);
+
+  const addVariantToCart = (variantId, quantity) => {
+
+    setCartOpen( true );
 
     const lineItemsToAdd = [{variantId, quantity: parseInt(quantity, 10)}]
-    const checkoutId = this.state.checkout.id
+    const checkoutId = checkout.id
 
-    return this.props.client.checkout.addLineItems(checkoutId, lineItemsToAdd).then(res => {
-      this.setState({
-        checkout: res,
-      });
+    return props.client.checkout.addLineItems(checkoutId, lineItemsToAdd).then(res => {
+      setCheckout( res );
     });
   }
 
-  updateQuantityInCart(lineItemId, quantity) {
-    const checkoutId = this.state.checkout.id
+  const updateQuantityInCart = (lineItemId, quantity) => {
+    const checkoutId = checkout.id
     const lineItemsToUpdate = [{id: lineItemId, quantity: parseInt(quantity, 10)}]
 
-    return this.props.client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then(res => {
-      this.setState({
-        checkout: res,
-      });
+    return props.client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then(res => {
+      setCheckout( res );
     });
   }
 
-  removeLineItemInCart(lineItemId) {
-    const checkoutId = this.state.checkout.id
+  const removeLineItemInCart = (lineItemId) => {
+    const checkoutId = checkout.id
 
-    return this.props.client.checkout.removeLineItems(checkoutId, [lineItemId]).then(res => {
-      this.setState({
-        checkout: res,
-      });
+    return props.client.checkout.removeLineItems(checkoutId, [lineItemId]).then(res => {
+
+      setCheckout( res );
     });
   }
 
-  handleCartClose() {
-    this.setState({
-      isCartOpen: false,
-    });
+  const handleCartClose = () => {
+
+    setCartOpen( false );
   }
 
-  render() {
-    return (
-      <div className="App">
+  return (
+    <div className="App">
         <header className="App__header">
-          {!this.state.isCartOpen &&
+          {!isCartOpen &&
             <div className="App__view-cart-wrapper">
-              <button className="App__view-cart" onClick={()=> this.setState({isCartOpen: true})}>Cart</button>
+              <button className="App__view-cart" onClick={cartOpen}>Cart</button>
             </div>
           }
           <div className="App__title">
-            <h1>{this.state.shop.name}: React Example</h1>
-            <h2>{this.state.shop.description}</h2>
+            <h1>{shop.name}: React Example</h1>
+            <h2>{shop.description}</h2>
           </div>
         </header>
         <Products
-          products={this.state.products}
-          client={this.props.client}
-          addVariantToCart={this.addVariantToCart}
+          products={products}
+          client={props.client}
+          addVariantToCart={addVariantToCart}
         />
         <Cart
-          checkout={this.state.checkout}
-          isCartOpen={this.state.isCartOpen}
-          handleCartClose={this.handleCartClose}
-          updateQuantityInCart={this.updateQuantityInCart}
-          removeLineItemInCart={this.removeLineItemInCart}
+          checkout={checkout}
+          isCartOpen={isCartOpen}
+          handleCartClose={handleCartClose}
+          updateQuantityInCart={updateQuantityInCart}
+          removeLineItemInCart={removeLineItemInCart}
         />
       </div>
-    );
-  }
+  );
 }
 
 export default App;

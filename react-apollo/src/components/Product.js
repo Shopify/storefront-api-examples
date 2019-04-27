@@ -5,7 +5,9 @@ class Product extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      selectedOptions: {}
+    };
 
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.handleQuantityChange = this.handleQuantityChange.bind(this);
@@ -14,9 +16,12 @@ class Product extends Component {
 
   componentWillMount() {
     this.props.product.options.forEach((selector) => {
-      this.setState({
-        selectedOptions: { [selector.name]: selector.values[0] }
-      });
+      this.setState((prevState) => ({
+        selectedOptions:{
+          ...prevState.selectedOptions,
+          [selector.name]: selector.values[0]
+        }
+      }));
     });
   }
 

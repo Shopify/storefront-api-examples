@@ -88,5 +88,5 @@ app.post('/increment_line_item/:id', (req, res) => {
 });
 
 app.listen(4200, () => {
-  console.log('Faheemnusrat.com listening on port 4200!'); // eslint-disable-line no-console
+  console.log('Example app listening on port 4200!'); // eslint-disable-line no-console
 });

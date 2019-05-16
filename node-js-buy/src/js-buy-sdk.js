@@ -5,7 +5,7 @@ global.fetch = fetch;
 
 const client = Client.buildClient({
   storefrontAccessToken: '20ef0127c6c37cee73dd149879a379a8',
-  domain: 'faheemnusrat.com'
+  domain: 'demofnstore.myshopify.com'
 });
 
 export default client;

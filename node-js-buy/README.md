@@ -27,7 +27,7 @@ const config = new Config({
 ## Running
 
 * `yarn start`
-* View the example at [http://localhost:4200](http://localhost:4200).
+* View the examp le at [http://localhost:4200](http://localhost:4200).
 
 ## Contributing
 For help on setting up the repo locally, building, testing, and contributing

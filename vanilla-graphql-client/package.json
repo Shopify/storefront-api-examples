@@ -1,0 +1,14 @@
+{
+  "name": "vanilla-graphql-client",
+  "version": "0.1.0",
+  "description": "The simplest Storefront API example",
+  "main": "example.js",
+  "scripts": {
+    "run": "node <myshopify url> <storefront access token>"
+  },
+  "author": "Shopify",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.5.0"
+  }
+}

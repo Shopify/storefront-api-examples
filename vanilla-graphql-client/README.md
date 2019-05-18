@@ -23,7 +23,7 @@ You will need the following things properly installed on your computer.
 
 Before running create a private app on your test shop and [generate a storefront access token](https://help.shopify.com/en/api/custom-storefronts/storefront-api/getting-started#authentication).
 
-Pass the shop url and access token as parameters to the example.js stript:
+Pass the shop url and access token as parameters to the example.js script:
 
 `$ node example.js https://yourshop.myshopify.com 0e3115ef504f08f57a748208e2833af9`
 

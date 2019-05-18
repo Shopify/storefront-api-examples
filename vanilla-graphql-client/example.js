@@ -46,12 +46,12 @@ const query2 = `query SpecificProduct($id: ID!) {
 const fetchQuery1 = () => {
     // Define options for first query with no variables and body is string and not a json object
     const optionsQuery1 = {
-    method: "post",
-    headers: {
-        "Content-Type": "application/graphql",
-        "X-Shopify-Storefront-Access-Token": accessToken
-    },
-    body: query1
+        method: "post",
+        headers: {
+            "Content-Type": "application/graphql",
+            "X-Shopify-Storefront-Access-Token": accessToken
+        },
+        body: query1
     };
 
     // Fetch data and remember product id
@@ -59,6 +59,7 @@ const fetchQuery1 = () => {
         .then(res => res.json())
         .then(response => {
             productId = response.data.products.edges[0].node.id; 
+            console.log("=============== Fetch First Product ===============");
             console.log(JSON.stringify(response, null, 4));
             fetchQuery2(productId)  
         });
@@ -66,11 +67,11 @@ const fetchQuery1 = () => {
 
 // Fetch a specific product with example of json body with both query and variables
 const fetchQuery2 = (productId) => {
-    var params = {
+    const params = {
         query: query2,
         variables: { id: productId}
     }
-    var optionsQuery2 = {
+    const optionsQuery2 = {
         method: "post",
         headers: {
         "Content-Type": "application/json",
@@ -83,6 +84,7 @@ const fetchQuery2 = (productId) => {
     fetch(shopUrl + `/api/graphql`, optionsQuery2)
         .then(res => res.json())
         .then(response => {  
+            console.log("=============== Fetch Specific Product ===============");
             console.log(JSON.stringify(response, null, 4)) 
         });        
 }

@@ -15,7 +15,7 @@ You will need the following things properly installed on your computer.
 ## Installation
 
 * `git clone git@github.com:Shopify/storefront-api-examples.git` this repository
-* `cd angular-graphql-client`
+* `cd storefront-api-examples/angular-graphql-client`
 * `npm install`
 
 ## Configuring

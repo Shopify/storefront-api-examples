@@ -3,7 +3,7 @@
 Shopify's [Storefront API](https://help.shopify.com/api/storefront-api) allows you to build custom ecommerce experiences.
 
 Each directory is a self-contained example application that demonstrates usage of the Storefront API.
-The examples are built on both Shopify specific libraries and popular open source frameworks (React, Ember, etc).
+The examples are built on both Shopify specific libraries and popular open source frameworks (React, Ember, etc). These examples are built and maintained by community members.
 
 See the `README.md` in each example directory for more details and how to get started.
 

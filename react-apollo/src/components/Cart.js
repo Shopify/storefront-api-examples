@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LineItem from './LineItem';
 
-import withStoreContext from '../providers/withStoreContext';
+import withStoreContext from '../withStoreContext';
 
 const Cart  = (props) => {
   const {

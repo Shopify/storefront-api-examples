@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import withStoreContext from '../providers/withStoreContext';
+import withStoreContext from '../withStoreContext';
 import VariantSelector from './VariantSelector';
 
 class Product extends Component {
@@ -14,7 +15,7 @@ class Product extends Component {
 
   componentDidMount() {
     const {
-      product
+      product,
     } = this.props;
 
     product.options.forEach((selector) => {
@@ -98,6 +99,13 @@ class Product extends Component {
       </div>
     );
   }
+}
+
+Product.propTypes = {
+  storeContext: PropTypes.shape({
+    addVariantToCart: PropTypes.func,
+  }).isRequired,
+  product: PropTypes.shape({}).isRequired,
 }
 
 export default withStoreContext(Product);

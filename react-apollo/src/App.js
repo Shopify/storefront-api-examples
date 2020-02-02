@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import CustomerAuth from './components/CustomerAuth';
 import Cart from './components/Cart';
 import Product from './components/Product';
-import withStoreContext from './providers/withStoreContext'
+import withStoreContext from './withStoreContext'
 
 const App = (props) => {
   const {

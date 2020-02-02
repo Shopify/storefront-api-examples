@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import withStoreContext from '../providers/withStoreContext';
+import withStoreContext from '../withStoreContext';
 
 class CustomerAuth extends Component {
 	constructor(props) {
@@ -125,6 +126,17 @@ class CustomerAuth extends Component {
     </div>
   	);
   }
+}
+
+CustomerAuth.propTypes = {
+  storeContext: PropTypes.shape({
+    createCustomerAccount: PropTypes.func,
+    loginCustomerAccount: PropTypes.func,
+    closeCustomerAuth: PropTypes.func,
+    isNewCustomer: PropTypes.bool,
+    isCustomerAuthOpen: PropTypes.bool,
+    authErrors: PropTypes.shape({}),
+  }).isRequired,
 }
 
 export default withStoreContext(CustomerAuth);

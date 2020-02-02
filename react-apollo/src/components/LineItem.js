@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import withStoreContext from '../providers/withStoreContext';
+import withStoreContext from '../withStoreContext';
 
 const LineItem = (props) => {
 
@@ -40,6 +41,11 @@ const LineItem = (props) => {
         </div>
       </li>
   )
+}
+
+LineItem.propTypes = {
+  updateLineItemInCart: PropTypes.func,
+  removeLineItemInCart: PropTypes.func,
 }
 
 export default withStoreContext(LineItem);

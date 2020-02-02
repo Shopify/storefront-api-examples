@@ -1,162 +1,101 @@
-import React, { Component } from 'react';
-import Product from './components/Product';
-import Cart from './components/Cart';
-import CustomerAuthWithMutation from './components/CustomerAuth';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql, compose } from 'react-apollo';
+import compose from 'lodash.flowright';
+import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {
-  createCheckout,
-  checkoutLineItemsAdd,
-  checkoutLineItemsUpdate,
-  checkoutLineItemsRemove,
-  checkoutCustomerAssociate,
-  addVariantToCart,
-  updateLineItemInCart,
-  removeLineItemInCart,
-  associateCustomerCheckout
-} from './checkout';
+import CustomerAuth from './components/CustomerAuth';
+import Cart from './components/Cart';
+import Product from './components/Product';
+import withStoreContext from './providers/withStoreContext'
 
-class App extends Component {
-  constructor() {
-    super();
+const App = (props) => {
+  const {
+    data: {
+      shop,
+      loading,
+      error,
+    },
+    storeContext: {
+      openCustomerAuth,
+      setIsNewCustomer,
+      showAccountVerificationMessage,
+      isCartOpen,
+      handleCartOpen,
+    },
+  } = props;
 
-    this.state = {
-      isCartOpen: false,
-      isCustomerAuthOpen: false,
-      isNewCustomer: false,
-      products: [],
-      checkout: { lineItems: { edges: [] } }
-    };
-
-    this.handleCartClose = this.handleCartClose.bind(this);
-    this.handleCartOpen = this.handleCartOpen.bind(this);
-    this.openCustomerAuth = this.openCustomerAuth.bind(this);
-    this.closeCustomerAuth = this.closeCustomerAuth.bind(this);
-    this.addVariantToCart = addVariantToCart.bind(this);
-    this.updateLineItemInCart = updateLineItemInCart.bind(this);
-    this.removeLineItemInCart = removeLineItemInCart.bind(this);
-    this.showAccountVerificationMessage = this.showAccountVerificationMessage.bind(this);
-    this.associateCustomerCheckout = associateCustomerCheckout.bind(this);
+  const setCustomerTypeAndOpenAuthScreen = ({ isNewCustomer }) => {
+    setIsNewCustomer(isNewCustomer);
+    openCustomerAuth();
   }
 
-  componentWillMount() {
-    this.props.createCheckout({
-      variables: {
-        input: {}
-      }}).then((res) => {
-      this.setState({
-        checkout: res.data.checkoutCreate.checkout
-      });
-    });
-  }
+  if (loading) return <p>Loading ...</p>;
+  if (error) return <p>{error.message}</p>;
 
-  static propTypes = {
-    data: PropTypes.shape({
-      loading: PropTypes.bool,
-      error: PropTypes.object,
-      shop: PropTypes.object,
-    }).isRequired,
-    createCheckout: PropTypes.func.isRequired,
-    checkoutLineItemsAdd: PropTypes.func.isRequired,
-    checkoutLineItemsUpdate: PropTypes.func.isRequired
-  }
-
-  handleCartOpen() {
-    this.setState({
-      isCartOpen: true,
-    });
-  }
-
-  handleCartClose() {
-    this.setState({
-      isCartOpen: false,
-    });
-  }
-
-  openCustomerAuth(event) {
-    if (event.target.getAttribute('data-customer-type') === "new-customer") {
-      this.setState({
-        isNewCustomer: true,
-        isCustomerAuthOpen: true
-      });
-    } else {
-      this.setState({
-        isNewCustomer: false,
-        isCustomerAuthOpen: true
-      });
-    }
-  }
-
-  showAccountVerificationMessage(){
-    this.setState({ accountVerificationMessage: true });
-    setTimeout(() => {
-     this.setState({
-       accountVerificationMessage: false
-     })
-   }, 5000);
-  }
-
-  closeCustomerAuth() {
-    this.setState({
-      isCustomerAuthOpen: false,
-    });
-  }
-
-  render() {
-    if (this.props.data.loading) {
-      return <p>Loading ...</p>;
-    }
-    if (this.props.data.error) {
-      return <p>{this.props.data.error.message}</p>;
-    }
-
-    return (
-      <div className="App">
-        <div className="Flash__message-wrapper">
-          <p className={`Flash__message ${this.state.accountVerificationMessage ? 'Flash__message--open' : ''}`}>We have sent you an email, please click the link included to verify your email address</p>
-        </div>
-        <CustomerAuthWithMutation
-          closeCustomerAuth={this.closeCustomerAuth}
-          isCustomerAuthOpen={this.state.isCustomerAuthOpen}
-          newCustomer={this.state.isNewCustomer}
-          associateCustomerCheckout={this.associateCustomerCheckout}
-          showAccountVerificationMessage={this.showAccountVerificationMessage}
-        />
-        <header className="App__header">
-          <ul className="App__nav">
-            <li className="button App__customer-actions" onClick={this.openCustomerAuth} data-customer-type="new-customer">Create an Account</li>
-            <li className="login App__customer-actions" onClick={this.openCustomerAuth}>Log in</li>
-          </ul>
-          {!this.state.isCartOpen &&
-            <div className="App__view-cart-wrapper">
-              <button className="App__view-cart" onClick={()=> this.setState({isCartOpen: true})}>Cart</button>
-            </div>
-          }
-          <div className="App__title">
-            <h1>{this.props.data.shop.name}: React Example</h1>
-            <h2>{this.props.data.shop.description}</h2>
+  return (
+    <div className="App">
+      {showAccountVerificationMessage
+        && (
+          <div className="Flash__message-wrapper">
+            <p className={`Flash__message Flash__message--open`}>
+              We have sent you an email, please click the link included to verify your email address
+            </p>
           </div>
-        </header>
-        <div className="Product-wrapper">
-          { this.props.data.shop.products.edges.map(product =>
-            <Product addVariantToCart={this.addVariantToCart} checkout={this.state.checkout} key={product.node.id.toString()} product={product.node} />
+        )}
+
+      <CustomerAuth />
+
+      <header className="App__header">
+        <ul className="App__nav">
+          <li
+            className="button App__customer-actions"
+            onClick={() => setCustomerTypeAndOpenAuthScreen({ isNewCustomer: true })}
+          >
+            Create an Account
+          </li>
+          <li
+            className="login App__customer-actions"
+            onClick={() => setCustomerTypeAndOpenAuthScreen({ isNewCustomer: false })}
+          >
+            Log in
+          </li>
+        </ul>
+
+        {!isCartOpen
+          && (
+            <div className="App__view-cart-wrapper">
+              <button
+                className="App__view-cart"
+                onClick={handleCartOpen}
+              >
+                Cart
+              </button>
+            </div>
           )}
+
+        <div className="App__title">
+          <h1>{shop.name}: React Example</h1>
+          <h2>{shop.description}</h2>
         </div>
-        <Cart
-          removeLineItemInCart={this.removeLineItemInCart}
-          updateLineItemInCart={this.updateLineItemInCart}
-          checkout={this.state.checkout}
-          isCartOpen={this.state.isCartOpen}
-          handleCartClose={this.handleCartClose}
-          customerAccessToken={this.state.customerAccessToken}
-        />
+      </header>
+
+      <div className="Product-wrapper">
+        {(shop.products.edges && shop.products.edges.length > 0) && shop.products.edges.map(product => (
+          <Product
+            key={product.node.id.toString()}
+            product={product.node}
+          />
+        ))}
       </div>
-    );
-  }
+
+      <Cart />
+    </div>
+  );
 }
 
-const query = gql`
+// could migrate this into the provider? something could be done to abstract this out I think...
+// or maybe create a product setter method on the provider so we could set them or update them somehow
+const loadProductsQuery = gql`
   query query {
     shop {
       name
@@ -214,12 +153,14 @@ const query = gql`
 `;
 
 const AppWithDataAndMutation = compose(
-  graphql(query),
-  graphql(createCheckout, {name: "createCheckout"}),
-  graphql(checkoutLineItemsAdd, {name: "checkoutLineItemsAdd"}),
-  graphql(checkoutLineItemsUpdate, {name: "checkoutLineItemsUpdate"}),
-  graphql(checkoutLineItemsRemove, {name: "checkoutLineItemsRemove"}),
-  graphql(checkoutCustomerAssociate, {name: "checkoutCustomerAssociate"})
+	graphql(loadProductsQuery),
 )(App);
 
-export default AppWithDataAndMutation;
+App.propTypes = {
+  storeContext: PropTypes.shape({
+    openCustomerAuth: PropTypes.func,
+    setIsNewCustomer: PropTypes.func,
+  }).isRequired,
+}
+
+export default withStoreContext(AppWithDataAndMutation);

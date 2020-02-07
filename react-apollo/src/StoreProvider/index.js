@@ -84,6 +84,27 @@ class StoreProvider extends Component {
 
   setLoginStatus = (bool) => { this.setState({ isLoggedIn: bool }); }
 
+  setAuthErrors = (errors) => {
+		const errorKeyValuePairs = errors.reduce((messageAcc, error) => {
+			const {
+				field: fields,
+				message,
+			} = error;
+
+			const errorObjs = fields.reduce((fieldTypeAcc, fieldName) => ({
+				...fieldTypeAcc,
+				[`${fieldName}ErrorMessage`]: message,
+			}), []);
+
+			return {
+				...messageAcc,
+				...errorObjs,
+			};
+		}, []);
+
+		this.setState({ authErrors: errorKeyValuePairs });
+	}
+
   redirectToWebCheckout = () => {
   	const { checkout } = this.state;
   	window.open(checkout.webUrl);
@@ -140,7 +161,6 @@ class StoreProvider extends Component {
 
 	createCustomerAccount = (email, password) => {
 		const { customerCreateMutation } = this.props;
-		const { authErrors } = this.state;
 
 		const input = {
 			email,
@@ -155,17 +175,7 @@ class StoreProvider extends Component {
 				this.closeCustomerAuth();
 				this.showAccountVerificationMessage();
 			} else {
-				res.data.customerCreate.userErrors.forEach((error) => {
-					if (error.field) {
-						error.field.forEach((field) => {
-							this.setState({ authErrors: { ...authErrors, [`${field}ErrorMessage`]: error.message }});
-						});
-					} else if (error.message) {
-						this.setState({ authErrors: { ...authErrors, genericErrorMessage: error.message }});
-					} else {
-						this.setState({ authErrors: { ...authErrors, genericErrorMessage: 'Uh oh! Something went wrong, please try again!' } });
-					}
-				});
+        this.setAuthErrors(res.data.customerCreate.userErrors);
 			}
 		});
 	}
@@ -183,7 +193,6 @@ class StoreProvider extends Component {
 
 	loginCustomerAccount = (email, password) => {
 		const { customerAccessTokenCreateMutation } = this.props;
-		const { authErrors } = this.state;
 
 		const input = {
 			email,
@@ -198,17 +207,7 @@ class StoreProvider extends Component {
 				this.setLoginStatus(true);
 				this.setAccessToken(res.data.customerAccessTokenCreate.customerAccessToken);
 			} else {
-				res.data.customerAccessTokenCreate.userErrors.forEach((error) => {
-					if (error.field) {
-						error.field.forEach((field) => {
-							this.setState({ authErrors: { ...authErrors, [`${field}ErrorMessage`]: error.message }});
-						});
-					} else if (error.message) {
-						this.setState({ authErrors: { ...authErrors, genericErrorMessage: error.message }});
-					} else {
-						this.setState({ authErrors: { ...authErrors, genericErrorMessage: 'Uh oh! Something went wrong, please try again!' } });
-					}
-				});
+        this.setAuthErrors(res.data.customerAccessTokenCreate.userErrors);
 			}
 		});
 	}
@@ -221,7 +220,16 @@ class StoreProvider extends Component {
 
 	render() {
 		const { children } = this.props;
-		const { authErrors, isLoggedIn, checkout, accessToken, isCartOpen, isCustomerAuthOpen, isNewCustomer, showAccountVerificationMessage } = this.state;
+    const {
+      authErrors,
+      isLoggedIn,
+      checkout,
+      accessToken,
+      isCartOpen,
+      isCustomerAuthOpen,
+      isNewCustomer,
+      showAccountVerificationMessage
+    } = this.state;
 
 		const storeContext = {
 			storeContext: {

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Products from './components/Products';
-import Cart from './components/Cart';
-import {gql} from 'babel-plugin-graphql-js-client-transform';
+import React, { Component } from "react";
+import Products from "./components/Products";
+import Cart from "./components/Cart";
+import { gql } from "babel-plugin-graphql-js-client-transform";
 
 class App extends Component {
   constructor() {
@@ -23,7 +23,9 @@ class App extends Component {
   componentWillMount() {
     const client = this.props.client;
 
-    client.send(gql(client)`
+    client
+      .send(
+        gql(client)`
       mutation {
         checkoutCreate(input: {}) {
           userErrors {
@@ -58,13 +60,17 @@ class App extends Component {
           }
         }
       }
-    `).then((res) => {
-      this.setState({
-        checkout: res.model.checkoutCreate.checkout,
+    `
+      )
+      .then(res => {
+        this.setState({
+          checkout: res.model.checkoutCreate.checkout
+        });
       });
-    });
 
-    client.send(gql(client)`
+    client
+      .send(
+        gql(client)`
       query {
         shop {
           name
@@ -117,23 +123,28 @@ class App extends Component {
           }
         }
       }
-    `).then((res) => {
-      this.setState({
-        shop: res.model.shop,
-        products: res.model.shop.products,
+    `
+      )
+      .then(res => {
+        this.setState({
+          shop: res.model.shop,
+          products: res.model.shop.products
+        });
       });
-    });
   }
 
-  addVariantToCart(variantId, quantity){
+  addVariantToCart(variantId, quantity) {
+    const client = this.props.client;
     this.setState({
-      isCartOpen: true,
+      isCartOpen: true
     });
 
-    const lineItems = [{variantId, quantity: parseInt(quantity, 10)}]
-    const checkoutId = this.state.checkout.id
+    const lineItems = [{ variantId, quantity: parseInt(quantity, 10) }];
+    const checkoutId = this.state.checkout.id;
 
-    return this.props.client.send(gql(this.props.client)`
+    return client
+      .send(
+        gql(client)`
       mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
         checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
           userErrors {
@@ -167,18 +178,23 @@ class App extends Component {
           }
         }
       }
-    `, {checkoutId, lineItems}).then(res => {
-      this.setState({
-        checkout: res.model.checkoutLineItemsAdd.checkout,
+    `,
+        { checkoutId, lineItems }
+      )
+      .then(res => {
+        this.setState({
+          checkout: res.model.checkoutLineItemsAdd.checkout
+        });
       });
-    });
   }
 
   updateQuantityInCart(lineItemId, quantity) {
-    const checkoutId = this.state.checkout.id
-    const lineItems = [{id: lineItemId, quantity: parseInt(quantity, 10)}]
+    const checkoutId = this.state.checkout.id;
+    const lineItems = [{ id: lineItemId, quantity: parseInt(quantity, 10) }];
 
-    return this.props.client.send(gql(this.props.client)`
+    return this.props.client
+      .send(
+        gql(this.props.client)`
       mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
         checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
           userErrors {
@@ -212,17 +228,22 @@ class App extends Component {
           }
         }
       }
-    `, {checkoutId, lineItems}).then(res => {
-      this.setState({
-        checkout: res.model.checkoutLineItemsUpdate.checkout,
+    `,
+        { checkoutId, lineItems }
+      )
+      .then(res => {
+        this.setState({
+          checkout: res.model.checkoutLineItemsUpdate.checkout
+        });
       });
-    });
   }
 
   removeLineItemInCart(lineItemId) {
     const checkoutId = this.state.checkout.id;
 
-    return this.props.client.send(gql(this.props.client)`
+    return this.props.client
+      .send(
+        gql(this.props.client)`
       mutation ($checkoutId: ID!, $lineItemIds: [ID!]!) {
         checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
           userErrors {
@@ -256,16 +277,19 @@ class App extends Component {
           }
         }
       }
-    `, {checkoutId, lineItemIds: [lineItemId]}).then(res => {
-      this.setState({
-        checkout: res.model.checkoutLineItemsRemove.checkout,
+    `,
+        { checkoutId, lineItemIds: [lineItemId] }
+      )
+      .then(res => {
+        this.setState({
+          checkout: res.model.checkoutLineItemsRemove.checkout
+        });
       });
-    });
   }
 
   handleCartClose() {
     this.setState({
-      isCartOpen: false,
+      isCartOpen: false
     });
   }
 
@@ -273,11 +297,16 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App__header">
-          {!this.state.isCartOpen &&
+          {!this.state.isCartOpen && (
             <div className="App__view-cart-wrapper">
-              <button className="App__view-cart" onClick={()=> this.setState({isCartOpen: true})}>Cart</button>
+              <button
+                className="App__view-cart"
+                onClick={() => this.setState({ isCartOpen: true })}
+              >
+                Cart
+              </button>
             </div>
-          }
+          )}
           <div className="App__title">
             <h1>{this.state.shop.name}: React Example</h1>
             <h2>{this.state.shop.description}</h2>

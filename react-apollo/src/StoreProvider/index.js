@@ -85,20 +85,28 @@ class StoreProvider extends Component {
   setLoginStatus = (bool) => { this.setState({ isLoggedIn: bool }); }
 
   setAuthErrors = (errors) => {
-		const errorKeyValuePairs = errors.reduce((messageAcc, error) => {
+		const errorKeyValuePairs = errors && errors.reduce((messageAcc, error) => {
 			const {
 				field: fields,
 				message,
 			} = error;
 
-			const errorObjs = fields.reduce((fieldTypeAcc, fieldName) => ({
+			const fieldSpecificErrors = fields && fields.reduce((fieldTypeAcc, fieldName) => ({
 				...fieldTypeAcc,
 				[`${fieldName}ErrorMessage`]: message,
 			}), []);
 
+			// error was not attached to a field, more generic
+			if (!fields) {
+				return {
+					...messageAcc,
+					genericErrorMessage: message,
+				};
+			}
+
 			return {
 				...messageAcc,
-				...errorObjs,
+				...fieldSpecificErrors,
 			};
 		}, []);
 

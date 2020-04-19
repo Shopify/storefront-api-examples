@@ -193,7 +193,7 @@ function addMiddleware(devServer) {
       target: proxy,
       logLevel: 'silent',
       onProxyReq: function(proxyReq) {
-        // Browers may send Origin headers even with same-origin
+        // Browsers may send Origin headers even with same-origin
         // requests. To prevent CORS issues, we have to change
         // the Origin to match the target URL.
         if (proxyReq.getHeader('origin')) {

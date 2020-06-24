@@ -3,7 +3,8 @@ import Product from './components/Product';
 import Cart from './components/Cart';
 import CustomerAuthWithMutation from './components/CustomerAuth';
 import PropTypes from 'prop-types';
-import { graphql, compose } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import {flowRight as compose} from 'lodash';
 import gql from 'graphql-tag';
 import {
   createCheckout,

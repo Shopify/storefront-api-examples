@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import VariantSelector from './VariantSelector';
 
@@ -8,7 +8,6 @@ function Product(props){
   props.product.options.forEach((selector) => {
     defaultOptionValues[selector.name] = selector.values[0];
   });
-
 
   const [selectedOptions,setSelectedOptions] = useState(defaultOptionValues);
 

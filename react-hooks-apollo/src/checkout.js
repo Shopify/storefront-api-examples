@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { useEffect } from 'react';
 
 const CheckoutFragment = gql`
   fragment CheckoutFragment on Checkout {
@@ -101,3 +102,11 @@ export const checkoutCustomerAssociate = gql`
   }
   ${CheckoutFragment}
 `;
+
+export function useCheckoutEffect(data, key, setDataCallback) {
+  useEffect(() => {
+    if(data && data[key] && data[key].checkout) {
+      setDataCallback(data[key].checkout);
+    }
+  }, [data])
+}

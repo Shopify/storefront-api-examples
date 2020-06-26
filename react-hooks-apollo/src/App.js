@@ -3,11 +3,9 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import Product from './components/Product';
 import Cart from './components/Cart';
 import CustomerAuthWithMutation from './components/CustomerAuth';
-import PropTypes from 'prop-types';
-import { graphql } from 'react-apollo';
-import {flowRight as compose} from 'lodash';
 import gql from 'graphql-tag';
 import {
+  useCheckoutEffect,
   createCheckout,
   checkoutLineItemsAdd,
   checkoutLineItemsUpdate,
@@ -74,25 +72,48 @@ const query = gql`
 
 function App(props){
 
-  const [products,setProducts] = useState([]);
   const [isCartOpen,setCartOpen] = useState(false);
   const [isNewCustomer,setNewCustomer] = useState(false);
   const [isCustomerAuthOpen,setCustomerAuthOpen] = useState(false);
   const [showAccountVerificationMessage,setAccountVerificationMessage] = useState(false);
   const [checkout,setCheckout] = useState({ lineItems: { edges: [] }});
 
-  const [shop,setShop] = useState({});
   const [customerAccessToken, setCustomerAccessToken] = useState(null);
 
-  const [createCheckoutMutation, {data: createCheckoutData, loading: createCheckoutLoading, error: createCheckoutError}] = useMutation(createCheckout);
+  const [createCheckoutMutation,
+  {
+    data: createCheckoutData,
+    loading: createCheckoutLoading,
+    error: createCheckoutError
+  }] = useMutation(createCheckout);
 
-  const [lineItemAddMutation, {data: lineItemAddData, loading: lineItemAddLoading, error: lineItemAddError}] = useMutation(checkoutLineItemsAdd);
+  const [lineItemAddMutation,
+  {
+    data: lineItemAddData,
+    loading: lineItemAddLoading,
+    error: lineItemAddError
+  }] = useMutation(checkoutLineItemsAdd);
 
-  const [lineItemUpdateMutation, {data: lineItemUpdateData, loading: lineItemUpdateLoading, error: lineItemUpdateError}] = useMutation(checkoutLineItemsUpdate);
+  const [lineItemUpdateMutation,
+  {
+    data: lineItemUpdateData,
+    loading: lineItemUpdateLoading,
+    error: lineItemUpdateError
+  }] = useMutation(checkoutLineItemsUpdate);
 
-  const [lineItemRemoveMutation, {data: lineItemRemoveData, loading: lineItemRemoveLoading, error: lineItemRemoveError}] = useMutation(checkoutLineItemsRemove);
+  const [lineItemRemoveMutation,
+  {
+    data: lineItemRemoveData,
+    loading: lineItemRemoveLoading,
+    error: lineItemRemoveError
+  }] = useMutation(checkoutLineItemsRemove);
 
-  const [customerAssociateMutation, {data: customerAssociateData, loading: customerAssociateLoading, error: customerAssociateError}] = useMutation(checkoutCustomerAssociate);
+  const [customerAssociateMutation,
+  {
+    data: customerAssociateData,
+    loading: customerAssociateLoading,
+    error: customerAssociateError
+  }] = useMutation(checkoutCustomerAssociate);
 
   const { loading:shopLoading, error:shopError, data:shopData } = useQuery(query);
 
@@ -109,37 +130,11 @@ function App(props){
 
   }, []);
 
-  useEffect(() => {
-    if(createCheckoutData && createCheckoutData.checkoutCreate && createCheckoutData.checkoutCreate.checkout) {
-      setCheckout(createCheckoutData.checkoutCreate.checkout);
-    }
-  }, [createCheckoutData])
-
-  useEffect(() => {
-    if(lineItemAddData && lineItemAddData.checkoutLineItemsAdd && lineItemAddData.checkoutLineItemsAdd.checkout) {
-      setCheckout(lineItemAddData.checkoutLineItemsAdd.checkout);
-    }
-  }, [lineItemAddData])
-
-  useEffect(() => {
-    if(lineItemUpdateData && lineItemUpdateData.checkoutLineItemsUpdate && lineItemUpdateData.checkoutLineItemsUpdate.checkout) {
-      setCheckout(lineItemUpdateData.checkoutLineItemsUpdate.checkout);
-    }
-  }, [lineItemUpdateData])
-
-  useEffect(() => {
-    if(lineItemRemoveData && lineItemRemoveData.checkoutLineItemsRemove && lineItemRemoveData.checkoutLineItemsRemove.checkout) {
-      setCheckout(lineItemRemoveData.checkoutLineItemsRemove.checkout);
-    }
-  }, [lineItemRemoveData])
-
-  useEffect(() => {
-    if(customerAssociateData && customerAssociateData.checkoutCustomerAssociate && customerAssociateData.checkoutCustomerAssociate.checkout) {
-      setCheckout(customerAssociateData.checkoutCustomerAssociate.checkout);
-    }
-  }, [customerAssociateData])
-
-
+  useCheckoutEffect(createCheckoutData, 'checkoutCreate', setCheckout);
+  useCheckoutEffect(lineItemAddData, 'checkoutLineItemsAdd', setCheckout);
+  useCheckoutEffect(lineItemUpdateData, 'checkoutLineItemsUpdate', setCheckout);
+  useCheckoutEffect(lineItemRemoveData, 'checkoutLineItemsRemove', setCheckout);
+  useCheckoutEffect(customerAssociateData, 'checkoutCustomerAssociate', setCheckout);
 
   const handleCartClose = () => {
     setCartOpen( false );
@@ -245,17 +240,6 @@ function App(props){
     </div>
   );
 
-}
-
-App.propTypes = {
-  data: PropTypes.shape({
-    loading: PropTypes.bool,
-    error: PropTypes.object,
-    shop: PropTypes.object,
-  }).isRequired,
-  createCheckout: PropTypes.func.isRequired,
-  checkoutLineItemsAdd: PropTypes.func.isRequired,
-  checkoutLineItemsUpdate: PropTypes.func.isRequired
 }
 
 export default App;

@@ -9,7 +9,7 @@
 import Vue from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
 
-export default Vue.extend({
+export default ({
   name: 'App',
   components: {
     HelloWorld,

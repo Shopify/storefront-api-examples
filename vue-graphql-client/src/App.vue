@@ -1,31 +1,22 @@
 <template>
-  <div id="app">
+  <div>
     <the-header />
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <product-list />
   </div>
 </template>
 
 <script lang="ts">
-import HelloWorld from './components/HelloWorld.vue';
-import TheHeader from './components/single-instance/TheHeader.vue';
+import TheHeader from './components/TheHeader.vue';
+import ProductList from './components/ProductList.vue';
 
 export default ({
   name: 'App',
   components: {
-    HelloWorld,
     TheHeader,
+    ProductList,
   },
 });
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    header
+    <h2>Shopping Card</h2>
   </div>
 </template>
 

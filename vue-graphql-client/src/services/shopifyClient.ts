@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Product, ProductImage } from '@/store/modules/products.types';
+import { Product, ProductImage, ProductVariant } from '@/store/modules/products.types';
 
 // ALL DEFUALT CONFIGURATION HERE
 // export default axios.create({
@@ -38,40 +38,29 @@ export default class ShopifyClient {
   static getAllProducts(successCallback: any, errorCallback: any) {
     const graphquery = `
       query {
-        shop {
-          name
-          description
-          products(first:10, query:"product_type:Dress") {
-            pageInfo {
-              hasNextPage
-              hasPreviousPage
-            }
-            edges {
-              node {
-                id
-                title
-                description
-                availableForSale
-                images(first: 10) {
-                  edges {
-                    node {
-                      id
-                      src
-                      altText
-                    }
+        products(first: 1) {
+          edges {
+            node {
+              id
+              title
+              description
+              productType
+              images(first: 1) {
+                edges {
+                  node {
+                    altText
+                    originalSrc
                   }
                 }
-                variants(first: 10) {
-                  edges {
-                    node {
-                      id
-                      price
-                      title
-                      image {
-                        src
-                        id
-                        altText
-                      }
+              }
+              variants(first: 1) {
+                edges {
+                  node {
+                    id
+                    title
+                    priceV2 {
+                      amount
+                      currencyCode
                     }
                   }
                 }
@@ -83,7 +72,8 @@ export default class ShopifyClient {
     `;
 
     ShopifyClient.query(graphquery, (responseSuccess: {data: any}) => {
-      const products = responseSuccess.data.data.shop.products.edges;
+      console.info(responseSuccess.data);
+      const products = responseSuccess.data.data.products.edges;
       const normalizedProducts:Product[] = [];
 
       products.forEach((element: any) => {
@@ -91,21 +81,37 @@ export default class ShopifyClient {
         // and prep it for the product object
         const images:ProductImage[] = [];
 
+        // Normalize each image attached to the product
         element.node.images.edges.forEach((imageElement: any) => {
-          const normalizedProductImage = {
+          const normalizedProductImage: ProductImage = {
             id: imageElement.node.id,
-            src: imageElement.node.src,
+            src: imageElement.node.originalSrc,
             altText: imageElement.node.altText,
           };
           images.push(normalizedProductImage);
         });
 
+        const variants:ProductVariant[] = [];
+
+        // Normalize each variant for the product
+        element.node.variants.edges.forEach((variantElement: any) => {
+          const normalizedProductVariant: ProductVariant = {
+            id: variantElement.node.id,
+            title: variantElement.node.title,
+            price: variantElement.node.priceV2.amount,
+            currencyCode: variantElement.node.priceV2.currencyCode,
+          };
+          variants.push(normalizedProductVariant);
+        });
+
+        // Put the product object together based on our local type (not what came out of shopify)
         const normalizedProduct = {
           id: element.node.id,
           description: element.node.description !== '' ? element.node.description : null,
           title: element.node.title,
+          type: element.node.productType,
           images,
-          variants: [],
+          variants,
         };
         normalizedProducts[element.node.id] = normalizedProduct;
       });

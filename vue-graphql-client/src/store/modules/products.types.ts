@@ -11,6 +11,7 @@ export interface Product {
   description: string,
   images: ProductImage[],
   variants: ProductVariant[],
+  type: String,
 }
 
 // Product Image Model
@@ -22,5 +23,8 @@ export interface ProductImage {
 
 // Product Variant Model
 export interface ProductVariant {
-
+  id: string,
+  title: string,
+  price: string
+  currencyCode: string,
 }

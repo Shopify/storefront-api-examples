@@ -12,20 +12,6 @@ export default (props) => {
 		setCount,
 	} = useShopify()
 
-	function getCount() {
-		let lineItems =
-			checkoutState.lineItems && checkoutState.lineItems.length > 0
-				? checkoutState.lineItems
-				: []
-		let count = 0
-		lineItems.forEach((item) => {
-			count += item.quantity
-			return count
-		})
-
-		setCount(count)
-	}
-
 	function handleOpen(e) {
 		e.preventDefault()
 		openCart()
@@ -49,6 +35,21 @@ export default (props) => {
 		} else {
 			button.classList.remove("hide")
 		}
+
+		function getCount() {
+			let lineItems =
+				checkoutState.lineItems && checkoutState.lineItems.length > 0
+					? checkoutState.lineItems
+					: []
+			let count = 0
+			lineItems.forEach((item) => {
+				count += item.quantity
+				return count
+			})
+
+			setCount(count)
+		}
+
 		getCount()
 	}, [cartStatus, checkoutState])
 

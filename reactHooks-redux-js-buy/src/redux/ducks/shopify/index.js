@@ -3,18 +3,18 @@ import Client from "shopify-buy"
 
 // Creates the client with Shopify-Buy and store info
 //
-const client = Client.buildClient({
-	storefrontAccessToken: "your-storefront-access-token",
-	domain: "your-shop-name.myshopify.com",
-})
+// const client = Client.buildClient({
+// 	storefrontAccessToken: "your-storefront-access-token",
+// 	domain: "your-shop-name.myshopify.com",
+// })
 
 //
 // Example Storefront
 //
-// const client = Client.buildClient({
-// 	storefrontAccessToken: "dd4d4dc146542ba7763305d71d1b3d38",
-// 	domain: "graphql.myshopify.com",
-// })
+const client = Client.buildClient({
+	storefrontAccessToken: "dd4d4dc146542ba7763305d71d1b3d38",
+	domain: "graphql.myshopify.com",
+})
 
 const PRODUCTS_FOUND = "shopify/PRODUCTS_FOUND"
 const PRODUCT_FOUND = "shopify/PRODUCT_FOUND"

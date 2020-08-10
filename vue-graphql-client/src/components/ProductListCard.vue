@@ -82,7 +82,8 @@ export default ({
         const index = product.value.variants.findIndex(
           (element) => element.id === variantSelected.value,
         );
-        price = product.value.variants[index].price;
+        // Convert the string to a currency display
+        price = `$${parseFloat(product.value.variants[index].price).toFixed(2)}`;
       }
       return price;
     });

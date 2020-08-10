@@ -43,13 +43,13 @@ const actions: ActionTree<ProductsState, RootState> = {
 // mutations
 const mutations: MutationTree<ProductsState> = {
 
-  setProducts(state: ProductsState, products) {
+  setProducts(state: ProductsState, products: { [key: string]: Product }) {
     state.all = products;
   },
 
 };
 
-// state
+// default state
 const state: ProductsState = {
   all: {},
 };

@@ -38,7 +38,7 @@ export default class ShopifyClient {
   static getAllProducts(successCallback: any, errorCallback: any) {
     const graphquery = `
       query {
-        products(first: 1) {
+        products(first: 2) {
           edges {
             node {
               id
@@ -53,7 +53,7 @@ export default class ShopifyClient {
                   }
                 }
               }
-              variants(first: 1) {
+              variants(first: 10) {
                 edges {
                   node {
                     id
@@ -61,6 +61,10 @@ export default class ShopifyClient {
                     priceV2 {
                       amount
                       currencyCode
+                    }
+                    image {
+                      originalSrc
+                      altText
                     }
                   }
                 }
@@ -100,6 +104,8 @@ export default class ShopifyClient {
             title: variantElement.node.title,
             price: variantElement.node.priceV2.amount,
             currencyCode: variantElement.node.priceV2.currencyCode,
+            imageSrc: variantElement.node.image.originalSrc,
+            imageAltText: variantElement.node.image.altText,
           };
           variants.push(normalizedProductVariant);
         });

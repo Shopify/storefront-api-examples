@@ -1,7 +1,5 @@
 export interface ProductsState {
-  all: {
-    [key: string]: Product
-  }
+  all: { [key: string]: Product },
 }
 
 // Product Model
@@ -23,8 +21,10 @@ export interface ProductImage {
 
 // Product Variant Model
 export interface ProductVariant {
-  id: string,
-  title: string,
-  price: string
-  currencyCode: string,
+  readonly id: string,
+  readonly title: string,
+  readonly price: string
+  readonly currencyCode: string,
+  readonly imageSrc?: string,
+  readonly imageAltText?: string,
 }

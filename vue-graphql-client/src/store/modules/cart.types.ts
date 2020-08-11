@@ -1,4 +1,5 @@
 export interface CartState {
+  visibility: boolean,
   checkoutId: string,
   items: LineItem[],
 }
@@ -9,4 +10,3 @@ export interface LineItem {
   variantId: string,
   quantity: number,
 }
-

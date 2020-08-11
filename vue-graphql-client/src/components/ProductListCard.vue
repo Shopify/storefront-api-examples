@@ -39,7 +39,7 @@
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { LineItem } from '@/store/modules/cart.types';
-import { Product } from '@/store/modules/products.types';
+import { Product, ProductVariant } from '@/store/modules/products.types';
 
 export default ({
 
@@ -47,13 +47,13 @@ export default ({
     id: String,
   },
 
-  setup(props) {
+  setup(props : any) {
     const store = useStore();
 
     // Set the order quantity to a default of 1
     const formError = ref(false);
 
-    const product : Product = computed(() => store.getters['products/productById'](props.id));
+    const product = computed(() => store.getters['products/productById'](props.id));
 
     // find the set the first available variant
     // TODO: if no variants available degrade gracefully
@@ -80,7 +80,7 @@ export default ({
       if (variantSelected.value !== '' || variantSelected.value !== undefined) {
         console.log('Calculating Variant Price');
         const index = product.value.variants.findIndex(
-          (element) => element.id === variantSelected.value,
+          (element: ProductVariant) => element.id === variantSelected.value,
         );
         // Convert the string to a currency display
         price = `$${parseFloat(product.value.variants[index].price).toFixed(2)}`;

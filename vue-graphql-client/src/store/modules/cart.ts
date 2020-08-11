@@ -4,15 +4,33 @@ import { CartState, LineItem } from './cart.types';
 import ShopifyClient from '../../services/shopifyClient';
 
 // getters
-const getters = {};
+const getters = {
+
+  cartVisibility: (state: CartState) => state.visibility,
+
+  cartItems: (state: CartState) => state.items,
+
+  cartProductsCount: (state: CartState) => {
+    let productCount = 0;
+    state.items.forEach((element : LineItem) => {
+      productCount += element.quantity;
+    });
+    return productCount;
+  },
+
+};
 
 // actions
 const actions: ActionTree<CartState, RootState> = {
 
+  ToggleCartVisibility({ commit }) {
+    commit('TOGGLE_CART_VISIBILITY');
+  },
+
   // Add line item to the vuex cart store
   // TODO: in future add a checkout mutation against
   // the shopify store api
-  AddLineItemToCart({ state, commit, rootState }, lineItem) {
+  AddLineItemToCart({ state, commit }, lineItem) {
     let isFound = false;
     let oldQuantity = 0;
     // Loop through the shopping cart items to see if the thing
@@ -43,6 +61,10 @@ const actions: ActionTree<CartState, RootState> = {
 // mutations
 const mutations: MutationTree<CartState> = {
 
+  TOGGLE_CART_VISIBILITY(state: CartState) {
+    state.visibility = !state.visibility;
+  },
+
   UPDATE_LINE_ITEM_QUANTITY(state: CartState, lineItem: LineItem) {
     const index = state.items.findIndex((element) => {
       console.log('Attempting to find cart item');
@@ -66,6 +88,7 @@ const mutations: MutationTree<CartState> = {
 
 // initial state
 const state: CartState = {
+  visibility: false,
   checkoutId: '',
   items: [],
 };

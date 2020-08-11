@@ -1,5 +1,5 @@
 import { ActionTree, MutationTree } from 'vuex';
-import { ProductsState, Product } from './products.types';
+import { ProductsState, Product, ProductVariant } from './products.types';
 import { RootState } from '../index.type';
 import ShopifyClient from '../../services/shopifyClient';
 
@@ -16,6 +16,14 @@ const getters = {
   productsCount: (state: ProductsState) => Object.keys(state.all).length,
 
   productById: (state: ProductsState) => (id: string) => state.all[id],
+
+  productTitleById: (state: ProductsState) => (id: string) => state.all[id].title,
+
+  variantTitleByIds: (state: ProductsState) => (productId: string, variantId: string) => {
+    const variant : ProductVariant | undefined = state.all[productId].variants
+      .find((element) => element.id === variantId);
+    return variant?.title || 'Error';
+  },
 
   // productCounts: (state: ProductsState) => { return Object.keys(state.all).length; },
 

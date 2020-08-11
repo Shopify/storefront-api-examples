@@ -27,6 +27,19 @@ const actions: ActionTree<CartState, RootState> = {
     commit('TOGGLE_CART_VISIBILITY');
   },
 
+  // Update the quantity of a line item in the vuex cart store
+  // If the quantity is being updated to zero then we remove
+  // the line item from the cart
+  // TODO: in the future add a checkout mutation against
+  // the shopify store api
+  UpdateLineItemInCart({ state, commit }, lineItem : LineItem) {
+    if (lineItem.quantity === 0) {
+      commit('REMOVE_LINE_ITEM', lineItem);
+    } else {
+      commit('UPDATE_LINE_ITEM_QUANTITY', lineItem);
+    }
+  },
+
   // Add line item to the vuex cart store
   // TODO: in future add a checkout mutation against
   // the shopify store api
@@ -70,6 +83,7 @@ const mutations: MutationTree<CartState> = {
       console.log('Attempting to find cart item');
       return (element.productId === lineItem.productId && element.variantId === lineItem.variantId);
     });
+    // Add/Replace the line item
     if (index !== -1) {
       state.items.splice(index, 1, {
         ...lineItem,
@@ -82,7 +96,14 @@ const mutations: MutationTree<CartState> = {
   },
 
   REMOVE_LINE_ITEM(state: CartState, lineItem: LineItem) {
-    state.items.push(lineItem);
+    const index = state.items.findIndex((element) => {
+      console.log('Attempting to find cart item');
+      return (element.productId === lineItem.productId && element.variantId === lineItem.variantId);
+    });
+    // Remove the line item
+    if (index > -1) {
+      state.items.splice(index, 1);
+    }
   },
 };
 

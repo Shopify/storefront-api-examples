@@ -25,6 +25,21 @@ const getters = {
     return variant?.title || 'Error';
   },
 
+  variantPriceByIds: (state: ProductsState) => (productId: string, variantId: string) => {
+    const variant : ProductVariant | undefined = state.all[productId].variants
+      .find((element) => element.id === variantId);
+    return variant?.price || 'Error';
+  },
+
+  variantImageByIds: (state: ProductsState) => (productId: string, variantId: string) => {
+    // TODO: If the product object doesn't have an image use a category default
+    // Grab the product image because we know a product *should* have an image
+    const imageSrc = state.all[productId].images[0] || '';
+    const variant : ProductVariant | undefined = state.all[productId].variants
+      .find((element) => element.id === variantId);
+    return variant?.imageSrc || imageSrc;
+  },
+
   // productCounts: (state: ProductsState) => { return Object.keys(state.all).length; },
 
 };

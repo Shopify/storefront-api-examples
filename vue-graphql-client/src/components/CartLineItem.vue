@@ -26,7 +26,8 @@
           {{ variantPrice }}
         </span>
         <button
-          className="Line-item__remove">
+          className="Line-item__remove"
+          v-on:click="removeLineItem">
           ×
         </button>
       </div>
@@ -54,6 +55,10 @@ export default {
     const variantPrice = computed(() => store.getters['products/variantPriceByIds'](props.item.productId, props.item.variantId));
     const variantImage = computed(() => store.getters['products/variantImageByIds'](props.item.productId, props.item.variantId));
 
+    function removeLineItem() {
+      store.dispatch('cart/removeLineItemFromCart', props.item);
+    }
+
     function incrementLineItemQuantity() {
       // Tell the store to increment the quantity for this line item
       store.dispatch('cart/UpdateLineItemInCart', {
@@ -77,9 +82,9 @@ export default {
       variantTitle,
       variantPrice,
       variantImage,
+      removeLineItem,
       incrementLineItemQuantity,
       decrementLineItemQuantity,
-
     };
   },
 

@@ -27,6 +27,10 @@ const actions: ActionTree<CartState, RootState> = {
     commit('TOGGLE_CART_VISIBILITY');
   },
 
+  removeLineItemFromCart({ state, commit }, lineItem : LineItem) {
+    commit('REMOVE_LINE_ITEM', lineItem);
+  },
+
   // Update the quantity of a line item in the vuex cart store
   // If the quantity is being updated to zero then we remove
   // the line item from the cart

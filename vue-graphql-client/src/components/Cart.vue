@@ -37,7 +37,11 @@
             <span className="pricing">${{ cartTotalPrice }}</span>
           </div>
         </div>
-        <button className="Cart__checkout button">Checkout</button>
+        <button
+          className="Cart__checkout button"
+          v-on:disabled="cartWebUrl === ''"
+          v-on:click="handleCartCheckOutClick">
+          Checkout</button>
       </footer>
     </div>
   </div>
@@ -63,10 +67,15 @@ export default {
     const cartSubtotalPrice = computed(() => store.getters['cart/cartSubtotalPrice']);
     const cartTotalTax = computed(() => store.getters['cart/cartTotalTax']);
     const cartTotalPrice = computed(() => store.getters['cart/cartTotalPrice']);
+    const cartWebUrl = computed(() => store.getters['cart/cartWebUrl']);
 
     function toggleCartVisibility() {
       // Tell the store to toggle the visibility of the cart
       store.dispatch('cart/ToggleCartVisibility');
+    }
+
+    function handleCartCheckOutClick() {
+      window.location.href = cartWebUrl.value;
     }
 
     return {
@@ -74,8 +83,9 @@ export default {
       cartSubtotalPrice,
       cartTotalTax,
       cartTotalPrice,
-      toggleCartVisibility,
       cartItems,
+      toggleCartVisibility,
+      handleCartCheckOutClick,
     };
   },
 

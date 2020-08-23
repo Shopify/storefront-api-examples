@@ -24,6 +24,8 @@ const getters = {
 
   cartTotalTax: (state: CartState) => state.totalTax,
 
+  cartWebUrl: (state: CartState) => state.webUrl,
+
 };
 
 // actions

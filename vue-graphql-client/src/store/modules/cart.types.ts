@@ -1,12 +1,16 @@
 export interface CartState {
   visibility: boolean,
-  checkoutId: string,
+  id: string,
+  webUrl: string,
+  subtotalPrice: string,
+  totalTax: string,
+  totalPrice: string,
   items: LineItem[],
 }
 
-// Product Model
+// Line Item Model
 export interface LineItem {
-  productId: string,
+  id: string,
   variantId: string,
   quantity: number,
 }

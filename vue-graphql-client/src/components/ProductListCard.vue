@@ -100,14 +100,15 @@ export default ({
 
     // Add variant to cart
     function handleAddVariantToCart() {
-      // Create a line item object
-      const lineItem: LineItem = {
-        productId: product.value.id,
+      // Create a payload object
+      // with the variantId and the quantity amount
+      const payload = {
         variantId: variantSelected.value,
         quantity: productQuantity.value,
       };
+
       // Vuex store Add Product Variant to Cart function
-      store.dispatch('cart/AddLineItemToCart', lineItem);
+      store.dispatch('cart/addLineItemToCart', payload);
     }
 
     return {

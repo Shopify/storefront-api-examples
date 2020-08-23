@@ -12,7 +12,7 @@
         </button>
       </header>
       <ul className="Cart__line-items">
-        <product-list-card
+        <cart-line-item
           v-for="(item, index) in cartItems"
           :item="item"
           :index="index"
@@ -22,19 +22,19 @@
         <div className="Cart-info clearfix">
           <div className="Cart-info__total Cart-info__small">Subtotal</div>
           <div className="Cart-info__pricing">
-            <span className="pricing">$ {props.checkout.subtotalPrice}</span>
+            <span className="pricing">${{ cartSubtotalPrice }}</span>
           </div>
         </div>
         <div className="Cart-info clearfix">
           <div className="Cart-info__total Cart-info__small">Taxes</div>
           <div className="Cart-info__pricing">
-            <span className="pricing">$ {props.checkout.totalTax}</span>
+            <span className="pricing">${{ cartTotalTax }}</span>
           </div>
         </div>
         <div className="Cart-info clearfix">
           <div className="Cart-info__total Cart-info__small">Total</div>
           <div className="Cart-info__pricing">
-            <span className="pricing">$ {props.checkout.totalPrice}</span>
+            <span className="pricing">${{ cartTotalPrice }}</span>
           </div>
         </div>
         <button className="Cart__checkout button">Checkout</button>
@@ -47,15 +47,22 @@
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
-import ProductListCard from '@/components/CartLineItem.vue';
+import CartLineItem from '@/components/CartLineItem.vue';
 
 export default {
 
   setup() {
     const store = useStore();
-    const cartVisibility = computed(() => store.getters['cart/cartVisibility']);
 
+    // Tell the store to get all of the products
+    store.dispatch('cart/fetchCart');
+
+    // Get the needed cart info from the vuex store as reactive references
+    const cartVisibility = computed(() => store.getters['cart/cartVisibility']);
     const cartItems = computed(() => store.getters['cart/cartItems']);
+    const cartSubtotalPrice = computed(() => store.getters['cart/cartSubtotalPrice']);
+    const cartTotalTax = computed(() => store.getters['cart/cartTotalTax']);
+    const cartTotalPrice = computed(() => store.getters['cart/cartTotalPrice']);
 
     function toggleCartVisibility() {
       // Tell the store to toggle the visibility of the cart
@@ -64,13 +71,16 @@ export default {
 
     return {
       cartVisibility,
+      cartSubtotalPrice,
+      cartTotalTax,
+      cartTotalPrice,
       toggleCartVisibility,
       cartItems,
     };
   },
 
   components: {
-    ProductListCard,
+    CartLineItem,
   },
 
 };

@@ -50,30 +50,32 @@ export default {
   setup(props : any) {
     const store = useStore();
 
-    const productTitle = computed(() => store.getters['products/productTitleById'](props.item.productId));
-    const variantTitle = computed(() => store.getters['products/variantTitleByIds'](props.item.productId, props.item.variantId));
-    const variantPrice = computed(() => store.getters['products/variantPriceByIds'](props.item.productId, props.item.variantId));
-    const variantImage = computed(() => store.getters['products/variantImageByIds'](props.item.productId, props.item.variantId));
+    // Get the product title from the vuex store
+    const productTitle = computed(() => store.getters['products/productTitleByVariantId'](props.item.variantId));
+    // Get the variant title from the vuex store
+    const variantTitle = computed(() => store.getters['products/variantTitleByVariantId'](props.item.variantId));
+    // Get the variant price title from the vuex store
+    const variantPrice = computed(() => store.getters['products/variantPriceByVariantId'](props.item.variantId));
+    // Get the variant image src from the vuex store
+    const variantImage = computed(() => store.getters['products/variantImgSrcByVariantId'](props.item.variantId));
 
     function removeLineItem() {
-      store.dispatch('cart/removeLineItemFromCart', props.item);
+      store.dispatch('cart/removeLineItemFromCart', props.item.variantId);
     }
 
     function incrementLineItemQuantity() {
       // Tell the store to increment the quantity for this line item
-      store.dispatch('cart/UpdateLineItemInCart', {
-        productId: props.item.productId,
+      store.dispatch('cart/updateLineItemQuantityInCart', {
         variantId: props.item.variantId,
-        quantity: props.item.quantity + 1,
+        quantityChange: 1,
       });
     }
 
     function decrementLineItemQuantity() {
       // Tell the store to decrement the quantity for this line item
-      store.dispatch('cart/UpdateLineItemInCart', {
-        productId: props.item.productId,
+      store.dispatch('cart/updateLineItemQuantityInCart', {
         variantId: props.item.variantId,
-        quantity: props.item.quantity - 1,
+        quantityChange: -1,
       });
     }
 

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Product, ProductImage, ProductVariant } from '@/store/modules/products.types';
+import { LineItem } from '@/store/modules/cart.types';
 
 // ALL DEFUALT CONFIGURATION HERE
 // export default axios.create({
@@ -17,11 +18,11 @@ const shopifyToken = 'dd4d4dc146542ba7763305d71d1b3d38';
 const baseURL = `${baseDomain}/api/${apiVersion}/graphql.json`;
 
 export default class ShopifyClient {
-  static query(gqlData: string, successCallback: any, errorCallback: any) {
+  static query(gqlData: any, successCallback: any, errorCallback: any) {
     const config = {
       headers: {
         'X-Shopify-Storefront-Access-Token': shopifyToken,
-        'content-Type': 'application/graphql',
+        'content-Type': 'application/json',
       },
     };
 
@@ -35,10 +36,11 @@ export default class ShopifyClient {
       });
   }
 
+  // Get the products data
   static getAllProducts(successCallback: any, errorCallback: any) {
     const graphquery = `
       query {
-        products(first: 2) {
+        products(first: 3) {
           edges {
             node {
               id
@@ -75,8 +77,7 @@ export default class ShopifyClient {
       }
     `;
 
-    ShopifyClient.query(graphquery, (responseSuccess: {data: any}) => {
-      console.info(responseSuccess.data);
+    ShopifyClient.query({ query: graphquery }, (responseSuccess: {data: any}) => {
       const products = responseSuccess.data.data.products.edges;
       const normalizedProducts:Product[] = [];
 
@@ -124,6 +125,138 @@ export default class ShopifyClient {
       successCallback(normalizedProducts);
     }, (responseError: any) => {
       console.log('You such', responseError);
+      errorCallback(responseError);
     });
+  }
+
+  // Get the cart data
+  // If there is an ID than use it, other get a new cart from Shopify
+  static createCheckout(successCallback: any, errorCallback: any) {
+    const graphquery = `
+      mutation {
+        checkoutCreate(input: {}) {
+          checkout {
+            id
+            webUrl
+            subtotalPrice
+            totalTax
+            totalPrice
+          }
+        }
+      }
+    `;
+
+    ShopifyClient.query({ query: graphquery }, (responseSuccess: {data: any}) => {
+      // Successfull call back
+      console.info(responseSuccess.data);
+      const response = responseSuccess.data.data.checkoutCreate.checkout;
+      // let normalizedCartData: CartData | undefined;
+      const normalizedCartData = {
+        id: response.id,
+        webUrl: response.webUrl,
+        subtotalPrice: response.subtotalPrice,
+        totalTax: response.totalTax,
+        totalPrice: response.totalPrice,
+      };
+      successCallback(normalizedCartData);
+    }, (responseError: any) => {
+      // Error handling
+      console.error('Error while trying to fetch cart: ', responseError);
+      errorCallback(responseError);
+    });
+  }
+
+  // Get the cart data
+  // If there is an ID than use it, other get a new cart from Shopify
+  static addVariantToCart(
+    payload : {
+      checkoutId: string,
+      variantId: string,
+      quantity: number,
+    },
+    successCallback: any,
+    errorCallback: any,
+  ) {
+    console.log('Payload', payload);
+    const graphquery = `
+      mutation ($lineItems: [CheckoutLineItemInput!]!, $checkoutId: ID!) {
+        checkoutLineItemsAdd(lineItems: $lineItems, checkoutId: $checkoutId) {
+          checkout {
+            id
+            subtotalPrice
+            totalTax
+            totalPrice
+            lineItems(first: 250) {
+              edges {
+                node {
+                  id
+                  quantity
+                  variant {
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    // Setup the variables for the graph mutation
+    // GraphQL will replace these variables in the query above
+    const variables = {
+      lineItems: [
+        {
+          variantId: payload.variantId,
+          quantity: payload.quantity,
+        },
+      ],
+      checkoutId: payload.checkoutId,
+    };
+
+    // Create an object that encapsulates both the query
+    // and the variables and then send the payload to Shopify
+    const graphPayload = {
+      query: graphquery,
+      variables,
+    };
+
+    ShopifyClient.query(
+      graphPayload,
+      (responseSuccess: {data: any}) => {
+        // Successfull call back
+        // Here we are getting all of the line items in the shopping cart with
+        // the specified checkoutID. So we need to normalise the line items data
+        // that comes back into the structure that the app is expecting and
+        // TODO: Add Error Checking, right now only dealing with positive response
+        console.info(responseSuccess);
+
+        const response = responseSuccess.data.data.checkoutLineItemsAdd.checkout;
+        // let normalizedCartData: CartData | undefined;
+        const normalizedLineItems:LineItem[] = [];
+
+        response.lineItems.edges.forEach((element: any) => {
+          const normalizedLineItem : LineItem = {
+            id: element.node.id,
+            variantId: element.node.variant.id,
+            quantity: element.node.quantity,
+          };
+          normalizedLineItems.push(normalizedLineItem);
+        });
+
+        const normalizedCartData = {
+          subtotalPrice: response.subtotalPrice,
+          totalTax: response.totalTax,
+          totalPrice: response.totalPrice,
+          lineItems: normalizedLineItems,
+        };
+        successCallback(normalizedCartData);
+      },
+      (responseError: any) => {
+        // Error handling
+        console.error('Error while trying to fetch cart: ', responseError);
+        errorCallback(responseError);
+      },
+    );
   }
 }

@@ -60,7 +60,7 @@ export default {
     const variantImage = computed(() => store.getters['products/variantImgSrcByVariantId'](props.item.variantId));
 
     function removeLineItem() {
-      store.dispatch('cart/removeLineItemFromCart', props.item.variantId);
+      store.dispatch('cart/removeLineItemFromCart', props.item.id);
     }
 
     function incrementLineItemQuantity() {

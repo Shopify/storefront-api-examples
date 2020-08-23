@@ -84,8 +84,27 @@ const actions: ActionTree<CartState, RootState> = {
     */
   },
 
-  removeLineItemFromCart({ state, commit }, variantId : string) {
-    commit('REMOVE_LINE_ITEM', variantId);
+  // Remove a line item from the vuex cart
+  // This will then trigger a mutation call to Shopify's
+  // checkout api
+  // Calling function should provide a Line Item ID that we want to remove
+  removeLineItemFromCart({ state, commit }, id: string) {
+    // TODO: Check input is valid
+    // Call the ShopifyClient object which removes the line item from the cart
+    ShopifyClient.removeCheckoutLineItem({
+      checkoutId: state.id,
+      lineItemId: id,
+    }, (returnPayload: any) => {
+      commit('SET_CART_PRICES', {
+        subtotalPrice: returnPayload.subtotalPrice,
+        totalTax: returnPayload.totalTax,
+        totalPrice: returnPayload.totalPrice,
+      });
+      commit('SET_LINE_ITEMS', returnPayload.lineItems);
+    }, () => {
+      // TO DO: Add error processing
+      console.info('Vuex Action Failed: removeLineItemFromCart');
+    });
   },
 
   // Update the quantity of a line item in the vuex cart

@@ -350,4 +350,95 @@ export default class ShopifyClient {
       },
     );
   }
+
+  // Update a line item from the Checkout Cart
+  // Get a checkoutId, lineItemId, variantId, new quantity
+  // and pass those on to the API
+  // https://shopify.dev/docs/storefront-api/reference/mutation/checkoutlineitemsupdate
+  static updateCheckoutLineItem(
+    payload : {
+      checkoutId: string,
+      lineItem: LineItem,
+    },
+    successCallback: any,
+    errorCallback: any,
+  ) {
+    // Create the graph query
+    const graphquery = `
+      mutation checkoutLineItemsUpdate($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
+        checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
+          checkout {
+            id
+            subtotalPrice
+            totalTax
+            totalPrice
+            lineItems(first: 250) {
+              edges {
+                node {
+                  id
+                  quantity
+                  variant {
+                    id
+                  }
+                }
+              }
+            }
+          }
+          checkoutUserErrors {
+            code
+            field
+            message
+          }
+        }
+      }
+    `;
+
+    // Setup the variables for the graph mutation
+    // GraphQL will replace these variables in the query above
+    const variables = {
+      checkoutId: payload.checkoutId,
+      lineItems: [
+        payload.lineItem,
+      ],
+    };
+
+    // Create an object that encapsulates both the query
+    // and the variables and then send the payload to Shopify
+    const graphPayload = {
+      query: graphquery,
+      variables,
+    };
+
+    ShopifyClient.query(
+      graphPayload,
+      (responseSuccess: {data: any}) => {
+        console.info(responseSuccess);
+
+        const response = responseSuccess.data.data.checkoutLineItemsUpdate.checkout;
+        const normalizedLineItems:LineItem[] = [];
+
+        response.lineItems.edges.forEach((element: any) => {
+          const normalizedLineItem : LineItem = {
+            id: element.node.id,
+            variantId: element.node.variant.id,
+            quantity: element.node.quantity,
+          };
+          normalizedLineItems.push(normalizedLineItem);
+        });
+
+        const normalizedCartData = {
+          subtotalPrice: response.subtotalPrice,
+          totalTax: response.totalTax,
+          totalPrice: response.totalPrice,
+          lineItems: normalizedLineItems,
+        };
+        successCallback(normalizedCartData);
+      },
+      (responseError: any) => {
+        // Error handling
+        console.error('Error while trying to updates checkout line item: ', responseError);
+        errorCallback(responseError);
+      },
+    );
+  }
 }

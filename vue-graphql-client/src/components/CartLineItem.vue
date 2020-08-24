@@ -66,6 +66,7 @@ export default {
     function incrementLineItemQuantity() {
       // Tell the store to increment the quantity for this line item
       store.dispatch('cart/updateLineItemQuantityInCart', {
+        id: props.item.id,
         variantId: props.item.variantId,
         quantityChange: 1,
       });
@@ -74,6 +75,7 @@ export default {
     function decrementLineItemQuantity() {
       // Tell the store to decrement the quantity for this line item
       store.dispatch('cart/updateLineItemQuantityInCart', {
+        id: props.item.id,
         variantId: props.item.variantId,
         quantityChange: -1,
       });

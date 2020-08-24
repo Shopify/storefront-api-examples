@@ -112,16 +112,29 @@ const actions: ActionTree<CartState, RootState> = {
   // checkout api
   // Calling function should provide a variant ID and the quantity to add
   // or remove
-  updateLineItemQuantityInCart({ state, commit },
-    payload: { variantId: string, quantityChange: number }) {
-    const foundIndex = state.items.findIndex((item) => item.variantId === payload.variantId);
+  updateLineItemQuantityInCart({ state, commit, dispatch },
+    payload: { id: string, variantId: string, quantityChange: number }) {
+    const foundIndex = state.items.findIndex((item) => item.id === payload.id);
+
     if (foundIndex !== -1) {
-      // Check that the quantity when adjusted doesn't go to zero (or negative)
-      if ((state.items[foundIndex].quantity + payload.quantityChange) <= 0) {
-        commit('REMOVE_LINE_ITEM', payload.variantId);
-      } else {
-        commit('UPDATE_LINE_ITEM_QUANTITY', payload);
-      }
+      ShopifyClient.updateCheckoutLineItem({
+        checkoutId: state.id,
+        lineItem: {
+          id: payload.id,
+          variantId: payload.variantId,
+          quantity: state.items[foundIndex].quantity + payload.quantityChange,
+        },
+      }, (returnPayload: any) => {
+        commit('SET_CART_PRICES', {
+          subtotalPrice: returnPayload.subtotalPrice,
+          totalTax: returnPayload.totalTax,
+          totalPrice: returnPayload.totalPrice,
+        });
+        commit('SET_LINE_ITEMS', returnPayload.lineItems);
+      }, () => {
+        // TO DO: Add error processing
+        console.info('Vuex Action Failed: updateLineItemQuantityInCart');
+      });
     }
   },
 

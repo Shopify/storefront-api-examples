@@ -59,7 +59,7 @@ export default {
     const store = useStore();
 
     // Tell the store to get all of the products
-    store.dispatch('cart/fetchCart');
+    store.dispatch('cart/initialiseCart');
 
     // Get the needed cart info from the vuex store as reactive references
     const cartVisibility = computed(() => store.getters['cart/cartVisibility']);

@@ -2,6 +2,7 @@ import { ActionTree, MutationTree } from 'vuex';
 import { RootState } from '../index.type';
 import { CartState, LineItem } from './cart.types';
 import ShopifyClient from '../../services/shopifyClient';
+import isLocalStorageAvailable from '../../services/localStorageCheck';
 
 // getters
 const getters = {
@@ -112,7 +113,7 @@ const actions: ActionTree<CartState, RootState> = {
   // checkout api
   // Calling function should provide a variant ID and the quantity to add
   // or remove
-  updateLineItemQuantityInCart({ state, commit, dispatch },
+  updateLineItemQuantityInCart({ state, commit },
     payload: { id: string, variantId: string, quantityChange: number }) {
     const foundIndex = state.items.findIndex((item) => item.id === payload.id);
 
@@ -139,8 +140,8 @@ const actions: ActionTree<CartState, RootState> = {
   },
 
   // Get the cart object from the Shopify API
-  // TODO: Check the session storage to see if a cart object exists
-  fetchCart({ commit }) {
+  // https://github.com/Shopify/storefront-api-examples/issues/30
+  createNewCart({ commit }) {
     // Get the cart id and other cart info from the ShopifyClient Service
     // and the commit the data to the Cart Store
     ShopifyClient.createCheckout((payload: any) => {
@@ -151,10 +152,51 @@ const actions: ActionTree<CartState, RootState> = {
         totalTax: payload.totalTax,
         totalPrice: payload.totalPrice,
       });
+      // Set the local storage cart it
+      if (isLocalStorageAvailable()) {
+        window.localStorage.setItem('shopify_checkout_id', payload.id);
+      }
     }, () => {
       // TO DO: Add error processing
       console.log('ERROR');
     });
+  },
+
+  // Get the cart object from the Shopify API
+  // https://github.com/Shopify/storefront-api-examples/issues/30
+  fetchExistingCart({ commit }, checkoutId: string) {
+    console.log('Fetching cart', checkoutId);
+    ShopifyClient.fetchExistingCart({ checkoutId }, (returnPayload: any) => {
+      commit('SET_CART_CHECKOUT_ID', returnPayload.id);
+      commit('SET_CART_WEB_URL', returnPayload.webUrl);
+      commit('SET_CART_PRICES', {
+        subtotalPrice: returnPayload.subtotalPrice,
+        totalTax: returnPayload.totalTax,
+        totalPrice: returnPayload.totalPrice,
+      });
+      commit('SET_LINE_ITEMS', returnPayload.lineItems);
+    }, () => {
+      console.log('ERROR Fetching Cart');
+    });
+  },
+
+  // Initialise the cart in vuex by first checking to see if a cart id
+  // is in the localstorage. If it is, try to fetch the cart. If both
+  // don't succeed then create a new cart
+  initialiseCart({ dispatch }) {
+    let checkoutId : string | null = null;
+
+    // Check the local storage to see if a cart object exists
+    if (isLocalStorageAvailable()) {
+      checkoutId = window.localStorage.getItem('shopify_checkout_id');
+    }
+
+    // If CheckoutId exists then try to fetch the cart otherwise create a new cart
+    if (checkoutId === null || checkoutId === '') {
+      dispatch('createNewCart');
+    } else {
+      dispatch('fetchExistingCart', checkoutId);
+    }
   },
 
 };

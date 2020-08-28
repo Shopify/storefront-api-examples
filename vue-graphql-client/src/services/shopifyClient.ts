@@ -168,6 +168,86 @@ export default class ShopifyClient {
 
   // Get the cart data
   // If there is an ID than use it, other get a new cart from Shopify
+  static fetchExistingCart(
+    payload : {
+      checkoutId: string,
+    },
+    successCallback: any,
+    errorCallback: any,
+  ) {
+    console.log('FETCH EXISTING CART: Checkout Id', payload.checkoutId);
+    const graphquery = `
+      query ($checkoutId: ID!) {
+        node(id: $checkoutId) {
+          ... on Checkout {
+            id
+            webUrl
+            subtotalPrice
+            totalTax
+            totalPrice
+            lineItems(first: 250) {
+              edges {
+                node {
+                  id
+                  quantity
+                  variant {
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    // Setup the variables for the graph mutation
+    // GraphQL will replace these variables in the query above
+    const variables = {
+      checkoutId: payload.checkoutId,
+    };
+
+    // Create an object that encapsulates both the query
+    // and the variables and then send the payload to Shopify
+    const graphPayload = {
+      query: graphquery,
+      variables,
+    };
+
+    ShopifyClient.query(graphPayload, (responseSuccess: {data: any}) => {
+      // Successfull call back
+      console.info(responseSuccess.data);
+      const response = responseSuccess.data.data.node;
+
+      const normalizedLineItems:LineItem[] = [];
+
+      response.lineItems.edges.forEach((element: any) => {
+        const normalizedLineItem : LineItem = {
+          id: element.node.id,
+          variantId: element.node.variant.id,
+          quantity: element.node.quantity,
+        };
+        normalizedLineItems.push(normalizedLineItem);
+      });
+
+      const normalizedCartData = {
+        id: response.id,
+        webUrl: response.webUrl,
+        subtotalPrice: response.subtotalPrice,
+        totalTax: response.totalTax,
+        totalPrice: response.totalPrice,
+        lineItems: normalizedLineItems,
+      };
+      successCallback(normalizedCartData);
+    }, (responseError: any) => {
+      // Error handling
+      console.error('Error while trying to fetch cart: ', responseError);
+      errorCallback(responseError);
+    });
+  }
+
+  // Get the cart data
+  // If there is an ID than use it, other get a new cart from Shopify
   static addVariantToCart(
     payload : {
       checkoutId: string,

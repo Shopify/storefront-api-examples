@@ -2,41 +2,36 @@
   <div
     class="Product"
     v-if="product">
-      <img :src="product.images[0].src" alt="" />
-      <h5 class="Product__title">{{ product.title }}</h5>
-      <span className="Product__price">{{ productVariantPrice }}</span>
-      <!--
-      <p>{{ product.id }}</p>
-      <p>{{ product.description }}</p>
-      -->
-      <select
-        className="Product__option"
-        v-model="variantSelected"
-        v-on:change="handleVariantSelected">
-        <option
-          v-for="variant in product.variants"
-          v-bind:key="variant.id"
-          v-bind:value="variant.id">
-          {{ variant.title }}
-        </option>
-      </select>
-      <label className="Product__option">
-        Quantity
-        <input
-          min="1"
-          v-model="productQuantity"
-          v-on:change="handleProductQuantityChanged"
-          type="number" />
-      </label>
-      <button
-        v-bind:disabled="formError"
-        v-on:click="handleAddVariantToCart"
-        className="Product__buy button">Add to Cart</button>
+    <img :src="productImage" alt="" />
+    <h5 class="Product__title">{{ product.title }}</h5>
+    <span className="Product__price">{{ productVariantPrice }}</span>
+    <select
+      className="Product__option"
+      v-model="orderVariantId">
+      <option
+        v-for="variant in product.variants"
+        v-bind:key="variant.id"
+        v-bind:value="variant.id">
+        {{ variant.title }}
+      </option>
+    </select>
+    <label className="Product__option">
+      Quantity
+      <input
+        min="1"
+        v-model="orderQuantity"
+        v-on:change="handleProductQuantityChanged"
+        type="number" />
+    </label>
+    <button
+      v-bind:disabled="hasError"
+      v-on:click="handleAddVariantToCart"
+      className="Product__buy button">Add to Cart</button>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { LineItem } from '@/store/modules/cart.types';
 import { Product, ProductVariant } from '@/store/modules/products.types';
@@ -44,80 +39,68 @@ import { Product, ProductVariant } from '@/store/modules/products.types';
 export default ({
 
   props: {
-    id: String,
+    productKey: {
+      type: String,
+      required: true,
+    },
   },
 
   setup(props : any) {
+    const DEFAULT_ORDER_QUANTITY = 1;
+
     const store = useStore();
+    const product = computed(() => store.getters['products/productById'](props.productKey));
+    const hasError = ref(false);
+    const orderQuantity = ref(DEFAULT_ORDER_QUANTITY);
+    const orderVariantId = ref('');
 
-    // Set the order quantity to a default of 1
-    const formError = ref(false);
-
-    const product = computed(() => store.getters['products/productById'](props.id));
-
-    // find the set the first available variant
-    // TODO: if no variants available degrade gracefully
-    const variantSelected = ref(product.value.variants[0].id);
-
-    // Set the order quantity to a default of 1
-    const productQuantity = ref(1);
-
-    // Figure out the product image
-    // Either it will be the main image
-    // or if a variant is selected then its
-    // the variant image if there is one
-    // TO DO
     const productImage = computed(() => {
       const productImageSrc = product.value.images[0];
-      if (variantSelected.value !== '') {
-        console.log('nope');
+      let variantImageSrc = null;
+      if (orderVariantId.value !== '') {
+        variantImageSrc = product.value.variants
+          .find((item : ProductVariant) => item.id === orderVariantId.value).imageSrc;
       }
-      return productImageSrc;
+      return variantImageSrc || productImageSrc;
     });
 
     const productVariantPrice = computed(() => {
       let price = '';
-      if (variantSelected.value !== '' || variantSelected.value !== undefined) {
-        console.log('Calculating Variant Price');
+      if (orderVariantId.value !== '') {
         const index = product.value.variants.findIndex(
-          (element: ProductVariant) => element.id === variantSelected.value,
+          (element: ProductVariant) => element.id === orderVariantId.value,
         );
-        // Convert the string to a currency display
         price = `$${parseFloat(product.value.variants[index].price).toFixed(2)}`;
       }
       return price;
     });
 
-    // Handle the user selecting a product variant
-    function handleVariantSelected() {
-      console.log('Variant Selected ID: ', variantSelected.value);
-    }
+    watch(product, () => {
+      if (product.value.variants) {
+        orderVariantId.value = product.value.variants
+          .find((item : ProductVariant) => item !== undefined).id;
+      }
+    }, { immediate: true });
 
-    // Check to make sure the quantity requested is a valid number
     function handleProductQuantityChanged() {
-      formError.value = productQuantity.value.toString() === '';
+      hasError.value = orderQuantity.value.toString() === '';
     }
 
-    // Add variant to cart
     function handleAddVariantToCart() {
-      // Create a payload object
-      // with the variantId and the quantity amount
       const payload = {
-        variantId: variantSelected.value,
-        quantity: productQuantity.value,
+        variantId: orderVariantId.value,
+        quantity: orderQuantity.value,
       };
-
-      // Vuex store Add Product Variant to Cart function
       store.dispatch('cart/addLineItemToCart', payload);
     }
 
     return {
-      formError,
       product,
-      productQuantity,
+      hasError,
+      orderQuantity,
+      orderVariantId,
+      productImage,
       productVariantPrice,
-      variantSelected,
-      handleVariantSelected,
       handleAddVariantToCart,
       handleProductQuantityChanged,
     };

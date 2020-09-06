@@ -1,14 +1,15 @@
 <template>
   <div>
     <main>
-      <h1 class="sr-only">Product List</h1>
+      <h3 class="sr-only">Product List</h3>
+      <div class="Product-wrapper">
+        <product-list-card
+          v-for="productKey in productsKeys"
+          v-bind:key="productKey"
+          v-bind:productKey="productKey"
+          />
+      </div>
     </main>
-    <div class="Product-wrapper">
-      <product-list-card
-        v-for="key in productsKeys"
-        v-bind:key="key"
-        :id="key" />
-    </div>
   </div>
 </template>
 
@@ -23,18 +24,11 @@ export default ({
   setup() {
     const store = useStore();
 
-    const products = computed(() => store.getters['products/productsAll']);
-
     const productsKeys = computed(() => store.getters['products/productsKeys']);
 
-    const productsCount = computed(() => store.getters['products/productsCount']);
-
-    // Tell the store to get all of the products
     store.dispatch('products/fetchAllProducts');
 
     return {
-      products,
-      productsCount,
       productsKeys,
     };
   },
@@ -45,6 +39,3 @@ export default ({
 
 });
 </script>
-
-<style>
-</style>

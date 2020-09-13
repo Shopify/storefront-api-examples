@@ -79,8 +79,8 @@ One problem with this setup is that the `ShopifyClient` is tightly coupled to ho
 
 ### Known Issues
 
-* If products fail to load from the api, and a persons cart has products in it, since the cart pulls data from the products store, as that store is empty the cart doesn't display properly
-* Error handling needs to be added 
+* If products fail to load from the api, and a users' cart has products in it, since the cart pulls data from the products store, as that store is empty the cart doesn't display properly - perhaps the cart should pull data by itself and not rely on the products data store
+* Error handling needs to be added
 * Product and Cart empty states need to be added to the UI
 * Types could be centralised into one types file and not scattered over the project
 

@@ -40,7 +40,7 @@ export default class ShopifyClient {
   static getAllProducts(successCallback: any, errorCallback: any) {
     const graphquery = `
       query {
-        products(first: 3) {
+        products(first:20) {
           edges {
             node {
               id

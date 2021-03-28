@@ -8,8 +8,5 @@
     "comma-dangle": ["error", "never"],
     "promise/always-return": 0
   },
-  "extends": [
-    "plugin:shopify/esnext",
-    "plugin:shopify/mocha"
-  ]
+  "extends": "plugin:@shopify/esnext"
 }

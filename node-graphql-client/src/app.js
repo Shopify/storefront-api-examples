@@ -1,8 +1,11 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import path from 'path';
-import client from './graphql-js-client';
+/* eslint-disable import/order */
 import {gql} from 'babel-plugin-graphql-js-client-transform';
+
+const express = require('express');
+
+const path = require('path');
+
+const client = require('./graphql-js-client').default;
 
 const app = express();
 
@@ -67,7 +70,7 @@ app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, '../../shared')));
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
   const checkoutId = req.query.checkoutId;
@@ -165,6 +168,7 @@ app.post('/add_line_item/:id', (req, res) => {
       lineItems: [{variantId: selectedVariant.id, quantity}]
     };
 
+    // eslint-disable-next-line promise/no-nesting
     return client.send(gql(client)`
       mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
         checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {

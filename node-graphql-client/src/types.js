@@ -1,3 +1,183 @@
+const ApiVersion = {
+  "name": "ApiVersion",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "displayName": "String",
+    "handle": "String",
+    "supported": "Boolean"
+  },
+  "implementsNode": false
+};
+
+const AppliedGiftCard = {
+  "name": "AppliedGiftCard",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "amountUsed": "Money",
+    "amountUsedV2": "MoneyV2",
+    "balance": "Money",
+    "balanceV2": "MoneyV2",
+    "id": "ID",
+    "lastCharacters": "String",
+    "presentmentAmountUsed": "MoneyV2"
+  },
+  "implementsNode": true
+};
+
+const Article = {
+  "name": "Article",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "author": "ArticleAuthor",
+    "authorV2": "ArticleAuthor",
+    "blog": "Blog",
+    "comments": "CommentConnection",
+    "content": "String",
+    "contentHtml": "HTML",
+    "excerpt": "String",
+    "excerptHtml": "HTML",
+    "handle": "String",
+    "id": "ID",
+    "image": "Image",
+    "publishedAt": "DateTime",
+    "seo": "SEO",
+    "tags": "String",
+    "title": "String",
+    "url": "URL"
+  },
+  "implementsNode": true
+};
+
+const ArticleAuthor = {
+  "name": "ArticleAuthor",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "bio": "String",
+    "email": "String",
+    "firstName": "String",
+    "lastName": "String",
+    "name": "String"
+  },
+  "implementsNode": false
+};
+
+const ArticleConnection = {
+  "name": "ArticleConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "ArticleEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const ArticleEdge = {
+  "name": "ArticleEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "Article"
+  },
+  "implementsNode": false
+};
+
+const ArticleSortKeys = {
+  "name": "ArticleSortKeys",
+  "kind": "ENUM"
+};
+
+const Attribute = {
+  "name": "Attribute",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "key": "String",
+    "value": "String"
+  },
+  "implementsNode": false
+};
+
+const AttributeInput = {
+  "name": "AttributeInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "key": "String",
+    "value": "String"
+  }
+};
+
+const AutomaticDiscountApplication = {
+  "name": "AutomaticDiscountApplication",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "allocationMethod": "DiscountApplicationAllocationMethod",
+    "targetSelection": "DiscountApplicationTargetSelection",
+    "targetType": "DiscountApplicationTargetType",
+    "title": "String",
+    "value": "PricingValue"
+  },
+  "implementsNode": false
+};
+
+const AvailableShippingRates = {
+  "name": "AvailableShippingRates",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "ready": "Boolean",
+    "shippingRates": "ShippingRate"
+  },
+  "implementsNode": false
+};
+
+const Blog = {
+  "name": "Blog",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "articleByHandle": "Article",
+    "articles": "ArticleConnection",
+    "authors": "ArticleAuthor",
+    "handle": "String",
+    "id": "ID",
+    "title": "String",
+    "url": "URL"
+  },
+  "implementsNode": true
+};
+
+const BlogConnection = {
+  "name": "BlogConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "BlogEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const BlogEdge = {
+  "name": "BlogEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "Blog"
+  },
+  "implementsNode": false
+};
+
+const BlogSortKeys = {
+  "name": "BlogSortKeys",
+  "kind": "ENUM"
+};
+
+const Boolean = {
+  "name": "Boolean",
+  "kind": "SCALAR"
+};
+
+const CardBrand = {
+  "name": "CardBrand",
+  "kind": "ENUM"
+};
+
 const Checkout = {
   "name": "Checkout",
   "kind": "OBJECT",
@@ -9,741 +189,34 @@ const Checkout = {
     "currencyCode": "CurrencyCode",
     "customAttributes": "Attribute",
     "customer": "Customer",
+    "discountApplications": "DiscountApplicationConnection",
     "email": "String",
     "id": "ID",
     "lineItems": "CheckoutLineItemConnection",
+    "lineItemsSubtotalPrice": "MoneyV2",
     "note": "String",
     "order": "Order",
     "orderStatusUrl": "URL",
     "paymentDue": "Money",
+    "paymentDueV2": "MoneyV2",
     "ready": "Boolean",
     "requiresShipping": "Boolean",
     "shippingAddress": "MailingAddress",
+    "shippingDiscountAllocations": "DiscountAllocation",
     "shippingLine": "ShippingRate",
     "subtotalPrice": "Money",
+    "subtotalPriceV2": "MoneyV2",
     "taxExempt": "Boolean",
     "taxesIncluded": "Boolean",
     "totalPrice": "Money",
+    "totalPriceV2": "MoneyV2",
     "totalTax": "Money",
+    "totalTaxV2": "MoneyV2",
     "updatedAt": "DateTime",
     "webUrl": "URL"
   },
   "implementsNode": true
 };
-Object.freeze(Checkout.fieldBaseTypes);
-var Checkout$1 = Object.freeze(Checkout);
-
-const ID = {
-  "name": "ID",
-  "kind": "SCALAR"
-};
-var ID$1 = Object.freeze(ID);
-
-const Boolean = {
-  "name": "Boolean",
-  "kind": "SCALAR"
-};
-var Boolean$1 = Object.freeze(Boolean);
-
-const CheckoutLineItemConnection = {
-  "name": "CheckoutLineItemConnection",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "edges": "CheckoutLineItemEdge",
-    "pageInfo": "PageInfo"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutLineItemConnection.fieldBaseTypes);
-var CheckoutLineItemConnection$1 = Object.freeze(CheckoutLineItemConnection);
-
-const PageInfo = {
-  "name": "PageInfo",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "hasNextPage": "Boolean",
-    "hasPreviousPage": "Boolean"
-  },
-  "implementsNode": false
-};
-Object.freeze(PageInfo.fieldBaseTypes);
-var PageInfo$1 = Object.freeze(PageInfo);
-
-const CheckoutLineItemEdge = {
-  "name": "CheckoutLineItemEdge",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "cursor": "String",
-    "node": "CheckoutLineItem"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutLineItemEdge.fieldBaseTypes);
-var CheckoutLineItemEdge$1 = Object.freeze(CheckoutLineItemEdge);
-
-const String = {
-  "name": "String",
-  "kind": "SCALAR"
-};
-var String$1 = Object.freeze(String);
-
-const CheckoutLineItem = {
-  "name": "CheckoutLineItem",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customAttributes": "Attribute",
-    "id": "ID",
-    "quantity": "Int",
-    "title": "String",
-    "variant": "ProductVariant"
-  },
-  "implementsNode": true
-};
-Object.freeze(CheckoutLineItem.fieldBaseTypes);
-var CheckoutLineItem$1 = Object.freeze(CheckoutLineItem);
-
-const ProductVariant = {
-  "name": "ProductVariant",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "available": "Boolean",
-    "id": "ID",
-    "image": "Image",
-    "price": "Money",
-    "product": "Product",
-    "selectedOptions": "SelectedOption",
-    "title": "String",
-    "weight": "Float",
-    "weightUnit": "WeightUnit"
-  },
-  "implementsNode": true
-};
-Object.freeze(ProductVariant.fieldBaseTypes);
-var ProductVariant$1 = Object.freeze(ProductVariant);
-
-const Float = {
-  "name": "Float",
-  "kind": "SCALAR"
-};
-var Float$1 = Object.freeze(Float);
-
-const WeightUnit = {
-  "name": "WeightUnit",
-  "kind": "ENUM"
-};
-var WeightUnit$1 = Object.freeze(WeightUnit);
-
-const Money = {
-  "name": "Money",
-  "kind": "SCALAR"
-};
-var Money$1 = Object.freeze(Money);
-
-const Image = {
-  "name": "Image",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "altText": "String",
-    "id": "ID",
-    "src": "URL"
-  },
-  "implementsNode": false
-};
-Object.freeze(Image.fieldBaseTypes);
-var Image$1 = Object.freeze(Image);
-
-const URL = {
-  "name": "URL",
-  "kind": "SCALAR"
-};
-var URL$1 = Object.freeze(URL);
-
-const Int = {
-  "name": "Int",
-  "kind": "SCALAR"
-};
-var Int$1 = Object.freeze(Int);
-
-const CropRegion = {
-  "name": "CropRegion",
-  "kind": "ENUM"
-};
-var CropRegion$1 = Object.freeze(CropRegion);
-
-const SelectedOption = {
-  "name": "SelectedOption",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "name": "String",
-    "value": "String"
-  },
-  "implementsNode": false
-};
-Object.freeze(SelectedOption.fieldBaseTypes);
-var SelectedOption$1 = Object.freeze(SelectedOption);
-
-const Product = {
-  "name": "Product",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "collections": "CollectionConnection",
-    "createdAt": "DateTime",
-    "description": "String",
-    "descriptionHtml": "HTML",
-    "descriptionPlainSummary": "String",
-    "handle": "String",
-    "id": "ID",
-    "images": "ImageConnection",
-    "options": "ProductOption",
-    "productType": "String",
-    "publishedAt": "DateTime",
-    "tags": "String",
-    "title": "String",
-    "updatedAt": "DateTime",
-    "variants": "ProductVariantConnection",
-    "vendor": "String"
-  },
-  "implementsNode": true
-};
-Object.freeze(Product.fieldBaseTypes);
-var Product$1 = Object.freeze(Product);
-
-const CollectionConnection = {
-  "name": "CollectionConnection",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "edges": "CollectionEdge",
-    "pageInfo": "PageInfo"
-  },
-  "implementsNode": false
-};
-Object.freeze(CollectionConnection.fieldBaseTypes);
-var CollectionConnection$1 = Object.freeze(CollectionConnection);
-
-const CollectionEdge = {
-  "name": "CollectionEdge",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "cursor": "String",
-    "node": "Collection"
-  },
-  "implementsNode": false
-};
-Object.freeze(CollectionEdge.fieldBaseTypes);
-var CollectionEdge$1 = Object.freeze(CollectionEdge);
-
-const Collection = {
-  "name": "Collection",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "description": "String",
-    "descriptionHtml": "HTML",
-    "descriptionPlainSummary": "String",
-    "handle": "String",
-    "id": "ID",
-    "image": "Image",
-    "products": "ProductConnection",
-    "title": "String",
-    "updatedAt": "DateTime"
-  },
-  "implementsNode": true
-};
-Object.freeze(Collection.fieldBaseTypes);
-var Collection$1 = Object.freeze(Collection);
-
-const HTML = {
-  "name": "HTML",
-  "kind": "SCALAR"
-};
-var HTML$1 = Object.freeze(HTML);
-
-const DateTime = {
-  "name": "DateTime",
-  "kind": "SCALAR"
-};
-var DateTime$1 = Object.freeze(DateTime);
-
-const ProductConnection = {
-  "name": "ProductConnection",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "edges": "ProductEdge",
-    "pageInfo": "PageInfo"
-  },
-  "implementsNode": false
-};
-Object.freeze(ProductConnection.fieldBaseTypes);
-var ProductConnection$1 = Object.freeze(ProductConnection);
-
-const ProductEdge = {
-  "name": "ProductEdge",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "cursor": "String",
-    "node": "Product"
-  },
-  "implementsNode": false
-};
-Object.freeze(ProductEdge.fieldBaseTypes);
-var ProductEdge$1 = Object.freeze(ProductEdge);
-
-const Node = {
-  "name": "Node",
-  "kind": "INTERFACE",
-  "fieldBaseTypes": {
-    "id": "ID"
-  },
-  "possibleTypes": ["AppliedGiftCard", "Checkout", "CheckoutLineItem", "Collection", "MailingAddress", "Order", "Payment", "Product", "ProductOption", "ProductVariant", "ShopPolicy"]
-};
-Object.freeze(Node.fieldBaseTypes);
-Object.freeze(Node.possibleTypes);
-var Node$1 = Object.freeze(Node);
-
-const ImageConnection = {
-  "name": "ImageConnection",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "edges": "ImageEdge",
-    "pageInfo": "PageInfo"
-  },
-  "implementsNode": false
-};
-Object.freeze(ImageConnection.fieldBaseTypes);
-var ImageConnection$1 = Object.freeze(ImageConnection);
-
-const ImageEdge = {
-  "name": "ImageEdge",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "cursor": "String",
-    "node": "Image"
-  },
-  "implementsNode": false
-};
-Object.freeze(ImageEdge.fieldBaseTypes);
-var ImageEdge$1 = Object.freeze(ImageEdge);
-
-const ProductOption = {
-  "name": "ProductOption",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "id": "ID",
-    "name": "String",
-    "values": "String"
-  },
-  "implementsNode": true
-};
-Object.freeze(ProductOption.fieldBaseTypes);
-var ProductOption$1 = Object.freeze(ProductOption);
-
-const ProductVariantConnection = {
-  "name": "ProductVariantConnection",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "edges": "ProductVariantEdge",
-    "pageInfo": "PageInfo"
-  },
-  "implementsNode": false
-};
-Object.freeze(ProductVariantConnection.fieldBaseTypes);
-var ProductVariantConnection$1 = Object.freeze(ProductVariantConnection);
-
-const ProductVariantEdge = {
-  "name": "ProductVariantEdge",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "cursor": "String",
-    "node": "ProductVariant"
-  },
-  "implementsNode": false
-};
-Object.freeze(ProductVariantEdge.fieldBaseTypes);
-var ProductVariantEdge$1 = Object.freeze(ProductVariantEdge);
-
-const Attribute = {
-  "name": "Attribute",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "key": "String",
-    "value": "String"
-  },
-  "implementsNode": false
-};
-Object.freeze(Attribute.fieldBaseTypes);
-var Attribute$1 = Object.freeze(Attribute);
-
-const MailingAddress = {
-  "name": "MailingAddress",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "address1": "String",
-    "address2": "String",
-    "city": "String",
-    "company": "String",
-    "country": "String",
-    "countryCode": "String",
-    "firstName": "String",
-    "formatted": "String",
-    "id": "ID",
-    "lastName": "String",
-    "latitude": "Float",
-    "longitude": "Float",
-    "name": "String",
-    "phone": "String",
-    "province": "String",
-    "provinceCode": "String",
-    "zip": "String"
-  },
-  "implementsNode": true
-};
-Object.freeze(MailingAddress.fieldBaseTypes);
-var MailingAddress$1 = Object.freeze(MailingAddress);
-
-const ShippingRate = {
-  "name": "ShippingRate",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "handle": "String",
-    "price": "Money",
-    "title": "String"
-  },
-  "implementsNode": false
-};
-Object.freeze(ShippingRate.fieldBaseTypes);
-var ShippingRate$1 = Object.freeze(ShippingRate);
-
-const AvailableShippingRates = {
-  "name": "AvailableShippingRates",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "ready": "Boolean",
-    "shippingRates": "ShippingRate"
-  },
-  "implementsNode": false
-};
-Object.freeze(AvailableShippingRates.fieldBaseTypes);
-var AvailableShippingRates$1 = Object.freeze(AvailableShippingRates);
-
-const Customer = {
-  "name": "Customer",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "acceptsMarketing": "Boolean",
-    "addresses": "MailingAddressConnection",
-    "createdAt": "DateTime",
-    "defaultAddress": "MailingAddress",
-    "displayName": "String",
-    "email": "String",
-    "firstName": "String",
-    "id": "ID",
-    "lastName": "String",
-    "orders": "OrderConnection",
-    "phone": "String",
-    "updatedAt": "DateTime"
-  },
-  "implementsNode": false
-};
-Object.freeze(Customer.fieldBaseTypes);
-var Customer$1 = Object.freeze(Customer);
-
-const MailingAddressConnection = {
-  "name": "MailingAddressConnection",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "edges": "MailingAddressEdge",
-    "pageInfo": "PageInfo"
-  },
-  "implementsNode": false
-};
-Object.freeze(MailingAddressConnection.fieldBaseTypes);
-var MailingAddressConnection$1 = Object.freeze(MailingAddressConnection);
-
-const MailingAddressEdge = {
-  "name": "MailingAddressEdge",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "cursor": "String",
-    "node": "MailingAddress"
-  },
-  "implementsNode": false
-};
-Object.freeze(MailingAddressEdge.fieldBaseTypes);
-var MailingAddressEdge$1 = Object.freeze(MailingAddressEdge);
-
-const OrderConnection = {
-  "name": "OrderConnection",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "edges": "OrderEdge",
-    "pageInfo": "PageInfo"
-  },
-  "implementsNode": false
-};
-Object.freeze(OrderConnection.fieldBaseTypes);
-var OrderConnection$1 = Object.freeze(OrderConnection);
-
-const OrderEdge = {
-  "name": "OrderEdge",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "cursor": "String",
-    "node": "Order"
-  },
-  "implementsNode": false
-};
-Object.freeze(OrderEdge.fieldBaseTypes);
-var OrderEdge$1 = Object.freeze(OrderEdge);
-
-const Order = {
-  "name": "Order",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "cancelReason": "OrderCancelReason",
-    "cancelledAt": "DateTime",
-    "createdAt": "DateTime",
-    "currencyCode": "CurrencyCode",
-    "customerUrl": "URL",
-    "displayFinancialStatus": "OrderDisplayFinancialStatus",
-    "displayFulfillmentStatus": "OrderDisplayFulfillmentStatus",
-    "id": "ID",
-    "lineItems": "OrderLineItemConnection",
-    "orderNumber": "Int",
-    "processedAt": "DateTime",
-    "shippingAddress": "MailingAddress",
-    "subtotalPrice": "Money",
-    "totalPrice": "Money",
-    "totalRefunded": "Money",
-    "totalShippingPrice": "Money",
-    "totalTax": "Money",
-    "updatedAt": "DateTime"
-  },
-  "implementsNode": true
-};
-Object.freeze(Order.fieldBaseTypes);
-var Order$1 = Object.freeze(Order);
-
-const OrderCancelReason = {
-  "name": "OrderCancelReason",
-  "kind": "ENUM"
-};
-var OrderCancelReason$1 = Object.freeze(OrderCancelReason);
-
-const CurrencyCode = {
-  "name": "CurrencyCode",
-  "kind": "ENUM"
-};
-var CurrencyCode$1 = Object.freeze(CurrencyCode);
-
-const OrderDisplayFulfillmentStatus = {
-  "name": "OrderDisplayFulfillmentStatus",
-  "kind": "ENUM"
-};
-var OrderDisplayFulfillmentStatus$1 = Object.freeze(OrderDisplayFulfillmentStatus);
-
-const OrderDisplayFinancialStatus = {
-  "name": "OrderDisplayFinancialStatus",
-  "kind": "ENUM"
-};
-var OrderDisplayFinancialStatus$1 = Object.freeze(OrderDisplayFinancialStatus);
-
-const OrderLineItemConnection = {
-  "name": "OrderLineItemConnection",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "edges": "OrderLineItemEdge",
-    "pageInfo": "PageInfo"
-  },
-  "implementsNode": false
-};
-Object.freeze(OrderLineItemConnection.fieldBaseTypes);
-var OrderLineItemConnection$1 = Object.freeze(OrderLineItemConnection);
-
-const OrderLineItemEdge = {
-  "name": "OrderLineItemEdge",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "cursor": "String",
-    "node": "OrderLineItem"
-  },
-  "implementsNode": false
-};
-Object.freeze(OrderLineItemEdge.fieldBaseTypes);
-var OrderLineItemEdge$1 = Object.freeze(OrderLineItemEdge);
-
-const OrderLineItem = {
-  "name": "OrderLineItem",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customAttributes": "Attribute",
-    "quantity": "Int",
-    "title": "String",
-    "variant": "ProductVariant"
-  },
-  "implementsNode": false
-};
-Object.freeze(OrderLineItem.fieldBaseTypes);
-var OrderLineItem$1 = Object.freeze(OrderLineItem);
-
-const OrderSortKeys = {
-  "name": "OrderSortKeys",
-  "kind": "ENUM"
-};
-var OrderSortKeys$1 = Object.freeze(OrderSortKeys);
-
-const AppliedGiftCard = {
-  "name": "AppliedGiftCard",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "amountUsed": "Money",
-    "balance": "Money",
-    "id": "ID",
-    "lastCharacters": "String"
-  },
-  "implementsNode": true
-};
-Object.freeze(AppliedGiftCard.fieldBaseTypes);
-var AppliedGiftCard$1 = Object.freeze(AppliedGiftCard);
-
-const QueryRoot = {
-  "name": "QueryRoot",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customer": "Customer",
-    "node": "Node",
-    "shop": "Shop"
-  },
-  "implementsNode": false
-};
-Object.freeze(QueryRoot.fieldBaseTypes);
-var QueryRoot$1 = Object.freeze(QueryRoot);
-
-const Shop = {
-  "name": "Shop",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "collections": "CollectionConnection",
-    "currencyCode": "CurrencyCode",
-    "description": "String",
-    "moneyFormat": "String",
-    "name": "String",
-    "primaryDomain": "Domain",
-    "privacyPolicy": "ShopPolicy",
-    "products": "ProductConnection",
-    "refundPolicy": "ShopPolicy",
-    "termsOfService": "ShopPolicy"
-  },
-  "implementsNode": false
-};
-Object.freeze(Shop.fieldBaseTypes);
-var Shop$1 = Object.freeze(Shop);
-
-const Domain = {
-  "name": "Domain",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "host": "String",
-    "sslEnabled": "Boolean",
-    "url": "URL"
-  },
-  "implementsNode": false
-};
-Object.freeze(Domain.fieldBaseTypes);
-var Domain$1 = Object.freeze(Domain);
-
-const ShopPolicy = {
-  "name": "ShopPolicy",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "body": "String",
-    "id": "ID",
-    "title": "String",
-    "url": "URL"
-  },
-  "implementsNode": true
-};
-Object.freeze(ShopPolicy.fieldBaseTypes);
-var ShopPolicy$1 = Object.freeze(ShopPolicy);
-
-const CollectionSortKeys = {
-  "name": "CollectionSortKeys",
-  "kind": "ENUM"
-};
-var CollectionSortKeys$1 = Object.freeze(CollectionSortKeys);
-
-const ProductSortKeys = {
-  "name": "ProductSortKeys",
-  "kind": "ENUM"
-};
-var ProductSortKeys$1 = Object.freeze(ProductSortKeys);
-
-const Mutation = {
-  "name": "Mutation",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkoutAttributesUpdate": "CheckoutAttributesUpdatePayload",
-    "checkoutCompleteFree": "CheckoutCompleteFreePayload",
-    "checkoutCompleteWithCreditCard": "CheckoutCompleteWithCreditCardPayload",
-    "checkoutCompleteWithTokenizedPayment": "CheckoutCompleteWithTokenizedPaymentPayload",
-    "checkoutCreate": "CheckoutCreatePayload",
-    "checkoutCustomerAssociate": "CheckoutCustomerAssociatePayload",
-    "checkoutCustomerDisassociate": "CheckoutCustomerDisassociatePayload",
-    "checkoutEmailUpdate": "CheckoutEmailUpdatePayload",
-    "checkoutGiftCardApply": "CheckoutGiftCardApplyPayload",
-    "checkoutGiftCardRemove": "CheckoutGiftCardRemovePayload",
-    "checkoutLineItemsAdd": "CheckoutLineItemsAddPayload",
-    "checkoutLineItemsRemove": "CheckoutLineItemsRemovePayload",
-    "checkoutLineItemsUpdate": "CheckoutLineItemsUpdatePayload",
-    "checkoutShippingAddressUpdate": "CheckoutShippingAddressUpdatePayload",
-    "checkoutShippingLineUpdate": "CheckoutShippingLineUpdatePayload",
-    "customerAccessTokenCreate": "CustomerAccessTokenCreatePayload",
-    "customerAccessTokenDelete": "CustomerAccessTokenDeletePayload",
-    "customerAccessTokenRenew": "CustomerAccessTokenRenewPayload",
-    "customerActivate": "CustomerActivatePayload",
-    "customerAddressCreate": "CustomerAddressCreatePayload",
-    "customerAddressDelete": "CustomerAddressDeletePayload",
-    "customerAddressUpdate": "CustomerAddressUpdatePayload",
-    "customerCreate": "CustomerCreatePayload",
-    "customerRecover": "CustomerRecoverPayload",
-    "customerReset": "CustomerResetPayload",
-    "customerUpdate": "CustomerUpdatePayload"
-  },
-  "implementsNode": false,
-  "relayInputObjectBaseTypes": {
-    "checkoutAttributesUpdate": "CheckoutAttributesUpdateInput",
-    "checkoutCreate": "CheckoutCreateInput",
-    "customerAccessTokenCreate": "CustomerAccessTokenCreateInput",
-    "customerActivate": "CustomerActivateInput",
-    "customerCreate": "CustomerCreateInput",
-    "customerReset": "CustomerResetInput"
-  }
-};
-Object.freeze(Mutation.fieldBaseTypes);
-Object.freeze(Mutation.relayInputObjectBaseTypes);
-var Mutation$1 = Object.freeze(Mutation);
-
-const CheckoutAttributesUpdatePayload = {
-  "name": "CheckoutAttributesUpdatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutAttributesUpdatePayload.fieldBaseTypes);
-var CheckoutAttributesUpdatePayload$1 = Object.freeze(CheckoutAttributesUpdatePayload);
-
-const UserError = {
-  "name": "UserError",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "field": "String",
-    "message": "String"
-  },
-  "implementsNode": false
-};
-Object.freeze(UserError.fieldBaseTypes);
-var UserError$1 = Object.freeze(UserError);
 
 const CheckoutAttributesUpdateInput = {
   "name": "CheckoutAttributesUpdateInput",
@@ -754,64 +227,501 @@ const CheckoutAttributesUpdateInput = {
     "allowPartialAddresses": "Boolean"
   }
 };
-Object.freeze(CheckoutAttributesUpdateInput.inputFieldBaseTypes);
-var CheckoutAttributesUpdateInput$1 = Object.freeze(CheckoutAttributesUpdateInput);
 
-const AttributeInput = {
-  "name": "AttributeInput",
+const CheckoutAttributesUpdatePayload = {
+  "name": "CheckoutAttributesUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutAttributesUpdateV2Input = {
+  "name": "CheckoutAttributesUpdateV2Input",
   "kind": "INPUT_OBJECT",
   "inputFieldBaseTypes": {
-    "key": "String",
-    "value": "String"
+    "note": "String",
+    "customAttributes": "AttributeInput",
+    "allowPartialAddresses": "Boolean"
   }
 };
-Object.freeze(AttributeInput.inputFieldBaseTypes);
-var AttributeInput$1 = Object.freeze(AttributeInput);
+
+const CheckoutAttributesUpdateV2Payload = {
+  "name": "CheckoutAttributesUpdateV2Payload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
 
 const CheckoutCompleteFreePayload = {
   "name": "CheckoutCompleteFreePayload",
   "kind": "OBJECT",
   "fieldBaseTypes": {
     "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
     "userErrors": "UserError"
   },
   "implementsNode": false
 };
-Object.freeze(CheckoutCompleteFreePayload.fieldBaseTypes);
-var CheckoutCompleteFreePayload$1 = Object.freeze(CheckoutCompleteFreePayload);
 
 const CheckoutCompleteWithCreditCardPayload = {
   "name": "CheckoutCompleteWithCreditCardPayload",
   "kind": "OBJECT",
   "fieldBaseTypes": {
     "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
     "payment": "Payment",
     "userErrors": "UserError"
   },
   "implementsNode": false
 };
-Object.freeze(CheckoutCompleteWithCreditCardPayload.fieldBaseTypes);
-var CheckoutCompleteWithCreditCardPayload$1 = Object.freeze(CheckoutCompleteWithCreditCardPayload);
 
-const Payment = {
-  "name": "Payment",
+const CheckoutCompleteWithCreditCardV2Payload = {
+  "name": "CheckoutCompleteWithCreditCardV2Payload",
   "kind": "OBJECT",
   "fieldBaseTypes": {
-    "amount": "Money",
-    "billingAddress": "MailingAddress",
     "checkout": "Checkout",
-    "creditCard": "CreditCard",
-    "errorMessage": "String",
+    "checkoutUserErrors": "CheckoutUserError",
+    "payment": "Payment",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutCompleteWithTokenizedPaymentPayload = {
+  "name": "CheckoutCompleteWithTokenizedPaymentPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "payment": "Payment",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutCompleteWithTokenizedPaymentV2Payload = {
+  "name": "CheckoutCompleteWithTokenizedPaymentV2Payload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "payment": "Payment",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutCreateInput = {
+  "name": "CheckoutCreateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "email": "String",
+    "lineItems": "CheckoutLineItemInput",
+    "shippingAddress": "MailingAddressInput",
+    "note": "String",
+    "customAttributes": "AttributeInput",
+    "allowPartialAddresses": "Boolean",
+    "presentmentCurrencyCode": "CurrencyCode"
+  }
+};
+
+const CheckoutCreatePayload = {
+  "name": "CheckoutCreatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutCustomerAssociatePayload = {
+  "name": "CheckoutCustomerAssociatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "customer": "Customer",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutCustomerAssociateV2Payload = {
+  "name": "CheckoutCustomerAssociateV2Payload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "customer": "Customer",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutCustomerDisassociatePayload = {
+  "name": "CheckoutCustomerDisassociatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutCustomerDisassociateV2Payload = {
+  "name": "CheckoutCustomerDisassociateV2Payload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutDiscountCodeApplyPayload = {
+  "name": "CheckoutDiscountCodeApplyPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutDiscountCodeApplyV2Payload = {
+  "name": "CheckoutDiscountCodeApplyV2Payload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutDiscountCodeRemovePayload = {
+  "name": "CheckoutDiscountCodeRemovePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutEmailUpdatePayload = {
+  "name": "CheckoutEmailUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutEmailUpdateV2Payload = {
+  "name": "CheckoutEmailUpdateV2Payload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutErrorCode = {
+  "name": "CheckoutErrorCode",
+  "kind": "ENUM"
+};
+
+const CheckoutGiftCardApplyPayload = {
+  "name": "CheckoutGiftCardApplyPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutGiftCardRemovePayload = {
+  "name": "CheckoutGiftCardRemovePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutGiftCardRemoveV2Payload = {
+  "name": "CheckoutGiftCardRemoveV2Payload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutGiftCardsAppendPayload = {
+  "name": "CheckoutGiftCardsAppendPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutLineItem = {
+  "name": "CheckoutLineItem",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customAttributes": "Attribute",
+    "discountAllocations": "DiscountAllocation",
     "id": "ID",
-    "idempotencyKey": "String",
-    "ready": "Boolean",
-    "test": "Boolean",
-    "transaction": "Transaction"
+    "quantity": "Int",
+    "title": "String",
+    "variant": "ProductVariant"
   },
   "implementsNode": true
 };
-Object.freeze(Payment.fieldBaseTypes);
-var Payment$1 = Object.freeze(Payment);
+
+const CheckoutLineItemConnection = {
+  "name": "CheckoutLineItemConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "CheckoutLineItemEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const CheckoutLineItemEdge = {
+  "name": "CheckoutLineItemEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "CheckoutLineItem"
+  },
+  "implementsNode": false
+};
+
+const CheckoutLineItemInput = {
+  "name": "CheckoutLineItemInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "customAttributes": "AttributeInput",
+    "quantity": "Int",
+    "variantId": "ID"
+  }
+};
+
+const CheckoutLineItemUpdateInput = {
+  "name": "CheckoutLineItemUpdateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "id": "ID",
+    "variantId": "ID",
+    "quantity": "Int",
+    "customAttributes": "AttributeInput"
+  }
+};
+
+const CheckoutLineItemsAddPayload = {
+  "name": "CheckoutLineItemsAddPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutLineItemsRemovePayload = {
+  "name": "CheckoutLineItemsRemovePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutLineItemsReplacePayload = {
+  "name": "CheckoutLineItemsReplacePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "userErrors": "CheckoutUserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutLineItemsUpdatePayload = {
+  "name": "CheckoutLineItemsUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutShippingAddressUpdatePayload = {
+  "name": "CheckoutShippingAddressUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutShippingAddressUpdateV2Payload = {
+  "name": "CheckoutShippingAddressUpdateV2Payload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutShippingLineUpdatePayload = {
+  "name": "CheckoutShippingLineUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkout": "Checkout",
+    "checkoutUserErrors": "CheckoutUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CheckoutUserError = {
+  "name": "CheckoutUserError",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "code": "CheckoutErrorCode",
+    "field": "String",
+    "message": "String"
+  },
+  "implementsNode": false
+};
+
+const Collection = {
+  "name": "Collection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "description": "String",
+    "descriptionHtml": "HTML",
+    "handle": "String",
+    "id": "ID",
+    "image": "Image",
+    "products": "ProductConnection",
+    "title": "String",
+    "updatedAt": "DateTime"
+  },
+  "implementsNode": true
+};
+
+const CollectionConnection = {
+  "name": "CollectionConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "CollectionEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const CollectionEdge = {
+  "name": "CollectionEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "Collection"
+  },
+  "implementsNode": false
+};
+
+const CollectionSortKeys = {
+  "name": "CollectionSortKeys",
+  "kind": "ENUM"
+};
+
+const Comment = {
+  "name": "Comment",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "author": "CommentAuthor",
+    "content": "String",
+    "contentHtml": "HTML",
+    "id": "ID"
+  },
+  "implementsNode": true
+};
+
+const CommentAuthor = {
+  "name": "CommentAuthor",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "email": "String",
+    "name": "String"
+  },
+  "implementsNode": false
+};
+
+const CommentConnection = {
+  "name": "CommentConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "CommentEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const CommentEdge = {
+  "name": "CommentEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "Comment"
+  },
+  "implementsNode": false
+};
+
+const CountryCode = {
+  "name": "CountryCode",
+  "kind": "ENUM"
+};
 
 const CreditCard = {
   "name": "CreditCard",
@@ -828,34 +738,6 @@ const CreditCard = {
   },
   "implementsNode": false
 };
-Object.freeze(CreditCard.fieldBaseTypes);
-var CreditCard$1 = Object.freeze(CreditCard);
-
-const Transaction = {
-  "name": "Transaction",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "amount": "Money",
-    "kind": "TransactionKind",
-    "status": "TransactionStatus",
-    "test": "Boolean"
-  },
-  "implementsNode": false
-};
-Object.freeze(Transaction.fieldBaseTypes);
-var Transaction$1 = Object.freeze(Transaction);
-
-const TransactionKind = {
-  "name": "TransactionKind",
-  "kind": "ENUM"
-};
-var TransactionKind$1 = Object.freeze(TransactionKind);
-
-const TransactionStatus = {
-  "name": "TransactionStatus",
-  "kind": "ENUM"
-};
-var TransactionStatus$1 = Object.freeze(TransactionStatus);
 
 const CreditCardPaymentInput = {
   "name": "CreditCardPaymentInput",
@@ -868,8 +750,547 @@ const CreditCardPaymentInput = {
     "test": "Boolean"
   }
 };
-Object.freeze(CreditCardPaymentInput.inputFieldBaseTypes);
-var CreditCardPaymentInput$1 = Object.freeze(CreditCardPaymentInput);
+
+const CreditCardPaymentInputV2 = {
+  "name": "CreditCardPaymentInputV2",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "paymentAmount": "MoneyInput",
+    "idempotencyKey": "String",
+    "billingAddress": "MailingAddressInput",
+    "vaultId": "String",
+    "test": "Boolean"
+  }
+};
+
+const CropRegion = {
+  "name": "CropRegion",
+  "kind": "ENUM"
+};
+
+const CurrencyCode = {
+  "name": "CurrencyCode",
+  "kind": "ENUM"
+};
+
+const Customer = {
+  "name": "Customer",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "acceptsMarketing": "Boolean",
+    "addresses": "MailingAddressConnection",
+    "createdAt": "DateTime",
+    "defaultAddress": "MailingAddress",
+    "displayName": "String",
+    "email": "String",
+    "firstName": "String",
+    "id": "ID",
+    "lastIncompleteCheckout": "Checkout",
+    "lastName": "String",
+    "orders": "OrderConnection",
+    "phone": "String",
+    "tags": "String",
+    "updatedAt": "DateTime"
+  },
+  "implementsNode": false
+};
+
+const CustomerAccessToken = {
+  "name": "CustomerAccessToken",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "accessToken": "String",
+    "expiresAt": "DateTime"
+  },
+  "implementsNode": false
+};
+
+const CustomerAccessTokenCreateInput = {
+  "name": "CustomerAccessTokenCreateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "email": "String",
+    "password": "String"
+  }
+};
+
+const CustomerAccessTokenCreatePayload = {
+  "name": "CustomerAccessTokenCreatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customerAccessToken": "CustomerAccessToken",
+    "customerUserErrors": "CustomerUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerAccessTokenDeletePayload = {
+  "name": "CustomerAccessTokenDeletePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "deletedAccessToken": "String",
+    "deletedCustomerAccessTokenId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerAccessTokenRenewPayload = {
+  "name": "CustomerAccessTokenRenewPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customerAccessToken": "CustomerAccessToken",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerActivateInput = {
+  "name": "CustomerActivateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "activationToken": "String",
+    "password": "String"
+  }
+};
+
+const CustomerActivatePayload = {
+  "name": "CustomerActivatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customer": "Customer",
+    "customerAccessToken": "CustomerAccessToken",
+    "customerUserErrors": "CustomerUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerAddressCreatePayload = {
+  "name": "CustomerAddressCreatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customerAddress": "MailingAddress",
+    "customerUserErrors": "CustomerUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerAddressDeletePayload = {
+  "name": "CustomerAddressDeletePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customerUserErrors": "CustomerUserError",
+    "deletedCustomerAddressId": "String",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerAddressUpdatePayload = {
+  "name": "CustomerAddressUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customerAddress": "MailingAddress",
+    "customerUserErrors": "CustomerUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerCreateInput = {
+  "name": "CustomerCreateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "firstName": "String",
+    "lastName": "String",
+    "email": "String",
+    "phone": "String",
+    "password": "String",
+    "acceptsMarketing": "Boolean"
+  }
+};
+
+const CustomerCreatePayload = {
+  "name": "CustomerCreatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customer": "Customer",
+    "customerUserErrors": "CustomerUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerDefaultAddressUpdatePayload = {
+  "name": "CustomerDefaultAddressUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customer": "Customer",
+    "customerUserErrors": "CustomerUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerErrorCode = {
+  "name": "CustomerErrorCode",
+  "kind": "ENUM"
+};
+
+const CustomerRecoverPayload = {
+  "name": "CustomerRecoverPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customerUserErrors": "CustomerUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerResetByUrlPayload = {
+  "name": "CustomerResetByUrlPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customer": "Customer",
+    "customerAccessToken": "CustomerAccessToken",
+    "customerUserErrors": "CustomerUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerResetInput = {
+  "name": "CustomerResetInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "resetToken": "String",
+    "password": "String"
+  }
+};
+
+const CustomerResetPayload = {
+  "name": "CustomerResetPayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customer": "Customer",
+    "customerAccessToken": "CustomerAccessToken",
+    "customerUserErrors": "CustomerUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerUpdateInput = {
+  "name": "CustomerUpdateInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "firstName": "String",
+    "lastName": "String",
+    "email": "String",
+    "phone": "String",
+    "password": "String",
+    "acceptsMarketing": "Boolean"
+  }
+};
+
+const CustomerUpdatePayload = {
+  "name": "CustomerUpdatePayload",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customer": "Customer",
+    "customerAccessToken": "CustomerAccessToken",
+    "customerUserErrors": "CustomerUserError",
+    "userErrors": "UserError"
+  },
+  "implementsNode": false
+};
+
+const CustomerUserError = {
+  "name": "CustomerUserError",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "code": "CustomerErrorCode",
+    "field": "String",
+    "message": "String"
+  },
+  "implementsNode": false
+};
+
+const DateTime = {
+  "name": "DateTime",
+  "kind": "SCALAR"
+};
+
+const Decimal = {
+  "name": "Decimal",
+  "kind": "SCALAR"
+};
+
+const DigitalWallet = {
+  "name": "DigitalWallet",
+  "kind": "ENUM"
+};
+
+const DiscountAllocation = {
+  "name": "DiscountAllocation",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "allocatedAmount": "MoneyV2",
+    "discountApplication": "DiscountApplication"
+  },
+  "implementsNode": false
+};
+
+const DiscountApplication = {
+  "name": "DiscountApplication",
+  "kind": "INTERFACE",
+  "fieldBaseTypes": {
+    "allocationMethod": "DiscountApplicationAllocationMethod",
+    "targetSelection": "DiscountApplicationTargetSelection",
+    "targetType": "DiscountApplicationTargetType",
+    "value": "PricingValue"
+  },
+  "possibleTypes": ["AutomaticDiscountApplication", "DiscountCodeApplication", "ManualDiscountApplication", "ScriptDiscountApplication"]
+};
+
+const DiscountApplicationAllocationMethod = {
+  "name": "DiscountApplicationAllocationMethod",
+  "kind": "ENUM"
+};
+
+const DiscountApplicationConnection = {
+  "name": "DiscountApplicationConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "DiscountApplicationEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const DiscountApplicationEdge = {
+  "name": "DiscountApplicationEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "DiscountApplication"
+  },
+  "implementsNode": false
+};
+
+const DiscountApplicationTargetSelection = {
+  "name": "DiscountApplicationTargetSelection",
+  "kind": "ENUM"
+};
+
+const DiscountApplicationTargetType = {
+  "name": "DiscountApplicationTargetType",
+  "kind": "ENUM"
+};
+
+const DiscountCodeApplication = {
+  "name": "DiscountCodeApplication",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "allocationMethod": "DiscountApplicationAllocationMethod",
+    "applicable": "Boolean",
+    "code": "String",
+    "targetSelection": "DiscountApplicationTargetSelection",
+    "targetType": "DiscountApplicationTargetType",
+    "value": "PricingValue"
+  },
+  "implementsNode": false
+};
+
+const DisplayableError = {
+  "name": "DisplayableError",
+  "kind": "INTERFACE",
+  "fieldBaseTypes": {
+    "field": "String",
+    "message": "String"
+  },
+  "possibleTypes": ["CheckoutUserError", "CustomerUserError", "UserError"]
+};
+
+const Domain = {
+  "name": "Domain",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "host": "String",
+    "sslEnabled": "Boolean",
+    "url": "URL"
+  },
+  "implementsNode": false
+};
+
+const Float = {
+  "name": "Float",
+  "kind": "SCALAR"
+};
+
+const Fulfillment = {
+  "name": "Fulfillment",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "fulfillmentLineItems": "FulfillmentLineItemConnection",
+    "trackingCompany": "String",
+    "trackingInfo": "FulfillmentTrackingInfo"
+  },
+  "implementsNode": false
+};
+
+const FulfillmentLineItem = {
+  "name": "FulfillmentLineItem",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "lineItem": "OrderLineItem",
+    "quantity": "Int"
+  },
+  "implementsNode": false
+};
+
+const FulfillmentLineItemConnection = {
+  "name": "FulfillmentLineItemConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "FulfillmentLineItemEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const FulfillmentLineItemEdge = {
+  "name": "FulfillmentLineItemEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "FulfillmentLineItem"
+  },
+  "implementsNode": false
+};
+
+const FulfillmentTrackingInfo = {
+  "name": "FulfillmentTrackingInfo",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "number": "String",
+    "url": "URL"
+  },
+  "implementsNode": false
+};
+
+const HTML = {
+  "name": "HTML",
+  "kind": "SCALAR"
+};
+
+const HasMetafields = {
+  "name": "HasMetafields",
+  "kind": "INTERFACE",
+  "fieldBaseTypes": {
+    "metafield": "Metafield",
+    "metafields": "MetafieldConnection"
+  },
+  "possibleTypes": ["Product", "ProductVariant"]
+};
+
+const ID = {
+  "name": "ID",
+  "kind": "SCALAR"
+};
+
+const Image = {
+  "name": "Image",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "altText": "String",
+    "id": "ID",
+    "originalSrc": "URL",
+    "src": "URL",
+    "transformedSrc": "URL"
+  },
+  "implementsNode": false
+};
+
+const ImageConnection = {
+  "name": "ImageConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "ImageEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const ImageContentType = {
+  "name": "ImageContentType",
+  "kind": "ENUM"
+};
+
+const ImageEdge = {
+  "name": "ImageEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "Image"
+  },
+  "implementsNode": false
+};
+
+const Int = {
+  "name": "Int",
+  "kind": "SCALAR"
+};
+
+const MailingAddress = {
+  "name": "MailingAddress",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "address1": "String",
+    "address2": "String",
+    "city": "String",
+    "company": "String",
+    "country": "String",
+    "countryCode": "String",
+    "countryCodeV2": "CountryCode",
+    "firstName": "String",
+    "formatted": "String",
+    "formattedArea": "String",
+    "id": "ID",
+    "lastName": "String",
+    "latitude": "Float",
+    "longitude": "Float",
+    "name": "String",
+    "phone": "String",
+    "province": "String",
+    "provinceCode": "String",
+    "zip": "String"
+  },
+  "implementsNode": true
+};
+
+const MailingAddressConnection = {
+  "name": "MailingAddressConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "MailingAddressEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const MailingAddressEdge = {
+  "name": "MailingAddressEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "MailingAddress"
+  },
+  "implementsNode": false
+};
 
 const MailingAddressInput = {
   "name": "MailingAddressInput",
@@ -887,21 +1308,678 @@ const MailingAddressInput = {
     "zip": "String"
   }
 };
-Object.freeze(MailingAddressInput.inputFieldBaseTypes);
-var MailingAddressInput$1 = Object.freeze(MailingAddressInput);
 
-const CheckoutCompleteWithTokenizedPaymentPayload = {
-  "name": "CheckoutCompleteWithTokenizedPaymentPayload",
+const ManualDiscountApplication = {
+  "name": "ManualDiscountApplication",
   "kind": "OBJECT",
   "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "payment": "Payment",
-    "userErrors": "UserError"
+    "allocationMethod": "DiscountApplicationAllocationMethod",
+    "description": "String",
+    "targetSelection": "DiscountApplicationTargetSelection",
+    "targetType": "DiscountApplicationTargetType",
+    "title": "String",
+    "value": "PricingValue"
   },
   "implementsNode": false
 };
-Object.freeze(CheckoutCompleteWithTokenizedPaymentPayload.fieldBaseTypes);
-var CheckoutCompleteWithTokenizedPaymentPayload$1 = Object.freeze(CheckoutCompleteWithTokenizedPaymentPayload);
+
+const Metafield = {
+  "name": "Metafield",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "description": "String",
+    "id": "ID",
+    "key": "String",
+    "namespace": "String",
+    "parentResource": "MetafieldParentResource",
+    "value": "String",
+    "valueType": "MetafieldValueType"
+  },
+  "implementsNode": true
+};
+
+const MetafieldConnection = {
+  "name": "MetafieldConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "MetafieldEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const MetafieldEdge = {
+  "name": "MetafieldEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "Metafield"
+  },
+  "implementsNode": false
+};
+
+const MetafieldParentResource = {
+  "name": "MetafieldParentResource",
+  "kind": "UNION"
+};
+
+const MetafieldValueType = {
+  "name": "MetafieldValueType",
+  "kind": "ENUM"
+};
+
+const Money = {
+  "name": "Money",
+  "kind": "SCALAR"
+};
+
+const MoneyInput = {
+  "name": "MoneyInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "amount": "Decimal",
+    "currencyCode": "CurrencyCode"
+  }
+};
+
+const MoneyV2 = {
+  "name": "MoneyV2",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "amount": "Decimal",
+    "currencyCode": "CurrencyCode"
+  },
+  "implementsNode": false
+};
+
+const Mutation = {
+  "name": "Mutation",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "checkoutAttributesUpdate": "CheckoutAttributesUpdatePayload",
+    "checkoutAttributesUpdateV2": "CheckoutAttributesUpdateV2Payload",
+    "checkoutCompleteFree": "CheckoutCompleteFreePayload",
+    "checkoutCompleteWithCreditCard": "CheckoutCompleteWithCreditCardPayload",
+    "checkoutCompleteWithCreditCardV2": "CheckoutCompleteWithCreditCardV2Payload",
+    "checkoutCompleteWithTokenizedPayment": "CheckoutCompleteWithTokenizedPaymentPayload",
+    "checkoutCompleteWithTokenizedPaymentV2": "CheckoutCompleteWithTokenizedPaymentV2Payload",
+    "checkoutCreate": "CheckoutCreatePayload",
+    "checkoutCustomerAssociate": "CheckoutCustomerAssociatePayload",
+    "checkoutCustomerAssociateV2": "CheckoutCustomerAssociateV2Payload",
+    "checkoutCustomerDisassociate": "CheckoutCustomerDisassociatePayload",
+    "checkoutCustomerDisassociateV2": "CheckoutCustomerDisassociateV2Payload",
+    "checkoutDiscountCodeApply": "CheckoutDiscountCodeApplyPayload",
+    "checkoutDiscountCodeApplyV2": "CheckoutDiscountCodeApplyV2Payload",
+    "checkoutDiscountCodeRemove": "CheckoutDiscountCodeRemovePayload",
+    "checkoutEmailUpdate": "CheckoutEmailUpdatePayload",
+    "checkoutEmailUpdateV2": "CheckoutEmailUpdateV2Payload",
+    "checkoutGiftCardApply": "CheckoutGiftCardApplyPayload",
+    "checkoutGiftCardRemove": "CheckoutGiftCardRemovePayload",
+    "checkoutGiftCardRemoveV2": "CheckoutGiftCardRemoveV2Payload",
+    "checkoutGiftCardsAppend": "CheckoutGiftCardsAppendPayload",
+    "checkoutLineItemsAdd": "CheckoutLineItemsAddPayload",
+    "checkoutLineItemsRemove": "CheckoutLineItemsRemovePayload",
+    "checkoutLineItemsReplace": "CheckoutLineItemsReplacePayload",
+    "checkoutLineItemsUpdate": "CheckoutLineItemsUpdatePayload",
+    "checkoutShippingAddressUpdate": "CheckoutShippingAddressUpdatePayload",
+    "checkoutShippingAddressUpdateV2": "CheckoutShippingAddressUpdateV2Payload",
+    "checkoutShippingLineUpdate": "CheckoutShippingLineUpdatePayload",
+    "customerAccessTokenCreate": "CustomerAccessTokenCreatePayload",
+    "customerAccessTokenDelete": "CustomerAccessTokenDeletePayload",
+    "customerAccessTokenRenew": "CustomerAccessTokenRenewPayload",
+    "customerActivate": "CustomerActivatePayload",
+    "customerAddressCreate": "CustomerAddressCreatePayload",
+    "customerAddressDelete": "CustomerAddressDeletePayload",
+    "customerAddressUpdate": "CustomerAddressUpdatePayload",
+    "customerCreate": "CustomerCreatePayload",
+    "customerDefaultAddressUpdate": "CustomerDefaultAddressUpdatePayload",
+    "customerRecover": "CustomerRecoverPayload",
+    "customerReset": "CustomerResetPayload",
+    "customerResetByUrl": "CustomerResetByUrlPayload",
+    "customerUpdate": "CustomerUpdatePayload"
+  },
+  "implementsNode": false,
+  "relayInputObjectBaseTypes": {
+    "checkoutAttributesUpdate": "CheckoutAttributesUpdateInput",
+    "checkoutAttributesUpdateV2": "CheckoutAttributesUpdateV2Input",
+    "checkoutCreate": "CheckoutCreateInput",
+    "customerAccessTokenCreate": "CustomerAccessTokenCreateInput",
+    "customerActivate": "CustomerActivateInput",
+    "customerCreate": "CustomerCreateInput",
+    "customerReset": "CustomerResetInput"
+  }
+};
+
+const Node = {
+  "name": "Node",
+  "kind": "INTERFACE",
+  "fieldBaseTypes": {
+    "id": "ID"
+  },
+  "possibleTypes": ["AppliedGiftCard", "Article", "Blog", "Checkout", "CheckoutLineItem", "Collection", "Comment", "MailingAddress", "Metafield", "Order", "Page", "Payment", "Product", "ProductOption", "ProductVariant", "ShopPolicy"]
+};
+
+const Order = {
+  "name": "Order",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "currencyCode": "CurrencyCode",
+    "customerLocale": "String",
+    "customerUrl": "URL",
+    "discountApplications": "DiscountApplicationConnection",
+    "email": "String",
+    "id": "ID",
+    "lineItems": "OrderLineItemConnection",
+    "name": "String",
+    "orderNumber": "Int",
+    "phone": "String",
+    "processedAt": "DateTime",
+    "shippingAddress": "MailingAddress",
+    "shippingDiscountAllocations": "DiscountAllocation",
+    "statusUrl": "URL",
+    "subtotalPrice": "Money",
+    "subtotalPriceV2": "MoneyV2",
+    "successfulFulfillments": "Fulfillment",
+    "totalPrice": "Money",
+    "totalPriceV2": "MoneyV2",
+    "totalRefunded": "Money",
+    "totalRefundedV2": "MoneyV2",
+    "totalShippingPrice": "Money",
+    "totalShippingPriceV2": "MoneyV2",
+    "totalTax": "Money",
+    "totalTaxV2": "MoneyV2"
+  },
+  "implementsNode": true
+};
+
+const OrderConnection = {
+  "name": "OrderConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "OrderEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const OrderEdge = {
+  "name": "OrderEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "Order"
+  },
+  "implementsNode": false
+};
+
+const OrderLineItem = {
+  "name": "OrderLineItem",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "customAttributes": "Attribute",
+    "discountAllocations": "DiscountAllocation",
+    "quantity": "Int",
+    "title": "String",
+    "variant": "ProductVariant"
+  },
+  "implementsNode": false
+};
+
+const OrderLineItemConnection = {
+  "name": "OrderLineItemConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "OrderLineItemEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const OrderLineItemEdge = {
+  "name": "OrderLineItemEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "OrderLineItem"
+  },
+  "implementsNode": false
+};
+
+const OrderSortKeys = {
+  "name": "OrderSortKeys",
+  "kind": "ENUM"
+};
+
+const Page = {
+  "name": "Page",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "body": "HTML",
+    "bodySummary": "String",
+    "createdAt": "DateTime",
+    "handle": "String",
+    "id": "ID",
+    "title": "String",
+    "updatedAt": "DateTime",
+    "url": "URL"
+  },
+  "implementsNode": true
+};
+
+const PageConnection = {
+  "name": "PageConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "PageEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const PageEdge = {
+  "name": "PageEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "Page"
+  },
+  "implementsNode": false
+};
+
+const PageInfo = {
+  "name": "PageInfo",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "hasNextPage": "Boolean",
+    "hasPreviousPage": "Boolean"
+  },
+  "implementsNode": false
+};
+
+const PageSortKeys = {
+  "name": "PageSortKeys",
+  "kind": "ENUM"
+};
+
+const Payment = {
+  "name": "Payment",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "amount": "Money",
+    "amountV2": "MoneyV2",
+    "billingAddress": "MailingAddress",
+    "checkout": "Checkout",
+    "creditCard": "CreditCard",
+    "errorMessage": "String",
+    "id": "ID",
+    "idempotencyKey": "String",
+    "ready": "Boolean",
+    "test": "Boolean",
+    "transaction": "Transaction"
+  },
+  "implementsNode": true
+};
+
+const PaymentSettings = {
+  "name": "PaymentSettings",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "acceptedCardBrands": "CardBrand",
+    "cardVaultUrl": "URL",
+    "countryCode": "CountryCode",
+    "currencyCode": "CurrencyCode",
+    "enabledPresentmentCurrencies": "CurrencyCode",
+    "shopifyPaymentsAccountId": "String",
+    "supportedDigitalWallets": "DigitalWallet"
+  },
+  "implementsNode": false
+};
+
+const PricingPercentageValue = {
+  "name": "PricingPercentageValue",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "percentage": "Float"
+  },
+  "implementsNode": false
+};
+
+const PricingValue = {
+  "name": "PricingValue",
+  "kind": "UNION"
+};
+
+const Product = {
+  "name": "Product",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "availableForSale": "Boolean",
+    "collections": "CollectionConnection",
+    "createdAt": "DateTime",
+    "description": "String",
+    "descriptionHtml": "HTML",
+    "handle": "String",
+    "id": "ID",
+    "images": "ImageConnection",
+    "metafield": "Metafield",
+    "metafields": "MetafieldConnection",
+    "onlineStoreUrl": "URL",
+    "options": "ProductOption",
+    "presentmentPriceRanges": "ProductPriceRangeConnection",
+    "priceRange": "ProductPriceRange",
+    "productType": "String",
+    "publishedAt": "DateTime",
+    "tags": "String",
+    "title": "String",
+    "updatedAt": "DateTime",
+    "variantBySelectedOptions": "ProductVariant",
+    "variants": "ProductVariantConnection",
+    "vendor": "String"
+  },
+  "implementsNode": true
+};
+
+const ProductCollectionSortKeys = {
+  "name": "ProductCollectionSortKeys",
+  "kind": "ENUM"
+};
+
+const ProductConnection = {
+  "name": "ProductConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "ProductEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const ProductEdge = {
+  "name": "ProductEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "Product"
+  },
+  "implementsNode": false
+};
+
+const ProductImageSortKeys = {
+  "name": "ProductImageSortKeys",
+  "kind": "ENUM"
+};
+
+const ProductOption = {
+  "name": "ProductOption",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "id": "ID",
+    "name": "String",
+    "values": "String"
+  },
+  "implementsNode": true
+};
+
+const ProductPriceRange = {
+  "name": "ProductPriceRange",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "maxVariantPrice": "MoneyV2",
+    "minVariantPrice": "MoneyV2"
+  },
+  "implementsNode": false
+};
+
+const ProductPriceRangeConnection = {
+  "name": "ProductPriceRangeConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "ProductPriceRangeEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const ProductPriceRangeEdge = {
+  "name": "ProductPriceRangeEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "ProductPriceRange"
+  },
+  "implementsNode": false
+};
+
+const ProductSortKeys = {
+  "name": "ProductSortKeys",
+  "kind": "ENUM"
+};
+
+const ProductVariant = {
+  "name": "ProductVariant",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "available": "Boolean",
+    "availableForSale": "Boolean",
+    "compareAtPrice": "Money",
+    "compareAtPriceV2": "MoneyV2",
+    "id": "ID",
+    "image": "Image",
+    "metafield": "Metafield",
+    "metafields": "MetafieldConnection",
+    "presentmentPrices": "ProductVariantPricePairConnection",
+    "price": "Money",
+    "priceV2": "MoneyV2",
+    "product": "Product",
+    "requiresShipping": "Boolean",
+    "selectedOptions": "SelectedOption",
+    "sku": "String",
+    "title": "String",
+    "weight": "Float",
+    "weightUnit": "WeightUnit"
+  },
+  "implementsNode": true
+};
+
+const ProductVariantConnection = {
+  "name": "ProductVariantConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "ProductVariantEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const ProductVariantEdge = {
+  "name": "ProductVariantEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "ProductVariant"
+  },
+  "implementsNode": false
+};
+
+const ProductVariantPricePair = {
+  "name": "ProductVariantPricePair",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "compareAtPrice": "MoneyV2",
+    "price": "MoneyV2"
+  },
+  "implementsNode": false
+};
+
+const ProductVariantPricePairConnection = {
+  "name": "ProductVariantPricePairConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "ProductVariantPricePairEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const ProductVariantPricePairEdge = {
+  "name": "ProductVariantPricePairEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "ProductVariantPricePair"
+  },
+  "implementsNode": false
+};
+
+const ProductVariantSortKeys = {
+  "name": "ProductVariantSortKeys",
+  "kind": "ENUM"
+};
+
+const QueryRoot = {
+  "name": "QueryRoot",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "articles": "ArticleConnection",
+    "blogByHandle": "Blog",
+    "blogs": "BlogConnection",
+    "collectionByHandle": "Collection",
+    "collections": "CollectionConnection",
+    "customer": "Customer",
+    "node": "Node",
+    "nodes": "Node",
+    "pageByHandle": "Page",
+    "pages": "PageConnection",
+    "productByHandle": "Product",
+    "productRecommendations": "Product",
+    "productTags": "StringConnection",
+    "productTypes": "StringConnection",
+    "products": "ProductConnection",
+    "publicApiVersions": "ApiVersion",
+    "shop": "Shop"
+  },
+  "implementsNode": false
+};
+
+const SEO = {
+  "name": "SEO",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "description": "String",
+    "title": "String"
+  },
+  "implementsNode": false
+};
+
+const ScriptDiscountApplication = {
+  "name": "ScriptDiscountApplication",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "allocationMethod": "DiscountApplicationAllocationMethod",
+    "description": "String",
+    "targetSelection": "DiscountApplicationTargetSelection",
+    "targetType": "DiscountApplicationTargetType",
+    "title": "String",
+    "value": "PricingValue"
+  },
+  "implementsNode": false
+};
+
+const SelectedOption = {
+  "name": "SelectedOption",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "name": "String",
+    "value": "String"
+  },
+  "implementsNode": false
+};
+
+const SelectedOptionInput = {
+  "name": "SelectedOptionInput",
+  "kind": "INPUT_OBJECT",
+  "inputFieldBaseTypes": {
+    "name": "String",
+    "value": "String"
+  }
+};
+
+const ShippingRate = {
+  "name": "ShippingRate",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "handle": "String",
+    "price": "Money",
+    "priceV2": "MoneyV2",
+    "title": "String"
+  },
+  "implementsNode": false
+};
+
+const Shop = {
+  "name": "Shop",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "articles": "ArticleConnection",
+    "blogs": "BlogConnection",
+    "collectionByHandle": "Collection",
+    "collections": "CollectionConnection",
+    "currencyCode": "CurrencyCode",
+    "description": "String",
+    "moneyFormat": "String",
+    "name": "String",
+    "paymentSettings": "PaymentSettings",
+    "primaryDomain": "Domain",
+    "privacyPolicy": "ShopPolicy",
+    "productByHandle": "Product",
+    "productTags": "StringConnection",
+    "productTypes": "StringConnection",
+    "products": "ProductConnection",
+    "refundPolicy": "ShopPolicy",
+    "shipsToCountries": "CountryCode",
+    "shopifyPaymentsAccountId": "String",
+    "termsOfService": "ShopPolicy"
+  },
+  "implementsNode": false
+};
+
+const ShopPolicy = {
+  "name": "ShopPolicy",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "body": "String",
+    "handle": "String",
+    "id": "ID",
+    "title": "String",
+    "url": "URL"
+  },
+  "implementsNode": true
+};
+
+const String = {
+  "name": "String",
+  "kind": "SCALAR"
+};
+
+const StringConnection = {
+  "name": "StringConnection",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "edges": "StringEdge",
+    "pageInfo": "PageInfo"
+  },
+  "implementsNode": false
+};
+
+const StringEdge = {
+  "name": "StringEdge",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "cursor": "String",
+    "node": "String"
+  },
+  "implementsNode": false
+};
 
 const TokenizedPaymentInput = {
   "name": "TokenizedPaymentInput",
@@ -916,469 +1994,64 @@ const TokenizedPaymentInput = {
     "identifier": "String"
   }
 };
-Object.freeze(TokenizedPaymentInput.inputFieldBaseTypes);
-var TokenizedPaymentInput$1 = Object.freeze(TokenizedPaymentInput);
 
-const CheckoutCreatePayload = {
-  "name": "CheckoutCreatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutCreatePayload.fieldBaseTypes);
-var CheckoutCreatePayload$1 = Object.freeze(CheckoutCreatePayload);
-
-const CheckoutCreateInput = {
-  "name": "CheckoutCreateInput",
+const TokenizedPaymentInputV2 = {
+  "name": "TokenizedPaymentInputV2",
   "kind": "INPUT_OBJECT",
   "inputFieldBaseTypes": {
-    "email": "String",
-    "lineItems": "CheckoutLineItemInput",
-    "shippingAddress": "MailingAddressInput",
-    "note": "String",
-    "customAttributes": "AttributeInput",
-    "allowPartialAddresses": "Boolean"
+    "paymentAmount": "MoneyInput",
+    "idempotencyKey": "String",
+    "billingAddress": "MailingAddressInput",
+    "paymentData": "String",
+    "test": "Boolean",
+    "identifier": "String",
+    "type": "String"
   }
 };
-Object.freeze(CheckoutCreateInput.inputFieldBaseTypes);
-var CheckoutCreateInput$1 = Object.freeze(CheckoutCreateInput);
 
-const CheckoutLineItemInput = {
-  "name": "CheckoutLineItemInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "variantId": "ID",
-    "quantity": "Int",
-    "customAttributes": "AttributeInput"
-  }
-};
-Object.freeze(CheckoutLineItemInput.inputFieldBaseTypes);
-var CheckoutLineItemInput$1 = Object.freeze(CheckoutLineItemInput);
-
-const CheckoutCustomerAssociatePayload = {
-  "name": "CheckoutCustomerAssociatePayload",
+const Transaction = {
+  "name": "Transaction",
   "kind": "OBJECT",
   "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
+    "amount": "Money",
+    "amountV2": "MoneyV2",
+    "kind": "TransactionKind",
+    "status": "TransactionStatus",
+    "statusV2": "TransactionStatus",
+    "test": "Boolean"
   },
   "implementsNode": false
 };
-Object.freeze(CheckoutCustomerAssociatePayload.fieldBaseTypes);
-var CheckoutCustomerAssociatePayload$1 = Object.freeze(CheckoutCustomerAssociatePayload);
 
-const CheckoutCustomerDisassociatePayload = {
-  "name": "CheckoutCustomerDisassociatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutCustomerDisassociatePayload.fieldBaseTypes);
-var CheckoutCustomerDisassociatePayload$1 = Object.freeze(CheckoutCustomerDisassociatePayload);
-
-const CheckoutEmailUpdatePayload = {
-  "name": "CheckoutEmailUpdatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutEmailUpdatePayload.fieldBaseTypes);
-var CheckoutEmailUpdatePayload$1 = Object.freeze(CheckoutEmailUpdatePayload);
-
-const CheckoutGiftCardApplyPayload = {
-  "name": "CheckoutGiftCardApplyPayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutGiftCardApplyPayload.fieldBaseTypes);
-var CheckoutGiftCardApplyPayload$1 = Object.freeze(CheckoutGiftCardApplyPayload);
-
-const CheckoutGiftCardRemovePayload = {
-  "name": "CheckoutGiftCardRemovePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutGiftCardRemovePayload.fieldBaseTypes);
-var CheckoutGiftCardRemovePayload$1 = Object.freeze(CheckoutGiftCardRemovePayload);
-
-const CheckoutLineItemsAddPayload = {
-  "name": "CheckoutLineItemsAddPayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutLineItemsAddPayload.fieldBaseTypes);
-var CheckoutLineItemsAddPayload$1 = Object.freeze(CheckoutLineItemsAddPayload);
-
-const CheckoutLineItemsRemovePayload = {
-  "name": "CheckoutLineItemsRemovePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutLineItemsRemovePayload.fieldBaseTypes);
-var CheckoutLineItemsRemovePayload$1 = Object.freeze(CheckoutLineItemsRemovePayload);
-
-const CheckoutLineItemsUpdatePayload = {
-  "name": "CheckoutLineItemsUpdatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutLineItemsUpdatePayload.fieldBaseTypes);
-var CheckoutLineItemsUpdatePayload$1 = Object.freeze(CheckoutLineItemsUpdatePayload);
-
-const CheckoutLineItemUpdateInput = {
-  "name": "CheckoutLineItemUpdateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "id": "ID",
-    "variantId": "ID",
-    "quantity": "Int",
-    "customAttributes": "AttributeInput"
-  }
-};
-Object.freeze(CheckoutLineItemUpdateInput.inputFieldBaseTypes);
-var CheckoutLineItemUpdateInput$1 = Object.freeze(CheckoutLineItemUpdateInput);
-
-const CheckoutShippingAddressUpdatePayload = {
-  "name": "CheckoutShippingAddressUpdatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutShippingAddressUpdatePayload.fieldBaseTypes);
-var CheckoutShippingAddressUpdatePayload$1 = Object.freeze(CheckoutShippingAddressUpdatePayload);
-
-const CheckoutShippingLineUpdatePayload = {
-  "name": "CheckoutShippingLineUpdatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "checkout": "Checkout",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CheckoutShippingLineUpdatePayload.fieldBaseTypes);
-var CheckoutShippingLineUpdatePayload$1 = Object.freeze(CheckoutShippingLineUpdatePayload);
-
-const CustomerAccessTokenCreatePayload = {
-  "name": "CustomerAccessTokenCreatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customerAccessToken": "CustomerAccessToken",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAccessTokenCreatePayload.fieldBaseTypes);
-var CustomerAccessTokenCreatePayload$1 = Object.freeze(CustomerAccessTokenCreatePayload);
-
-const CustomerAccessToken = {
-  "name": "CustomerAccessToken",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "accessToken": "String",
-    "expiresAt": "DateTime"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAccessToken.fieldBaseTypes);
-var CustomerAccessToken$1 = Object.freeze(CustomerAccessToken);
-
-const CustomerAccessTokenCreateInput = {
-  "name": "CustomerAccessTokenCreateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "email": "String",
-    "password": "String"
-  }
-};
-Object.freeze(CustomerAccessTokenCreateInput.inputFieldBaseTypes);
-var CustomerAccessTokenCreateInput$1 = Object.freeze(CustomerAccessTokenCreateInput);
-
-const CustomerAccessTokenDeletePayload = {
-  "name": "CustomerAccessTokenDeletePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "deletedAccessToken": "String",
-    "deletedCustomerAccessTokenId": "String",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAccessTokenDeletePayload.fieldBaseTypes);
-var CustomerAccessTokenDeletePayload$1 = Object.freeze(CustomerAccessTokenDeletePayload);
-
-const CustomerAccessTokenRenewPayload = {
-  "name": "CustomerAccessTokenRenewPayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customerAccessToken": "CustomerAccessToken",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAccessTokenRenewPayload.fieldBaseTypes);
-var CustomerAccessTokenRenewPayload$1 = Object.freeze(CustomerAccessTokenRenewPayload);
-
-const CustomerActivatePayload = {
-  "name": "CustomerActivatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customer": "Customer",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerActivatePayload.fieldBaseTypes);
-var CustomerActivatePayload$1 = Object.freeze(CustomerActivatePayload);
-
-const CustomerActivateInput = {
-  "name": "CustomerActivateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "activationToken": "String",
-    "password": "String"
-  }
-};
-Object.freeze(CustomerActivateInput.inputFieldBaseTypes);
-var CustomerActivateInput$1 = Object.freeze(CustomerActivateInput);
-
-const CustomerAddressCreatePayload = {
-  "name": "CustomerAddressCreatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customerAddress": "MailingAddress",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAddressCreatePayload.fieldBaseTypes);
-var CustomerAddressCreatePayload$1 = Object.freeze(CustomerAddressCreatePayload);
-
-const CustomerAddressDeletePayload = {
-  "name": "CustomerAddressDeletePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "deletedCustomerAddressId": "String",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAddressDeletePayload.fieldBaseTypes);
-var CustomerAddressDeletePayload$1 = Object.freeze(CustomerAddressDeletePayload);
-
-const CustomerAddressUpdatePayload = {
-  "name": "CustomerAddressUpdatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customerAddress": "MailingAddress",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerAddressUpdatePayload.fieldBaseTypes);
-var CustomerAddressUpdatePayload$1 = Object.freeze(CustomerAddressUpdatePayload);
-
-const CustomerCreatePayload = {
-  "name": "CustomerCreatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customer": "Customer",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerCreatePayload.fieldBaseTypes);
-var CustomerCreatePayload$1 = Object.freeze(CustomerCreatePayload);
-
-const CustomerCreateInput = {
-  "name": "CustomerCreateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "firstName": "String",
-    "lastName": "String",
-    "email": "String",
-    "password": "String",
-    "acceptsMarketing": "Boolean"
-  }
-};
-Object.freeze(CustomerCreateInput.inputFieldBaseTypes);
-var CustomerCreateInput$1 = Object.freeze(CustomerCreateInput);
-
-const CustomerRecoverPayload = {
-  "name": "CustomerRecoverPayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerRecoverPayload.fieldBaseTypes);
-var CustomerRecoverPayload$1 = Object.freeze(CustomerRecoverPayload);
-
-const CustomerResetPayload = {
-  "name": "CustomerResetPayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customer": "Customer",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerResetPayload.fieldBaseTypes);
-var CustomerResetPayload$1 = Object.freeze(CustomerResetPayload);
-
-const CustomerResetInput = {
-  "name": "CustomerResetInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "resetToken": "String",
-    "password": "String"
-  }
-};
-Object.freeze(CustomerResetInput.inputFieldBaseTypes);
-var CustomerResetInput$1 = Object.freeze(CustomerResetInput);
-
-const CustomerUpdatePayload = {
-  "name": "CustomerUpdatePayload",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "customer": "Customer",
-    "userErrors": "UserError"
-  },
-  "implementsNode": false
-};
-Object.freeze(CustomerUpdatePayload.fieldBaseTypes);
-var CustomerUpdatePayload$1 = Object.freeze(CustomerUpdatePayload);
-
-const CustomerUpdateInput = {
-  "name": "CustomerUpdateInput",
-  "kind": "INPUT_OBJECT",
-  "inputFieldBaseTypes": {
-    "firstName": "String",
-    "lastName": "String",
-    "email": "String",
-    "password": "String",
-    "acceptsMarketing": "Boolean"
-  }
-};
-Object.freeze(CustomerUpdateInput.inputFieldBaseTypes);
-var CustomerUpdateInput$1 = Object.freeze(CustomerUpdateInput);
-
-const __Schema = {
-  "name": "__Schema",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "directives": "__Directive",
-    "mutationType": "__Type",
-    "queryType": "__Type",
-    "subscriptionType": "__Type",
-    "types": "__Type"
-  },
-  "implementsNode": false
-};
-Object.freeze(__Schema.fieldBaseTypes);
-var __Schema$1 = Object.freeze(__Schema);
-
-const __Type = {
-  "name": "__Type",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "description": "String",
-    "enumValues": "__EnumValue",
-    "fields": "__Field",
-    "inputFields": "__InputValue",
-    "interfaces": "__Type",
-    "kind": "__TypeKind",
-    "name": "String",
-    "ofType": "__Type",
-    "possibleTypes": "__Type"
-  },
-  "implementsNode": false
-};
-Object.freeze(__Type.fieldBaseTypes);
-var __Type$1 = Object.freeze(__Type);
-
-const __TypeKind = {
-  "name": "__TypeKind",
+const TransactionKind = {
+  "name": "TransactionKind",
   "kind": "ENUM"
 };
-var __TypeKind$1 = Object.freeze(__TypeKind);
 
-const __Field = {
-  "name": "__Field",
+const TransactionStatus = {
+  "name": "TransactionStatus",
+  "kind": "ENUM"
+};
+
+const URL = {
+  "name": "URL",
+  "kind": "SCALAR"
+};
+
+const UserError = {
+  "name": "UserError",
   "kind": "OBJECT",
   "fieldBaseTypes": {
-    "args": "__InputValue",
-    "deprecationReason": "String",
-    "description": "String",
-    "isDeprecated": "Boolean",
-    "name": "String",
-    "type": "__Type"
+    "field": "String",
+    "message": "String"
   },
   "implementsNode": false
 };
-Object.freeze(__Field.fieldBaseTypes);
-var __Field$1 = Object.freeze(__Field);
 
-const __InputValue = {
-  "name": "__InputValue",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "defaultValue": "String",
-    "description": "String",
-    "name": "String",
-    "type": "__Type"
-  },
-  "implementsNode": false
+const WeightUnit = {
+  "name": "WeightUnit",
+  "kind": "ENUM"
 };
-Object.freeze(__InputValue.fieldBaseTypes);
-var __InputValue$1 = Object.freeze(__InputValue);
-
-const __EnumValue = {
-  "name": "__EnumValue",
-  "kind": "OBJECT",
-  "fieldBaseTypes": {
-    "deprecationReason": "String",
-    "description": "String",
-    "isDeprecated": "Boolean",
-    "name": "String"
-  },
-  "implementsNode": false
-};
-Object.freeze(__EnumValue.fieldBaseTypes);
-var __EnumValue$1 = Object.freeze(__EnumValue);
 
 const __Directive = {
   "name": "__Directive",
@@ -1394,133 +2067,306 @@ const __Directive = {
   },
   "implementsNode": false
 };
-Object.freeze(__Directive.fieldBaseTypes);
-var __Directive$1 = Object.freeze(__Directive);
 
 const __DirectiveLocation = {
   "name": "__DirectiveLocation",
   "kind": "ENUM"
 };
-var __DirectiveLocation$1 = Object.freeze(__DirectiveLocation);
+
+const __EnumValue = {
+  "name": "__EnumValue",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "deprecationReason": "String",
+    "description": "String",
+    "isDeprecated": "Boolean",
+    "name": "String"
+  },
+  "implementsNode": false
+};
+
+const __Field = {
+  "name": "__Field",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "accessRestricted": "Boolean",
+    "accessRestrictedReason": "String",
+    "args": "__InputValue",
+    "deprecationReason": "String",
+    "description": "String",
+    "isDeprecated": "Boolean",
+    "name": "String",
+    "requiredAccess": "String",
+    "type": "__Type"
+  },
+  "implementsNode": false
+};
+
+const __InputValue = {
+  "name": "__InputValue",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "defaultValue": "String",
+    "deprecationReason": "String",
+    "description": "String",
+    "isDeprecated": "Boolean",
+    "name": "String",
+    "type": "__Type"
+  },
+  "implementsNode": false
+};
+
+const __Schema = {
+  "name": "__Schema",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "directives": "__Directive",
+    "mutationType": "__Type",
+    "queryType": "__Type",
+    "subscriptionType": "__Type",
+    "types": "__Type"
+  },
+  "implementsNode": false
+};
+
+const __Type = {
+  "name": "__Type",
+  "kind": "OBJECT",
+  "fieldBaseTypes": {
+    "accessRestricted": "Boolean",
+    "accessRestrictedReason": "String",
+    "componentName": "String",
+    "description": "String",
+    "enumValues": "__EnumValue",
+    "fields": "__Field",
+    "inputFields": "__InputValue",
+    "interfaces": "__Type",
+    "kind": "__TypeKind",
+    "name": "String",
+    "ofType": "__Type",
+    "possibleTypes": "__Type",
+    "requiredAccess": "String"
+  },
+  "implementsNode": false
+};
+
+const __TypeKind = {
+  "name": "__TypeKind",
+  "kind": "ENUM"
+};
 
 const Types = {
   types: {}
 };
-Types.types["Checkout"] = Checkout$1;
-Types.types["ID"] = ID$1;
-Types.types["Boolean"] = Boolean$1;
-Types.types["CheckoutLineItemConnection"] = CheckoutLineItemConnection$1;
-Types.types["PageInfo"] = PageInfo$1;
-Types.types["CheckoutLineItemEdge"] = CheckoutLineItemEdge$1;
-Types.types["String"] = String$1;
-Types.types["CheckoutLineItem"] = CheckoutLineItem$1;
-Types.types["ProductVariant"] = ProductVariant$1;
-Types.types["Float"] = Float$1;
-Types.types["WeightUnit"] = WeightUnit$1;
-Types.types["Money"] = Money$1;
-Types.types["Image"] = Image$1;
-Types.types["URL"] = URL$1;
-Types.types["Int"] = Int$1;
-Types.types["CropRegion"] = CropRegion$1;
-Types.types["SelectedOption"] = SelectedOption$1;
-Types.types["Product"] = Product$1;
-Types.types["CollectionConnection"] = CollectionConnection$1;
-Types.types["CollectionEdge"] = CollectionEdge$1;
-Types.types["Collection"] = Collection$1;
-Types.types["HTML"] = HTML$1;
-Types.types["DateTime"] = DateTime$1;
-Types.types["ProductConnection"] = ProductConnection$1;
-Types.types["ProductEdge"] = ProductEdge$1;
-Types.types["Node"] = Node$1;
-Types.types["ImageConnection"] = ImageConnection$1;
-Types.types["ImageEdge"] = ImageEdge$1;
-Types.types["ProductOption"] = ProductOption$1;
-Types.types["ProductVariantConnection"] = ProductVariantConnection$1;
-Types.types["ProductVariantEdge"] = ProductVariantEdge$1;
-Types.types["Attribute"] = Attribute$1;
-Types.types["MailingAddress"] = MailingAddress$1;
-Types.types["ShippingRate"] = ShippingRate$1;
-Types.types["AvailableShippingRates"] = AvailableShippingRates$1;
-Types.types["Customer"] = Customer$1;
-Types.types["MailingAddressConnection"] = MailingAddressConnection$1;
-Types.types["MailingAddressEdge"] = MailingAddressEdge$1;
-Types.types["OrderConnection"] = OrderConnection$1;
-Types.types["OrderEdge"] = OrderEdge$1;
-Types.types["Order"] = Order$1;
-Types.types["OrderCancelReason"] = OrderCancelReason$1;
-Types.types["CurrencyCode"] = CurrencyCode$1;
-Types.types["OrderDisplayFulfillmentStatus"] = OrderDisplayFulfillmentStatus$1;
-Types.types["OrderDisplayFinancialStatus"] = OrderDisplayFinancialStatus$1;
-Types.types["OrderLineItemConnection"] = OrderLineItemConnection$1;
-Types.types["OrderLineItemEdge"] = OrderLineItemEdge$1;
-Types.types["OrderLineItem"] = OrderLineItem$1;
-Types.types["OrderSortKeys"] = OrderSortKeys$1;
-Types.types["AppliedGiftCard"] = AppliedGiftCard$1;
-Types.types["QueryRoot"] = QueryRoot$1;
-Types.types["Shop"] = Shop$1;
-Types.types["Domain"] = Domain$1;
-Types.types["ShopPolicy"] = ShopPolicy$1;
-Types.types["CollectionSortKeys"] = CollectionSortKeys$1;
-Types.types["ProductSortKeys"] = ProductSortKeys$1;
-Types.types["Mutation"] = Mutation$1;
-Types.types["CheckoutAttributesUpdatePayload"] = CheckoutAttributesUpdatePayload$1;
-Types.types["UserError"] = UserError$1;
-Types.types["CheckoutAttributesUpdateInput"] = CheckoutAttributesUpdateInput$1;
-Types.types["AttributeInput"] = AttributeInput$1;
-Types.types["CheckoutCompleteFreePayload"] = CheckoutCompleteFreePayload$1;
-Types.types["CheckoutCompleteWithCreditCardPayload"] = CheckoutCompleteWithCreditCardPayload$1;
-Types.types["Payment"] = Payment$1;
-Types.types["CreditCard"] = CreditCard$1;
-Types.types["Transaction"] = Transaction$1;
-Types.types["TransactionKind"] = TransactionKind$1;
-Types.types["TransactionStatus"] = TransactionStatus$1;
-Types.types["CreditCardPaymentInput"] = CreditCardPaymentInput$1;
-Types.types["MailingAddressInput"] = MailingAddressInput$1;
-Types.types["CheckoutCompleteWithTokenizedPaymentPayload"] = CheckoutCompleteWithTokenizedPaymentPayload$1;
-Types.types["TokenizedPaymentInput"] = TokenizedPaymentInput$1;
-Types.types["CheckoutCreatePayload"] = CheckoutCreatePayload$1;
-Types.types["CheckoutCreateInput"] = CheckoutCreateInput$1;
-Types.types["CheckoutLineItemInput"] = CheckoutLineItemInput$1;
-Types.types["CheckoutCustomerAssociatePayload"] = CheckoutCustomerAssociatePayload$1;
-Types.types["CheckoutCustomerDisassociatePayload"] = CheckoutCustomerDisassociatePayload$1;
-Types.types["CheckoutEmailUpdatePayload"] = CheckoutEmailUpdatePayload$1;
-Types.types["CheckoutGiftCardApplyPayload"] = CheckoutGiftCardApplyPayload$1;
-Types.types["CheckoutGiftCardRemovePayload"] = CheckoutGiftCardRemovePayload$1;
-Types.types["CheckoutLineItemsAddPayload"] = CheckoutLineItemsAddPayload$1;
-Types.types["CheckoutLineItemsRemovePayload"] = CheckoutLineItemsRemovePayload$1;
-Types.types["CheckoutLineItemsUpdatePayload"] = CheckoutLineItemsUpdatePayload$1;
-Types.types["CheckoutLineItemUpdateInput"] = CheckoutLineItemUpdateInput$1;
-Types.types["CheckoutShippingAddressUpdatePayload"] = CheckoutShippingAddressUpdatePayload$1;
-Types.types["CheckoutShippingLineUpdatePayload"] = CheckoutShippingLineUpdatePayload$1;
-Types.types["CustomerAccessTokenCreatePayload"] = CustomerAccessTokenCreatePayload$1;
-Types.types["CustomerAccessToken"] = CustomerAccessToken$1;
-Types.types["CustomerAccessTokenCreateInput"] = CustomerAccessTokenCreateInput$1;
-Types.types["CustomerAccessTokenDeletePayload"] = CustomerAccessTokenDeletePayload$1;
-Types.types["CustomerAccessTokenRenewPayload"] = CustomerAccessTokenRenewPayload$1;
-Types.types["CustomerActivatePayload"] = CustomerActivatePayload$1;
-Types.types["CustomerActivateInput"] = CustomerActivateInput$1;
-Types.types["CustomerAddressCreatePayload"] = CustomerAddressCreatePayload$1;
-Types.types["CustomerAddressDeletePayload"] = CustomerAddressDeletePayload$1;
-Types.types["CustomerAddressUpdatePayload"] = CustomerAddressUpdatePayload$1;
-Types.types["CustomerCreatePayload"] = CustomerCreatePayload$1;
-Types.types["CustomerCreateInput"] = CustomerCreateInput$1;
-Types.types["CustomerRecoverPayload"] = CustomerRecoverPayload$1;
-Types.types["CustomerResetPayload"] = CustomerResetPayload$1;
-Types.types["CustomerResetInput"] = CustomerResetInput$1;
-Types.types["CustomerUpdatePayload"] = CustomerUpdatePayload$1;
-Types.types["CustomerUpdateInput"] = CustomerUpdateInput$1;
-Types.types["__Schema"] = __Schema$1;
-Types.types["__Type"] = __Type$1;
-Types.types["__TypeKind"] = __TypeKind$1;
-Types.types["__Field"] = __Field$1;
-Types.types["__InputValue"] = __InputValue$1;
-Types.types["__EnumValue"] = __EnumValue$1;
-Types.types["__Directive"] = __Directive$1;
-Types.types["__DirectiveLocation"] = __DirectiveLocation$1;
+Types.types["ApiVersion"] = ApiVersion;
+Types.types["AppliedGiftCard"] = AppliedGiftCard;
+Types.types["Article"] = Article;
+Types.types["ArticleAuthor"] = ArticleAuthor;
+Types.types["ArticleConnection"] = ArticleConnection;
+Types.types["ArticleEdge"] = ArticleEdge;
+Types.types["ArticleSortKeys"] = ArticleSortKeys;
+Types.types["Attribute"] = Attribute;
+Types.types["AttributeInput"] = AttributeInput;
+Types.types["AutomaticDiscountApplication"] = AutomaticDiscountApplication;
+Types.types["AvailableShippingRates"] = AvailableShippingRates;
+Types.types["Blog"] = Blog;
+Types.types["BlogConnection"] = BlogConnection;
+Types.types["BlogEdge"] = BlogEdge;
+Types.types["BlogSortKeys"] = BlogSortKeys;
+Types.types["Boolean"] = Boolean;
+Types.types["CardBrand"] = CardBrand;
+Types.types["Checkout"] = Checkout;
+Types.types["CheckoutAttributesUpdateInput"] = CheckoutAttributesUpdateInput;
+Types.types["CheckoutAttributesUpdatePayload"] = CheckoutAttributesUpdatePayload;
+Types.types["CheckoutAttributesUpdateV2Input"] = CheckoutAttributesUpdateV2Input;
+Types.types["CheckoutAttributesUpdateV2Payload"] = CheckoutAttributesUpdateV2Payload;
+Types.types["CheckoutCompleteFreePayload"] = CheckoutCompleteFreePayload;
+Types.types["CheckoutCompleteWithCreditCardPayload"] = CheckoutCompleteWithCreditCardPayload;
+Types.types["CheckoutCompleteWithCreditCardV2Payload"] = CheckoutCompleteWithCreditCardV2Payload;
+Types.types["CheckoutCompleteWithTokenizedPaymentPayload"] = CheckoutCompleteWithTokenizedPaymentPayload;
+Types.types["CheckoutCompleteWithTokenizedPaymentV2Payload"] = CheckoutCompleteWithTokenizedPaymentV2Payload;
+Types.types["CheckoutCreateInput"] = CheckoutCreateInput;
+Types.types["CheckoutCreatePayload"] = CheckoutCreatePayload;
+Types.types["CheckoutCustomerAssociatePayload"] = CheckoutCustomerAssociatePayload;
+Types.types["CheckoutCustomerAssociateV2Payload"] = CheckoutCustomerAssociateV2Payload;
+Types.types["CheckoutCustomerDisassociatePayload"] = CheckoutCustomerDisassociatePayload;
+Types.types["CheckoutCustomerDisassociateV2Payload"] = CheckoutCustomerDisassociateV2Payload;
+Types.types["CheckoutDiscountCodeApplyPayload"] = CheckoutDiscountCodeApplyPayload;
+Types.types["CheckoutDiscountCodeApplyV2Payload"] = CheckoutDiscountCodeApplyV2Payload;
+Types.types["CheckoutDiscountCodeRemovePayload"] = CheckoutDiscountCodeRemovePayload;
+Types.types["CheckoutEmailUpdatePayload"] = CheckoutEmailUpdatePayload;
+Types.types["CheckoutEmailUpdateV2Payload"] = CheckoutEmailUpdateV2Payload;
+Types.types["CheckoutErrorCode"] = CheckoutErrorCode;
+Types.types["CheckoutGiftCardApplyPayload"] = CheckoutGiftCardApplyPayload;
+Types.types["CheckoutGiftCardRemovePayload"] = CheckoutGiftCardRemovePayload;
+Types.types["CheckoutGiftCardRemoveV2Payload"] = CheckoutGiftCardRemoveV2Payload;
+Types.types["CheckoutGiftCardsAppendPayload"] = CheckoutGiftCardsAppendPayload;
+Types.types["CheckoutLineItem"] = CheckoutLineItem;
+Types.types["CheckoutLineItemConnection"] = CheckoutLineItemConnection;
+Types.types["CheckoutLineItemEdge"] = CheckoutLineItemEdge;
+Types.types["CheckoutLineItemInput"] = CheckoutLineItemInput;
+Types.types["CheckoutLineItemUpdateInput"] = CheckoutLineItemUpdateInput;
+Types.types["CheckoutLineItemsAddPayload"] = CheckoutLineItemsAddPayload;
+Types.types["CheckoutLineItemsRemovePayload"] = CheckoutLineItemsRemovePayload;
+Types.types["CheckoutLineItemsReplacePayload"] = CheckoutLineItemsReplacePayload;
+Types.types["CheckoutLineItemsUpdatePayload"] = CheckoutLineItemsUpdatePayload;
+Types.types["CheckoutShippingAddressUpdatePayload"] = CheckoutShippingAddressUpdatePayload;
+Types.types["CheckoutShippingAddressUpdateV2Payload"] = CheckoutShippingAddressUpdateV2Payload;
+Types.types["CheckoutShippingLineUpdatePayload"] = CheckoutShippingLineUpdatePayload;
+Types.types["CheckoutUserError"] = CheckoutUserError;
+Types.types["Collection"] = Collection;
+Types.types["CollectionConnection"] = CollectionConnection;
+Types.types["CollectionEdge"] = CollectionEdge;
+Types.types["CollectionSortKeys"] = CollectionSortKeys;
+Types.types["Comment"] = Comment;
+Types.types["CommentAuthor"] = CommentAuthor;
+Types.types["CommentConnection"] = CommentConnection;
+Types.types["CommentEdge"] = CommentEdge;
+Types.types["CountryCode"] = CountryCode;
+Types.types["CreditCard"] = CreditCard;
+Types.types["CreditCardPaymentInput"] = CreditCardPaymentInput;
+Types.types["CreditCardPaymentInputV2"] = CreditCardPaymentInputV2;
+Types.types["CropRegion"] = CropRegion;
+Types.types["CurrencyCode"] = CurrencyCode;
+Types.types["Customer"] = Customer;
+Types.types["CustomerAccessToken"] = CustomerAccessToken;
+Types.types["CustomerAccessTokenCreateInput"] = CustomerAccessTokenCreateInput;
+Types.types["CustomerAccessTokenCreatePayload"] = CustomerAccessTokenCreatePayload;
+Types.types["CustomerAccessTokenDeletePayload"] = CustomerAccessTokenDeletePayload;
+Types.types["CustomerAccessTokenRenewPayload"] = CustomerAccessTokenRenewPayload;
+Types.types["CustomerActivateInput"] = CustomerActivateInput;
+Types.types["CustomerActivatePayload"] = CustomerActivatePayload;
+Types.types["CustomerAddressCreatePayload"] = CustomerAddressCreatePayload;
+Types.types["CustomerAddressDeletePayload"] = CustomerAddressDeletePayload;
+Types.types["CustomerAddressUpdatePayload"] = CustomerAddressUpdatePayload;
+Types.types["CustomerCreateInput"] = CustomerCreateInput;
+Types.types["CustomerCreatePayload"] = CustomerCreatePayload;
+Types.types["CustomerDefaultAddressUpdatePayload"] = CustomerDefaultAddressUpdatePayload;
+Types.types["CustomerErrorCode"] = CustomerErrorCode;
+Types.types["CustomerRecoverPayload"] = CustomerRecoverPayload;
+Types.types["CustomerResetByUrlPayload"] = CustomerResetByUrlPayload;
+Types.types["CustomerResetInput"] = CustomerResetInput;
+Types.types["CustomerResetPayload"] = CustomerResetPayload;
+Types.types["CustomerUpdateInput"] = CustomerUpdateInput;
+Types.types["CustomerUpdatePayload"] = CustomerUpdatePayload;
+Types.types["CustomerUserError"] = CustomerUserError;
+Types.types["DateTime"] = DateTime;
+Types.types["Decimal"] = Decimal;
+Types.types["DigitalWallet"] = DigitalWallet;
+Types.types["DiscountAllocation"] = DiscountAllocation;
+Types.types["DiscountApplication"] = DiscountApplication;
+Types.types["DiscountApplicationAllocationMethod"] = DiscountApplicationAllocationMethod;
+Types.types["DiscountApplicationConnection"] = DiscountApplicationConnection;
+Types.types["DiscountApplicationEdge"] = DiscountApplicationEdge;
+Types.types["DiscountApplicationTargetSelection"] = DiscountApplicationTargetSelection;
+Types.types["DiscountApplicationTargetType"] = DiscountApplicationTargetType;
+Types.types["DiscountCodeApplication"] = DiscountCodeApplication;
+Types.types["DisplayableError"] = DisplayableError;
+Types.types["Domain"] = Domain;
+Types.types["Float"] = Float;
+Types.types["Fulfillment"] = Fulfillment;
+Types.types["FulfillmentLineItem"] = FulfillmentLineItem;
+Types.types["FulfillmentLineItemConnection"] = FulfillmentLineItemConnection;
+Types.types["FulfillmentLineItemEdge"] = FulfillmentLineItemEdge;
+Types.types["FulfillmentTrackingInfo"] = FulfillmentTrackingInfo;
+Types.types["HTML"] = HTML;
+Types.types["HasMetafields"] = HasMetafields;
+Types.types["ID"] = ID;
+Types.types["Image"] = Image;
+Types.types["ImageConnection"] = ImageConnection;
+Types.types["ImageContentType"] = ImageContentType;
+Types.types["ImageEdge"] = ImageEdge;
+Types.types["Int"] = Int;
+Types.types["MailingAddress"] = MailingAddress;
+Types.types["MailingAddressConnection"] = MailingAddressConnection;
+Types.types["MailingAddressEdge"] = MailingAddressEdge;
+Types.types["MailingAddressInput"] = MailingAddressInput;
+Types.types["ManualDiscountApplication"] = ManualDiscountApplication;
+Types.types["Metafield"] = Metafield;
+Types.types["MetafieldConnection"] = MetafieldConnection;
+Types.types["MetafieldEdge"] = MetafieldEdge;
+Types.types["MetafieldParentResource"] = MetafieldParentResource;
+Types.types["MetafieldValueType"] = MetafieldValueType;
+Types.types["Money"] = Money;
+Types.types["MoneyInput"] = MoneyInput;
+Types.types["MoneyV2"] = MoneyV2;
+Types.types["Mutation"] = Mutation;
+Types.types["Node"] = Node;
+Types.types["Order"] = Order;
+Types.types["OrderConnection"] = OrderConnection;
+Types.types["OrderEdge"] = OrderEdge;
+Types.types["OrderLineItem"] = OrderLineItem;
+Types.types["OrderLineItemConnection"] = OrderLineItemConnection;
+Types.types["OrderLineItemEdge"] = OrderLineItemEdge;
+Types.types["OrderSortKeys"] = OrderSortKeys;
+Types.types["Page"] = Page;
+Types.types["PageConnection"] = PageConnection;
+Types.types["PageEdge"] = PageEdge;
+Types.types["PageInfo"] = PageInfo;
+Types.types["PageSortKeys"] = PageSortKeys;
+Types.types["Payment"] = Payment;
+Types.types["PaymentSettings"] = PaymentSettings;
+Types.types["PricingPercentageValue"] = PricingPercentageValue;
+Types.types["PricingValue"] = PricingValue;
+Types.types["Product"] = Product;
+Types.types["ProductCollectionSortKeys"] = ProductCollectionSortKeys;
+Types.types["ProductConnection"] = ProductConnection;
+Types.types["ProductEdge"] = ProductEdge;
+Types.types["ProductImageSortKeys"] = ProductImageSortKeys;
+Types.types["ProductOption"] = ProductOption;
+Types.types["ProductPriceRange"] = ProductPriceRange;
+Types.types["ProductPriceRangeConnection"] = ProductPriceRangeConnection;
+Types.types["ProductPriceRangeEdge"] = ProductPriceRangeEdge;
+Types.types["ProductSortKeys"] = ProductSortKeys;
+Types.types["ProductVariant"] = ProductVariant;
+Types.types["ProductVariantConnection"] = ProductVariantConnection;
+Types.types["ProductVariantEdge"] = ProductVariantEdge;
+Types.types["ProductVariantPricePair"] = ProductVariantPricePair;
+Types.types["ProductVariantPricePairConnection"] = ProductVariantPricePairConnection;
+Types.types["ProductVariantPricePairEdge"] = ProductVariantPricePairEdge;
+Types.types["ProductVariantSortKeys"] = ProductVariantSortKeys;
+Types.types["QueryRoot"] = QueryRoot;
+Types.types["SEO"] = SEO;
+Types.types["ScriptDiscountApplication"] = ScriptDiscountApplication;
+Types.types["SelectedOption"] = SelectedOption;
+Types.types["SelectedOptionInput"] = SelectedOptionInput;
+Types.types["ShippingRate"] = ShippingRate;
+Types.types["Shop"] = Shop;
+Types.types["ShopPolicy"] = ShopPolicy;
+Types.types["String"] = String;
+Types.types["StringConnection"] = StringConnection;
+Types.types["StringEdge"] = StringEdge;
+Types.types["TokenizedPaymentInput"] = TokenizedPaymentInput;
+Types.types["TokenizedPaymentInputV2"] = TokenizedPaymentInputV2;
+Types.types["Transaction"] = Transaction;
+Types.types["TransactionKind"] = TransactionKind;
+Types.types["TransactionStatus"] = TransactionStatus;
+Types.types["URL"] = URL;
+Types.types["UserError"] = UserError;
+Types.types["WeightUnit"] = WeightUnit;
+Types.types["__Directive"] = __Directive;
+Types.types["__DirectiveLocation"] = __DirectiveLocation;
+Types.types["__EnumValue"] = __EnumValue;
+Types.types["__Field"] = __Field;
+Types.types["__InputValue"] = __InputValue;
+Types.types["__Schema"] = __Schema;
+Types.types["__Type"] = __Type;
+Types.types["__TypeKind"] = __TypeKind;
 Types.queryType = "QueryRoot";
 Types.mutationType = "Mutation";
 Types.subscriptionType = null;
-Object.freeze(Types.types);
-var types = Object.freeze(Types);
+
+function recursivelyFreezeObject(structure) {
+  Object.getOwnPropertyNames(structure).forEach(key => {
+    const value = structure[key];
+    if (value && typeof value === 'object') {
+      recursivelyFreezeObject(value);
+    }
+  });
+  Object.freeze(structure);
+  return structure;
+}
+
+var types = recursivelyFreezeObject(Types);
 
 export default types;

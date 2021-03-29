@@ -12,7 +12,7 @@ This example uses [babel-plugin-graphql-js-client-transform](https://github.com/
 
 ```bash
 git clone https://github.com/Shopify/storefront-api-examples.git
-cd node-js-buy
+cd node-graphql-client
 yarn install
 ```
 

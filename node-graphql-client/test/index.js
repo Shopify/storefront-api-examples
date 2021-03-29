@@ -1,7 +1,8 @@
-import assert from 'assert';
+/* eslint-env mocha */
+const assert = require('assert');
 
-suite('This will test node-graphql-client', () => {
-  test('It should do something', () => {
+describe('This will test node-graphql-client', () => {
+  it('It should do something', () => {
     assert.ok(true, "It's good");
   });
 });

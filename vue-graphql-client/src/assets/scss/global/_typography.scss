@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700');
+
+@mixin fontSerif{
+    font-family: 'Roboto Slab', serif;
+}
+
+@mixin fontSanSerif{
+    font-family: 'Roboto', sans-serif;
+}

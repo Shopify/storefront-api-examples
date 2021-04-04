@@ -1,0 +1,42 @@
+<div class="fixed-container">
+    
+    <div class="cart">
+
+        <div class="line-item" v-for="lineItem in lineItems">
+            <div class="grid grid-3 grid-1-mobile">
+                <div class="cell">
+                    <div class="image">
+                        <img v-bind:src="lineItem.image" alt=""/>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="title">{{lineItem.title}}</div>
+                    <div class="variant-title">{{lineItem.variantTitle}}</div>
+                </div>
+                <div class="cell">
+                    <div class="price">Price: <span>${{lineItem.price}}</span></div>
+                    <div class="quantity">
+                        Quantity: <span>{{lineItem.quantity}}</span> 
+                        <a href="#" v-on:click="incrementQuantity(lineItem, $event)" class="btn btn-small"><font-awesome-icon icon="arrow-up" /></a>
+                        <a href="#" v-on:click="decrementQuantity(lineItem, $event)" class="btn btn-small"><font-awesome-icon icon="arrow-down" /></a>
+                    </div>
+                    <div class="total">Total: <span>${{lineItem.totalPrice}}</span></div>
+                    <div class="remove">
+                        <a href="#" class="btn" v-on:click="remove(lineItem, $event)">Remove</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+        
+            <div class="total" v-if="totalPrice">Total: <span>${{totalPrice}}</span></div>
+            <a v-bind:href="checkoutUrl" v-if="checkoutUrl" class="btn">Checkout</a>
+        </div>
+
+    </div>
+
+    <div class="close-fixed-container" v-on:click="$emit('hide-cart')">
+        <font-awesome-icon icon="times" />
+    </div>
+</div>

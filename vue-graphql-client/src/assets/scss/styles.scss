@@ -1,0 +1,11 @@
+@import 'global/normalize';
+@import 'global/variables';
+@import 'global/typography';
+@import 'global/mixins';
+@import 'global/animations';
+@import 'global/global';
+
+@import 'partials/product-list';
+@import 'partials/product-detail';
+@import 'partials/cart';
+@import 'partials/cart-button';

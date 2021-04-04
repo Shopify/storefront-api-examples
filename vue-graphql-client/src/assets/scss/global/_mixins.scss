@@ -1,0 +1,50 @@
+@mixin phone {
+    @media (max-width: 599px) { @content; }
+}
+
+@mixin grid {
+    display: grid;
+    column-gap: 10px;
+    row-gap: 10px;
+    &.grid-1 {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    &.grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    &.grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    &.grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    &.grid-5 {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    &.grid-6 {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    @include phone {
+        &.grid-1-mobile {
+            grid-template-columns: repeat(1, 1fr);
+        }
+        &.grid-2-mobile {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        &.grid-3-mobile {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        &.grid-4-mobile {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        &.grid-5-mobile {
+            grid-template-columns: repeat(5, 1fr);
+        }
+        &.grid-6-mobile {
+            grid-template-columns: repeat(6, 1fr);
+        }
+    }
+}
+
+

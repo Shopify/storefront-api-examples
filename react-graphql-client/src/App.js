@@ -27,6 +27,7 @@ class App extends Component {
       mutation {
         checkoutCreate(input: {}) {
           userErrors {
+            code
             message
             field
           }
@@ -42,6 +43,7 @@ class App extends Component {
                 hasPreviousPage
               }
               edges {
+               cursor
                 node {
                   title
                   variant {
@@ -75,6 +77,7 @@ class App extends Component {
               hasPreviousPage
             }
             edges {
+              cursor
               node {
                 id
                 title
@@ -88,6 +91,7 @@ class App extends Component {
                     hasPreviousPage
                   }
                   edges {
+                   cursor
                     node {
                       title
                       selectedOptions {
@@ -107,6 +111,7 @@ class App extends Component {
                     hasPreviousPage
                   }
                   edges {
+                    cursor
                     node {
                       src
                     }
@@ -137,6 +142,7 @@ class App extends Component {
       mutation ($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
         checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
           userErrors {
+            code
             message
             field
           }
@@ -151,6 +157,7 @@ class App extends Component {
                 hasPreviousPage
               }
               edges {
+                cursor
                 node {
                   title
                   variant {

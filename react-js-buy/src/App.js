@@ -12,14 +12,9 @@ class App extends Component {
       products: [],
       shop: {}
     };
-
-    this.handleCartClose = this.handleCartClose.bind(this);
-    this.addVariantToCart = this.addVariantToCart.bind(this);
-    this.updateQuantityInCart = this.updateQuantityInCart.bind(this);
-    this.removeLineItemInCart = this.removeLineItemInCart.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.client.checkout.create().then((res) => {
       this.setState({
         checkout: res,
@@ -39,7 +34,7 @@ class App extends Component {
     });
   }
 
-  addVariantToCart(variantId, quantity){
+  addVariantToCart = (variantId, quantity) => {
     this.setState({
       isCartOpen: true,
     });
@@ -54,7 +49,7 @@ class App extends Component {
     });
   }
 
-  updateQuantityInCart(lineItemId, quantity) {
+  updateQuantityInCart = (lineItemId, quantity) => {
     const checkoutId = this.state.checkout.id
     const lineItemsToUpdate = [{id: lineItemId, quantity: parseInt(quantity, 10)}]
 
@@ -65,7 +60,7 @@ class App extends Component {
     });
   }
 
-  removeLineItemInCart(lineItemId) {
+  removeLineItemInCart = (lineItemId) => {
     const checkoutId = this.state.checkout.id
 
     return this.props.client.checkout.removeLineItems(checkoutId, [lineItemId]).then(res => {
@@ -75,7 +70,7 @@ class App extends Component {
     });
   }
 
-  handleCartClose() {
+  handleCartClose = () => {
     this.setState({
       isCartOpen: false,
     });

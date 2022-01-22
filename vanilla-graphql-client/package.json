@@ -9,6 +9,6 @@
   "author": "Shopify",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "^2.5.0"
+    "node-fetch": "^3.1.1"
   }
 }

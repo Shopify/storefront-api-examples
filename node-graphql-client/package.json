@@ -18,7 +18,7 @@
     "babel-plugin-graphql-js-client-transform": "^1.1.1",
     "babel-preset-shopify": "~21.0.0",
     "eslint": "~7.23.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "graphql-js-client": "^0.12.0",
     "graphql-js-schema": "^0.7.1",
     "graphql-js-schema-fetch": "^1.1.2",

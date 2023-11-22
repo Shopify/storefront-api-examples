@@ -56,7 +56,22 @@ class Cart extends Component {
               <span className="pricing">$ {this.props.checkout.totalPrice}</span>
             </div>
           </div>
-          <button className="Cart__checkout button" onClick={this.openCheckout}>Checkout</button>
+            {line_items.length >= 1 ? (
+            <button
+              className="Cart__checkout button"
+              onClick={this.openCheckout}
+            >
+              Checkout
+            </button>
+          ) : (
+            <button
+              className="Cart__checkout button"
+              onClick={this.openCheckout}
+              disabled
+            >
+              Checkout
+            </button>
+          )}
         </footer>
       </div>
     )

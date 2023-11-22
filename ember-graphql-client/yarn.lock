@@ -3986,8 +3986,8 @@ jodid25519@^1.0.0:
     jsbn "~0.1.0"
 
 jquery@^3.1.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.7.1.tgz#083ef98927c9a6a74d05a6af02806566d16274de"
 
 js-reporters@1.2.0:
   version "1.2.0"

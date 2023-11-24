@@ -126,6 +126,7 @@ class App extends Component {
   }
 
   addVariantToCart(variantId, quantity){
+    const client = this.props.client;
     this.setState({
       isCartOpen: true,
     });

@@ -1,0 +1,32 @@
+<div class="fixed-container">
+    <div class="product-detail grid-2 grid-1-mobile">
+
+        <div class="product-detail-left">
+
+            <div class="product-image">
+                <img v-if="selectedVariant" v-bind:src="product.selectedImage" />
+            </div>
+
+            <ul class="thumbnails">
+                <li v-for="image in product.images" v-on:click="updateSelectedImage(image)" v-bind:class="{'selected': product.selectedImage == image}" v-bind:style="{ backgroundImage: 'url(' + image + ')' }"></li>
+            </ul>
+       
+        </div>
+        <div class="product-detail-right">
+            <h3 class="product-title" v-if="product.title">{{product.title}}</h3>
+            <p class="product-description" v-if="product.description">{{product.description}}</p>
+            <ul class="product-variants" v-if="product.variants.length > 1">
+                <li v-if="selectedVariant" v-for="variant in product.variants" v-on:click="selectVariant(variant, $event)" class="btn" v-bind:class="{ 'active': selectedVariant.id == variant.id }">
+                    {{variant.title}}
+                </li>
+            </ul>
+
+            <div class="product-price" v-if="selectedVariant">${{selectedVariant.price}}</div>
+            <a href="#" v-if="selectedVariant" v-on:click="addToCart(selectedVariant.id, $event)" class="btn btn-green">Add To Cart</a>
+        </div>
+
+    </div>
+    <div class="close-fixed-container" v-on:click="$emit('hide-product-details')">
+        <font-awesome-icon icon="times" />
+    </div>
+</div>

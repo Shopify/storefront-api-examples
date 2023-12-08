@@ -1,0 +1,112 @@
+.cart {
+    position: relative;
+
+    .line-item{
+        display: block;
+        position: relative;
+        width: 100%;
+        min-height: 300px;
+        border-bottom: 2px solid $colorFg;
+
+        .grid {
+            align-items: center;
+        }
+
+        .cell {
+            .image {
+                text-align: center;
+                padding: 10px 0;
+                img{
+                    height: 280px;
+                }
+            }
+
+            .title {
+                font-size: 24px;
+                @include fontSerif;
+                font-weight: bold;
+                @include phone {
+                    text-align: center;
+                }
+            }
+  
+            .variant-title {
+                padding-top: 12px;
+                font-size: 16px;
+                font-weight: bold;
+                @include phone {
+                    text-align: center;
+                }
+            }
+
+            .price {
+                font-size: 20px;
+                text-align: right;
+                span {
+                    font-weight: bold;
+                }
+                @include phone {
+                    text-align: center;
+                }
+            }
+
+            .quantity {
+                padding: 16px 0;
+                text-align: right;
+                font-size: 20px;
+
+                span {
+                    margin-right: 10px;
+                    font-weight: bold;
+                }
+                a{
+                    top: -2px;
+                }
+                @include phone {
+                    text-align: center;
+                }
+            }
+
+            .total {
+                text-align: right;
+                font-size: 20px;
+                span {
+                    font-weight: bold;
+                }
+                @include phone {
+                    text-align: center;
+                }
+            }
+
+            .remove{
+                text-align: right;
+                padding: 10px 0;
+                a.btn {
+                    margin-right: 0 !important;
+                }
+                @include phone {
+                    text-align: center;
+                }
+            }
+        }
+    }
+    
+    .cart-footer {
+        padding: 24px 0;
+        text-align: right;
+        .total {
+            font-size: 24px;
+            padding: 12px 0;
+            span {
+                font-weight: bold;
+            }
+        }
+        a.btn {
+            margin-right: 0 !important;
+        }
+
+        @include phone {
+            text-align: center;
+        }
+    }
+}

@@ -1,0 +1,29 @@
+
+
+.products {
+    position: relative;
+    width: 100%;
+
+    @include grid;
+
+    .product {
+        cursor: pointer;
+
+        .product-image {
+            display: block;
+            img {
+                width: 100%;
+            }
+        }
+    
+        .product-title {
+
+        }
+        .product-description {
+
+        }
+        .product-price {
+
+        }
+    }
+}
